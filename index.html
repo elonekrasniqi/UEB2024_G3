@@ -20,7 +20,7 @@
 
         <link href="css/bootstrap-icons.css" rel="stylesheet">
 
-        <link href="css/templatemo-festava-live.css" rel="stylesheet">
+        <link href="css/festival.css" rel="stylesheet">
 
     </head>
     
@@ -482,6 +482,10 @@
                                     <button class="nav-link" id="nav-ContactMap-tab" data-bs-toggle="tab" data-bs-target="#nav-ContactMap" type="button" role="tab" aria-controls="nav-ContactMap" aria-selected="false">
                                         <h5>Google Maps</h5>
                                     </button>
+
+                                    <button class="nav-link" id="nav-Volenteer-tab" data-bs-toggle="tab" data-bs-target="#nav-Volenteer" type="button" role="tab" aria-controls="nav-Volenteer" aria-selected="false" style="margin-left: 5px;">
+                                        <h5>Volenteer</h5>
+                                    </button>
                                 </div>
                             </nav>
 
@@ -513,6 +517,40 @@
                                 <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel" aria-labelledby="nav-ContactMap-tab">
                                    
                                     <iframe  class="google-map"  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2931.9408125671703!2d21.124844999999997!3d42.704974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDLCsDQyJzE3LjkiTiAyMcKwMDcnMjkuNCJF!5e0!3m2!1sen!2s!4v1711551717110!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-Volenteer" role="tabpanel" aria-labelledby="nav-Volenteer-tab">
+                                    <form class="custom-form contact-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                                        <div class="contact-form-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <input type="text" name="volunteer-name" id="volunteer-name" class="form-control" placeholder="Your full name" required>
+                                                </div>
+                                    
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <input type="email" name="volunteer-email" id="volunteer-email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Your email address" required>
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <input type="tel" name="volunteer-phone" id="volunteer-phone" class="form-control" placeholder="Your phone number" pattern="383-[0-9]{8}" required>
+                                                </div>
+                                    
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <input type="text" name="volunteer-company" id="volunteer-company" class="form-control" placeholder="Current job">
+                                                </div>
+                                            </div>
+                                    
+                                            <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message" placeholder="Tell us why you want to volunteer and any relevant experience"></textarea>
+                                    
+                                            <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                                                <button type="submit" class="form-control">Submit Volunteer Application</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
