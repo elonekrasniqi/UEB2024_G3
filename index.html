@@ -46,47 +46,90 @@
 
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="index.html" id="logo" style="transition: transform 0.3s ease; display: inline-block;">
                         Sunny Hill
                     </a>
 
-                    <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
-    
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-    
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_1">Home</a>
-                            </li>
-    
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_2">About</a>
-                            </li>
-    
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_3">Artists</a>
-                            </li>
+                    <script>
+                
+                        document.getElementById("logo").onmouseover = function() {
+                            this.style.transform = "scale(1.1)";
+                        };
+                        document.getElementById("logo").onmouseout = function() {
+                            this.style.transform = "scale(1)";
+                        };
+                    
+                        
+                    </script>
+<a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
 
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_4">Schedule</a>
-                            </li>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
 
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_5">Pricing</a>
-                            </li>
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_1" onclick="addEffect(this)">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_2" onclick="addEffect(this)">About</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_3" onclick="addEffect(this)">Artists</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_4" onclick="addEffect(this)">Schedule</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_5" onclick="addEffect(this)">Pricing</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_6" onclick="addEffect(this)">Contact</a>
+        </li>
+    </ul>
+
+    <a href="ticket.html" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
+
+<script>
     
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_6">Contact</a>
-                            </li>
-                        </ul>
+    var buyTicketBtn = document.getElementById("buyTicketBtn");
 
-                        <a href="ticket.html" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
-                    </div>
-                </div>
-            </nav>
+    
+    buyTicketBtn.addEventListener("mouseenter", function() {
+        this.style.backgroundColor = "#007bff"; 
+        this.style.color = "#fff"; 
+        this.style.transform = "scale(1.1)"; 
+        this.style.transition = "all 0.3s ease"; 
+    });
+
+    
+    buyTicketBtn.addEventListener("mouseleave", function() {
+        this.style.backgroundColor = ""; 
+        this.style.color = ""; 
+        this.style.transform = ""; 
+    });
+</script>
+
+</div>
+</div>
+</nav>
+
+<script>
+    function addEffect(element) {
+       
+        element.style.color = "#007bff" 
+        element.style.fontWeight = "bold"; 
+        element.style.transform = "scale(1.1)"; 
+        element.style.transition = "transform 0.3s ease";
+    }
+</script>
+
             
 
             <section class="hero-section" id="section_1">
