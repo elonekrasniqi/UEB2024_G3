@@ -1015,28 +1015,13 @@ strong {
   }
 }
 
-.text-container {
-  position: absolute;
-  top: 50%;
-  left: 0;
+marquee {
+  background-color: #56a2df;
   width: 100%;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  color: black;
-  font-weight: bold;
-}
-
-.moving-text {
-  display: inline-block;
+  height: 35px;
+  line-height: 30px; 
+  overflow: hidden;
   white-space: nowrap;
-  animation: moveText 5s linear infinite;
-}
-
-@keyframes moveText {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
 }

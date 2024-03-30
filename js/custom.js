@@ -30,8 +30,4 @@
   
   })(window.jQuery);
 
-     // Get the width of the screen and set it as the animation duration
-     const screenWidth = window.innerWidth;
-     const movingText = document.querySelector('.moving-text');
-     movingText.style.animationDuration = `${screenWidth / 100}px`;
-
+    
