@@ -556,13 +556,13 @@ strong {
   padding: 50px;
 }
 
-.ticket-form .form-check {
+.ticket-form .form-check .input-container{
   position: relative;
   min-height: 52px;
   padding-left: 35px;
 }
 
-.ticket-form .form-check .form-check-label {
+.ticket-form .form-check .form-check-label .radio-container{
   display: block;
   position: absolute;
   top: 50%;
