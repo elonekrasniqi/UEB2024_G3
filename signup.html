@@ -9,11 +9,7 @@
 
         <title>Sunny Hill - Sign up</title>
 
-        <!-- CSS FILES -->  
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-              
+        <!-- CSS FILES -->    
         <link rel="preconnect" href="https://fonts.googleapis.com">
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,64 +25,7 @@
     </head>
     
     <body>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('signupButton').addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent form submission
-                    
-                    var email = document.getElementById('signup-form-email').value;
-                    var password = document.getElementById('signup-form-password').value;
-                    var confirmPassword = document.getElementById('signup-form-confirm-password').value;
-
-                    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    var passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; 
-
-                    if (email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
-                        showAlert('Validation Error', 'Please fill in all fields.');
-                    } else if (!emailRegex.test(email)) {
-                        showAlert('Validation Error', 'Please enter a valid email.');
-                    } else if (!passRegex.test(password)) {
-                        showAlert('Validation Error', 'Password is not valid.', '<p>At least one lowercase letter<br>' +
-                            'At least one uppercase letter<br>' +
-                            'At least one number<br>' +
-                            'Minimum length of 8 characters</p>');
-                    } else if (password !== confirmPassword) {
-                        showAlert('Validation Error', 'Passwords do not match.');
-                        // Clear password fields
-                        document.getElementById('signup-form-password').value = '';
-                        document.getElementById('signup-form-confirm-password').value = '';
-                    } else {
-                        showSuccess('Success', 'You have registered successfully.', 'ticket.html'); // Redirect to login page after successful signup
-                    }
-                });
-            });
-
-            function showAlert(title, text, html = '') {
-    Swal.fire({
-        title: title,
-        text: text,
-        icon: 'warning',
-        confirmButtonText: 'OK',
-        background: '#000000',
-        confirmButtonColor: '#ff0000',
-        iconColor: '#ff0000',
-        html: html,
-    });
-}
-            function showSuccess(title, text, redirectUrl) {
-                Swal.fire({
-                    title: title,
-                    text: text,
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    background: '#000000',
-                    confirmButtonColor: '#00ff00',
-                    iconColor: '#00ff00'
-                }).then(function () {
-                    window.location.href = redirectUrl;
-                });
-            }
-        </script>
+       
        
         <main>
 
