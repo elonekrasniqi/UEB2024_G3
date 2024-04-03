@@ -1,3 +1,24 @@
+<?php
+
+//cookie i pare i perdorur per ta ruajtur emrin e personit qe shkruan mesazh
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    // Retrieve form data
+    $fullName = $_POST['contact-name'];
+
+    // Set the cookie with the user's full name
+    setcookie('user_name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
+?>
+    
+    <script>
+        var userName = '<?php echo $fullName; ?>';
+        var alertBox = alert('Thank you for your message, ' + userName + '!');
+       
+    </script>
+<?php
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
     <head>
