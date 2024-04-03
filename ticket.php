@@ -1,3 +1,33 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data
+    $name = $_POST["ticket-form-name"];
+    $email = $_POST["ticket-form-email"];
+    $phone = $_POST["ticket-form-phone"];
+    $ticketType = $_POST["TicketForm"];
+    $numTickets = $_POST["ticket-form-number"];
+    $message = $_POST["ticket-form-message"];
+
+    // Create an array to store the form data
+    $ticketData = array(
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone,
+        'ticketType' => $ticketType,
+        'numTickets' => $numTickets,
+        'message' => $message
+    );
+
+    // Convert the array to JSON format
+    $jsonData = json_encode($ticketData);
+
+    // Set the cookie with the JSON data
+    setcookie("ticketData", $jsonData, time() + (86400 * 30), "/"); // 30 days expiration
+
+    echo "Cookie 'ticketData' is set!";
+}
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
