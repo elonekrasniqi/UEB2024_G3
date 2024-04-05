@@ -18,6 +18,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 }
 ?>
 
+<?php
+// Cookie i dyte, ndryshon ngjyren varesisht nga vlera qe merr
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the name from the form
+    $name = $_POST["volunteer-name"];
+    
+    // Generate a color based on the name
+    $hash = md5($name); // Generate a hash from the name
+    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
+    
+    // Set a cookie to remember the color
+    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
+} else {
+    // Check if the dynamicColor cookie is set
+    if (isset($_COOKIE["dynamicColor"])) {
+        $color = $_COOKIE["dynamicColor"];
+    }
+}
+?>
 
 <!doctype html>
 <html lang="en">
@@ -47,6 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     </head>
     
     <body>
+    <style>
+        
+        #nav-Volenteer .custom-form {
+            background-color: #<?php echo $color; ?>;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        </style>
 
         <main>
 
