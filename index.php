@@ -17,9 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 <?php
 }
 ?>
-
 <?php
-// Cookie i dyte, ndryshon ngjyren varesisht nga vlera qe merr
+// Cookie i dyte, ndryshon ngjyren varesisht se cfare vlere merr
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the name from the form
     $name = $_POST["volunteer-name"];
@@ -37,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -66,13 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </head>
     
     <body>
-    <style>
-        
-        #nav-Volenteer .custom-form {
+        <style>
+            #nav-Volenteer .custom-form {
             background-color: #<?php echo $color; ?>;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
         </style>
 
