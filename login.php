@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Invalid email address";
     } else {
         // Perform further processing
-        echo "Login successful";
+        echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
     }
 }
 ?>

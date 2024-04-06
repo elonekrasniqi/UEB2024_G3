@@ -39,7 +39,35 @@ if (validateDate($date)) {
     echo 'The date is valid for July 2024!';
 } else {
     echo 'The date is not valid for July 2024!';
+
 }
+
+//perdorimi i sessions per ruajtjen e te dhenave nga format e kontaktit dhe vullnetareve
+session_start();
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check which form was submitted
+    if (isset($_POST['submit'])) {
+        // Contact Form submitted
+        $_SESSION['contact-name'] = $_POST['contact-name'];
+        $_SESSION['contact-email'] = $_POST['contact-email'];
+        $_SESSION['contact-company'] = $_POST['contact-company'];
+        $_SESSION['contact-message'] = $_POST['contact-message'];
+
+       
+    } elseif (isset($_POST['submitform'])) {
+        // Volunteer Form submitted
+        $_SESSION['volunteer-name'] = $_POST['volunteer-name'];
+        $_SESSION['volunteer-email'] = $_POST['volunteer-email'];
+        $_SESSION['volunteer-phone'] = $_POST['volunteer-phone'];
+        $_SESSION['volunteer-company'] = $_POST['volunteer-company'];
+        $_SESSION['volunteer-message'] = $_POST['volunteer-message'];
+
+       
+    }
+}
+
 ?>
 
 
