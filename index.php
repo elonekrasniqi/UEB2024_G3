@@ -1,44 +1,23 @@
 <?php
-
-//cookie i pare i perdorur per ta ruajtur emrin e personit qe shkruan mesazh
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    // Retrieve form data
-    $fullName = $_POST['contact-name'];
-
-    // Set the cookie with the user's full name
-    setcookie('user_name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
-?>
-    
-    <script>
-        var userName = '<?php echo $fullName; ?>';
-        var alertBox = alert('Thank you for your message, ' + userName + '!');
-       
-    </script>
-<?php
-}
-?>
-<?php
-// Cookie i dyte, ndryshon ngjyren varesisht se cfare vlere merr
+// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the name from the form
-    $name = $_POST["volunteer-name"];
+    // Handle the contact form submission
+    if (isset($_POST['submit'])) {
+        $fullName = $_POST['contact-name'];
+        setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
+        echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
+    }
     
-    // Generate a color based on the name
-    $hash = md5($name); // Generate a hash from the name
-    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
-    
-    // Set a cookie to remember the color
-    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
-} else {
-    // Check if the dynamicColor cookie is set
-    if (isset($_COOKIE["dynamicColor"])) {
-        $color = $_COOKIE["dynamicColor"];
+    // Handle the volunteer form submission
+    elseif (isset($_POST['volunteer-name'])) {
+        $name = $_POST["volunteer-name"];
+        $hash = md5($name); // Generate a hash from the name
+        $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
+        setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
     }
 }
-?>
 
-<?php
-// Validimi i datës për muajin korrik të vitit 2024 me RegEx
+// Validating date for July 2024 with Regex
 function validateDate($date) {
     $pattern = '/^2024-07-(25|26|27|28)$/';
     return preg_match($pattern, $date);
@@ -46,11 +25,12 @@ function validateDate($date) {
 
 $date = '2024-07-25';
 if (validateDate($date)) {
-    echo 'Data është valide për muajin korrik të vitit 2024';
+    echo 'The date is valid for July 2024!';
 } else {
-    echo 'Data nuk është valide për muajin korrik të vitit 2024';
+    echo 'The date is not valid for July 2024!';
 }
 ?>
+
 
 
 <!doctype html>
@@ -760,7 +740,7 @@ if (validateDate($date)) {
                                             <textarea name="contact-message" rows="3" class="form-control" id="contact-message" placeholder="Message"></textarea>
 
                                             <div class="col-lg-4 col-md-10 col-8 mx-auto">
-                                                <button type="submit" class="form-control">Send message</button>
+                                                <button type="submit" name="submit" class="form-control">Send message</button>
                                             </div>
                                         </div>
                                     </form>
