@@ -1,5 +1,5 @@
 <?php
-//cookie i pare, merr emrin nga forma dhe vendos alert
+//cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle the contact form submission
@@ -16,6 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
         setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
     }
+    
+   
+}
+//cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['submitform'])) {
+    $fullNameVol = $_POST['volunteer-name'];
+    setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
+    echo "<script>alert('Thank you for applying, $fullNameVol! We will contact you soon!');</script>";
+}
 }
 
 // Validating date for July 2024 with Regex
@@ -796,7 +806,7 @@ $html = ' <section class="artists-section section-padding" id="section_3">
                                             <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message" placeholder="Tell us why you want to volunteer and any relevant experience"></textarea>
                                     
                                             <div class="col-lg-4 col-md-10 col-8 mx-auto">
-                                                <button type="submit" class="form-control">Submit Volunteer Application</button>
+                                                <button type="submit" name="submitform" class="form-control">Submit Volunteer Application</button>
                                             </div>
                                         </div>
                                     </form>
