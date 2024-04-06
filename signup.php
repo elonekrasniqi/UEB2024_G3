@@ -1,3 +1,17 @@
+<?php
+//validimi i emailit me RegEx nga ana e serverit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['login-form-email'];
+    $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
+
+    if (!preg_match($emailPattern, $email)) {
+        echo "Invalid email address";
+    } else {
+        // Perform further processing
+        echo "Login successful";
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -129,6 +143,19 @@
                                                 <span>Already have an account?</span> <a href="login.html">Login</a>
                                             </div>
                                         </div>
+                                        
+                                          <script>
+                                          //validimi i emailit nga ana e klientit
+                                             function validateForm() {
+                                                 var email = document.getElementById('login-form-email').value;
+                                                 var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                                                 if (!emailPattern.test(email)) {
+                                                     alert("Invalid email address");
+                                                         return false;
+                                                 }
+                                                 return true;
+                                             }
+                                         </script>
                                     </div>
                                 </form>
                             </div>

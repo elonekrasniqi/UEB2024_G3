@@ -37,6 +37,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<?php
+//validimi i dates me RegEx
+function validateDate($date) {
+    $pattern = '/^\d{1,2}-\d{1,2}-\d{4}$/';
+    return preg_match($pattern, $date);
+}
+
+$date = '25-28 July 2024';
+if (validateDate($date)) {
+    echo 'Data është valide';
+} else {
+    echo 'Data nuk është valide';
+}
+?>
+
 
 <!doctype html>
 <html lang="en">
