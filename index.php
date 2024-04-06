@@ -481,150 +481,153 @@ if (validateDate($date)) {
             </section>
 
 
-            <section class="schedule-section section-padding" id="section_4">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h2 class="text-black mb-4">Festival Schedule</h2>
-                            <div class="table-responsive">
-                                <table class="schedule-table table table-dark">
-                                    <colgroup>
-                                        <col style="width: 25%;">
-                                        <col style="width: 25%;">
-                                        <col style="width: 25%;">
-                                        <col style="width: 25%;">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Day 1 - Thursday</th>
-                                            <th scope="col">Day 2 - Friday</th>
-                                            <th scope="col">Day 3 - Saturday</th>
-                                            <th scope="col">Day 4 - Sunday</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="background-color:  #d9e3da76">
-                                                <h3>Dua Lipa</h3>
-                                                <p class="mb-2">08:00 - 09:00 PM</p>
-                                                <p>Pop Performance</p>
-                                            </td>
-                                            <td style="background-color: #d9e3da76">
-                                                <h3>McKresha & LyricalSon</h3>
-                                                <p class="mb-2">08:00 - 09:00 PM</p>
-                                                <p>Pop Performance</p>
-                                            </td>
-                                            <td style="background-color:  #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">08:00 - 09:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                            <h3>Surprise</h3>
-                                            <p class="mb-2">08:00 - 09:00 PM</p>
-                                            <p>Surprise Performance</p>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color:  #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">09:00- 10:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">09:00 - 10:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">09:00 - 10:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color:#e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">09:00 - 10:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                               
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">10:00- 11:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color:  #d9e3da76">
-                                                <h3>Martin Garrix</h3>
-                                                <p class="mb-2">10:00 - 11:00 PM</p>
-                                                <p>DJ</p>
-                                            </td>
-                                            
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">10:00- 11:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color:  #d9e3da76">
-                                                <h3>Maneskin</h3>
-                                                <p class="mb-2">10:00 - 11:00 PM</p>
-                                                <p>Rock</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #d9e3da76">
-                                                <h3>Maluma</h3>
-                                                <p class="mb-2">11:00 - 12:00 PM</p>
-                                                <p>Rock & Roll</p>
-                                            </td>
-                                            <td style="background-color:#e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">11:00 - 12:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">11:00 - 12:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">11:00 - 12:00 PM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">12:00 PM- 01:00 AM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">12:00 PM- 01:00 AM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                            <td style="background-color:  #d9e3da76">
-                                                <h3>Rihanna</h3>
-                                                <p class="mb-2">12:00 PM- 01:00 AM</p>
-                                                <p>Pop Performance</p>
-                                            </td>
-                                            <td style="background-color: #e3d9dbbe">
-                                                <h3>Surprise</h3>
-                                                <p class="mb-2">12:00 PM- 01:00 AM</p>
-                                                <p>Surprise Performance</p>
-                                            </td>
-                                        </tr>
-                                       
+            <?php
 
-                                    </tbody>
-                                </table>
+                    $orari_html = '<section class="schedule-section section-padding" id="section_4">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2 class="text-black mb-4">Festival Schedule</h2>
+                                    <div class="table-responsive">
+                                        <table class="schedule-table table table-dark">
+                                            <colgroup>
+                                                <col style="width: 25%;">
+                                                <col style="width: 25%;">
+                                                <col style="width: 25%;">
+                                                <col style="width: 25%;">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Day 1 - Thursday</th>
+                                                    <th scope="col">Day 2 - Friday</th>
+                                                    <th scope="col">Day 3 - Saturday</th>
+                                                    <th scope="col">Day 4 - Sunday</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>Dua Lipa</h3>
+                                                        <p class="mb-2">08:00 PM 09:00 PM</p>
+                                                        <p>Pop Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>McKresha & LyricalSon</h3>
+                                                        <p class="mb-2">08:00 PM 09:00 PM</p>
+                                                        <p>Pop Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">08:00 PM 09:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">08:00 PM 09:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">09:00 PM 10:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">09:00 PM 10:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">09:00 PM 10:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">09:00 PM 10:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">10:00 PM 11:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>Martin Garrix</h3>
+                                                        <p class="mb-2">10:00 PM 11:00 PM</p>
+                                                        <p>DJ</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">10:00 PM 11:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>Maneskin</h3>
+                                                        <p class="mb-2">10:00 PM 11:00 PM</p>
+                                                        <p>Rock</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>Maluma</h3>
+                                                        <p class="mb-2">11:00 PM 12:00 PM</p>
+                                                        <p>Rock & Roll</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">11:00 PM 12:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">11:00 PM 12:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">11:00 PM 12:00 PM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">12:00 PM 01:00 AM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">12:00 PM 01:00 AM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #d9e3da76">
+                                                        <h3>Rihanna</h3>
+                                                        <p class="mb-2">12:00 PM 01:00 AM</p>
+                                                        <p>Pop Performance</p>
+                                                    </td>
+                                                    <td style="background-color: #e3d9dbbe">
+                                                        <h3>Surprise</h3>
+                                                        <p class="mb-2">12:00 PM 01:00 AM</p>
+                                                        <p>Surprise Performance</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-            
+                    </section>';
+
+                    // Shtimi i karakterit "-" ne mes te oreve
+                    $orari_html_me_karaktere = preg_replace('/(\d{2}:\d{2} [AP]M) (\d{2}:\d{2} [AP]M)/', '$1 - $2', $orari_html);
+
+                    echo $orari_html_me_karaktere;
+                    ?>
 
 
             <section class="pricing-section section-padding section-bg" id="section_5">
