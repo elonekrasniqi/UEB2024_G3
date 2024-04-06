@@ -1,4 +1,5 @@
 <?php
+//cookie i pare, merr emrin nga forma dhe vendos alert
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle the contact form submission
@@ -7,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
         echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
     }
-    
+    //cookie i dyte, ndryshon ngjyren varesisht qfare vlere merr
     // Handle the volunteer form submission
     elseif (isset($_POST['volunteer-name'])) {
         $name = $_POST["volunteer-name"];
