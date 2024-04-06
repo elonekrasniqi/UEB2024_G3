@@ -219,8 +219,7 @@ if (validateDate($date)) {
 
                             <div class="location-wrap mx-auto py-3 py-lg-0">
                                 <h5 class="text-white">
-                                    <i class="custom-icon bi-geo-alt me-2" ></i>
-                                                        Germia National Park in Prishtina
+                                    <i class="custom-icon bi-geo-alt me-2" ></i>Sunny Hill Festival Park, Prishtina 10000, Kosova
                                 </h5>
                             </div>
 
