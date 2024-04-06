@@ -256,187 +256,180 @@ if (validateDate($date)) {
             </section>
 
 
-            <section class="artists-section section-padding" id="section_3">
-                <div class="container">
-                    <div class="row justify-content-center">
+            <?php
 
-                        <div class="col-12 text-center">
-                            <h2 class="mb-4">Meet Artists</h1>
-                        </div>
+$html = ' <section class="artists-section section-padding" id="section_3">
+    <div class="container">
+        <div class="row justify-content-center">
 
-                        
+            <div class="col-12 text-center">
+                <h2 class="mb-4">Meet Artists</h2>
+            </div>
 
-                        <div class="col-lg-5">
-                            <div class="artists-thumb">
-                                <div class="artists-image-wrap">
-                                    <img src="images/artists/wallpapersden.com_dua-lipa-photoshoot-2020_1920x2026.jpg" class="artists-image img-fluid">
-                                </div>
-
-                                <div class="artists-hover">
-                                    <p>
-                                        <strong>Name:</strong>
-                                        Dua Lipa
-                                    </p>
-
-                                    <p>
-                                        <strong>Birthdate:</strong>
-                                        August 22, 1995
-                                    </p>
-
-                                    <p>
-                                        <strong>Music:</strong>
-                                        Pop
-                                    </p>
-
-                                    <hr>
-
-                                    <p class="mb-0">
-                                        <strong>Youtube Channel:</strong>
-                                        <a href="http://www.youtube.com/@dualipa">Dua Lipa Official</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-5">
-                            <div class="artists-thumb">
-                                <div class="artists-image-wrap">
-                                    <img src="images/artists/Kresha-Lyrical-Son.jpg" class="artists-image img-fluid">
-                                </div>
-
-                             <div class="artists-hover"> 
-                                    <p>
-                                        <strong>Name:</strong>
-                                        Mc Kresha & Lyrical Son
-                                    </p>
-
-                                    <p>
-                                        <strong>Birthdate:</strong>
-                                        September 5, 1984 & January 28, 1984
-                                    </p>
-
-                                    <p>
-                                        <strong>Music:</strong>
-                                        Hip Hop
-                                    </p>
-
-                                    <hr>
-
-                                    <p class="mb-0">
-                                        <strong>Youtube Channel:</strong>
-                                        <a href="http://www.youtube.com/@PINTofficial">PINT Official</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-5">
-                            <div class="artists-thumb">
-                                <div class="artists-image-wrap">
-                                    <img src="images/artists/rihanna_(1)1.jpg" class="artists-image img-fluid">
-                                </div>
-
-                                <div class="artists-hover">
-                                    <p>
-                                        <strong>Name:</strong>
-                                    Rihanna
-                                    </p>
-
-                                    <p>
-                                        <strong>Birthdate:</strong>
-                                        February 20, 1988
-                                    </p>
-
-                                    <p>
-                                        <strong>Music:</strong>
-                                        Pop, R&B, EDM, Reggae
-                                    </p>
-
-                                    <hr>
-
-                                    <p class="mb-0">
-                                        <strong>Youtube Channel:</strong>
-                                        <a href="http://www.youtube.com/@rihanna">Rihanna Official</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                       
-
-                        <div class="col-lg-6">
-                            <div class="artists-thumb">
-                                <div class="artists-image-wrap">
-                                    <img src="images/artists/cantante-colombiano-Maluma_1542456436_133521540_1200x675.jpg" class="artists-image img-fluid">
-                                </div>
-
-                                <div class="artists-hover">
-                                    <p>
-                                        <strong>Name:</strong>
-                                        Maluma
-                                    </p>
-
-                                    <p>
-                                        <strong>Birthdate:</strong>
-                                        January 28, 1994
-                                    </p>
-
-                                    <p>
-                                        <strong>Music:</strong>
-                                        Pop,Latin Trap
-                                    </p>
-
-                                    <hr>
-
-                                    <p class="mb-0">
-                                        <strong>Youtube Channel:</strong>
-                                        <a href="http://www.youtube.com/@Maluma_Official">Maluma Official</a>
-                                    </p>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-lg-5">
-                                    <div class="artists-image-wrap">
-
-                            <div class="artists-thumb">
-                                <img src="images/artists/Martin-Garrix-performs-on-stage.webp" class="artists-image img-fluid">
-
-                                <div class="artists-hover">
-                                    <p>
-                                        <strong>Name:</strong>
-                                        Martin Garrix
-                                    </p>
-
-                                    <p>
-                                        <strong>Birthdate:</strong>
-                                        May 14, 1996
-                                    </p>
-
-                                    <p>
-                                        <strong>Music:</strong>
-                                        DJ
-                                    </p>
-
-                                    <hr>
-
-                                    <p class="mb-0">
-                                        <strong>Youtube Channel:</strong>
-                                        <a href="http://www.youtube.com/@brunomars">Martin Garrix Official</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="artists-image-wrap">
-
+            <div class="col-lg-5">
                 <div class="artists-thumb">
-                    <img src="images/artists/Maneskin-by-Tommaso-Ottomano.jpg" class="artists-image img-fluid">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/wallpapersden.com_dua-lipa-photoshoot-2020_1920x2026.jpg" class="artists-image img-fluid">
+                    </div>
+
+                    <div class="artists-hover">
+                        <p>
+                            <strong>Name:</strong>
+                            Dua Lipa
+                        </p>
+
+                        <p>
+                            <strong>Birthdate:</strong>
+                            August 22 1995
+                        </p>
+
+                        <p>
+                            <strong>Music:</strong>
+                            Pop
+                        </p>
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Youtube Channel:</strong>
+                            <a href="http://www.youtube.com/@dualipa">Dua Lipa Official</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="artists-thumb">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/Kresha-Lyrical-Son.jpg" class="artists-image img-fluid">
+                    </div>
+
+                    <div class="artists-hover"> 
+                        <p>
+                            <strong>Name:</strong>
+                            Mc Kresha & Lyrical Son
+                        </p>
+
+                        <p>
+                            <strong>Birthdate:</strong>
+                            September 5 1984 & January 28, 1984
+                        </p>
+
+                        <p>
+                            <strong>Music:</strong>
+                            Hip Hop
+                        </p>
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Youtube Channel:</strong>
+                            <a href="http://www.youtube.com/@PINTofficial">PINT Official</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="artists-thumb">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/rihanna_(1)1.jpg" class="artists-image img-fluid">
+                    </div>
+
+                    <div class="artists-hover">
+                        <p>
+                            <strong>Name:</strong>
+                            Rihanna
+                        </p>
+
+                        <p>
+                            <strong>Birthdate:</strong>
+                            February 20 1988
+                        </p>
+
+                        <p>
+                            <strong>Music:</strong>
+                            Pop, R&B, EDM, Reggae
+                        </p>
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Youtube Channel:</strong>
+                            <a href="http://www.youtube.com/@rihanna">Rihanna Official</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="artists-thumb">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/cantante-colombiano-Maluma_1542456436_133521540_1200x675.jpg" class="artists-image img-fluid">
+                    </div>
+
+                    <div class="artists-hover">
+                        <p>
+                            <strong>Name:</strong>
+                            Maluma
+                        </p>
+
+                        <p>
+                            <strong>Birthdate:</strong>
+                            January 28 1994
+                        </p>
+
+                        <p>
+                            <strong>Music:</strong>
+                            Pop,Latin Trap
+                        </p>
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Youtube Channel:</strong>
+                            <a href="http://www.youtube.com/@Maluma_Official">Maluma Official</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="artists-thumb">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/Martin-Garrix-performs-on-stage.webp" class="artists-image img-fluid">
+                    </div>
+
+                    <div class="artists-hover">
+                        <p>
+                            <strong>Name:</strong>
+                            Martin Garrix
+                        </p>
+
+                        <p>
+                            <strong>Birthdate:</strong>
+                            May 14 1996
+                        </p>
+
+                        <p>
+                            <strong>Music:</strong>
+                            DJ
+                        </p>
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Youtube Channel:</strong>
+                            <a href="http://www.youtube.com/@brunomars">Martin Garrix Official</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="artists-thumb">
+                    <div class="artists-image-wrap">
+                        <img src="images/artists/Maneskin-by-Tommaso-Ottomano.jpg" class="artists-image img-fluid">
+                    </div>
 
                     <div class="artists-hover">
                         <p>
@@ -465,20 +458,43 @@ if (validateDate($date)) {
             </div>
 
         </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 col-12 d-flex flex-wrap">
-                            <marquee behavior="scroll" direction="right">
-                                <p class="d-flex me-4 mb-0">
-                                    <i class="bi-person custom-icon me-2"></i>
-                                    <strong style="color: white;">Other Artists Coming Soon...</strong>
-                                </p>
-                            </marquee>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12 d-flex flex-wrap">
+                <marquee behavior="scroll" direction="right">
+                    <p class="d-flex me-4 mb-0">
+                        <i class="bi-person custom-icon me-2"></i>
+                        <strong style="color: white;">Other Artists Coming Soon...</strong>
+                    </p>
+                </marquee>
+            </div>
+        </div>
+    </div>
+</section>';
+
+        // Funksioni per te shtuar presjet ne mes te numrave brenda ditelindjeve
+        function Manipulimi_ditelindja($html) {
+            // Definojme me RegEx formatin e ditelindjes
+            $pattern = '/(<strong>Birthdate:<\/strong>\s*)([A-Za-z]+\s+\d{1,2})\s+(\d{4})/';
+
+            // Definojme zevendesimin e karakterit ne mes te ditelindjes
+            $replacement = '$1$2, $3';
+
+            // Shtojme presjen ne mes te ditelindjes me funksioni preg_replace
+            $html_me_presje = preg_replace($pattern, $replacement, $html);
+
+            return $html_me_presje;
+        }
+
+            // Shto presjen te datat e lindjes
+            $html_me_presje = Manipulimi_ditelindja($html);
+
+            // Outputi i HTML te modifikuar
+            echo $html_me_presje;
+            ?>
+
 
 
             <?php
