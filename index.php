@@ -38,17 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <?php
-//validimi i dates me RegEx
+// Validimi i datës për muajin korrik të vitit 2024 me RegEx
 function validateDate($date) {
-    $pattern = '/^\d{1,2}-\d{1,2}-\d{4}$/';
+    $pattern = '/^2024-07-(25|26|27|28)$/';
     return preg_match($pattern, $date);
 }
 
-$date = '25-28 July 2024';
+$date = '2024-07-25';
 if (validateDate($date)) {
-    echo 'Data është valide';
+    echo 'Data është valide për muajin korrik të vitit 2024';
 } else {
-    echo 'Data nuk është valide';
+    echo 'Data nuk është valide për muajin korrik të vitit 2024';
 }
 ?>
 

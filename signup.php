@@ -15,16 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <?php
 // Funksioni për të verifikuar fjalëkalimin kundër shprehjes regullore
-function verifyPassword($password) {
-    $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/';
-    return preg_match($regex, $password);
-}
-// Testimi i fjalëkalimit
-$password = "Password123!";
-if (verifyPassword($password)) {
-    echo "Fjalëkalimi është i vlefshëm.";
-} else {
-    echo "Fjalëkalimi nuk është i vlefshëm.";
+function validatePassword($password) {
+    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+    return preg_match($pattern, $password);
 }
 ?>
 
