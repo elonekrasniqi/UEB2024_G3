@@ -83,7 +83,7 @@ if (validateDate($date)) {
     <body>
         <style>
             #nav-Volenteer .custom-form {
-            background-color: #<?php echo $color; ?>;
+            background-color:<?php echo $color; ?>;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
