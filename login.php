@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-
-
-
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['login-form-email'];
+    
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
+
 
     if (!preg_match($emailPattern, $email)) {
         echo "Invalid email address";
@@ -23,10 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
 // Funksioni për të verifikuar kredencialet e përdoruesit
 function authenticateUser($email, $password) {
-    $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
 
     // Lexo përmbajtjen e skedarit dhe kërko për emailin dhe fjalëkalimin
     if (file_exists($usersFile)) {
@@ -42,8 +40,6 @@ function authenticateUser($email, $password) {
 
     return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
 }
-
-
 ?>
 
 
@@ -181,7 +177,7 @@ function authenticateUser($email, $password) {
                 //validimi i emailit nga ana e klientit
                   function validateForm() {
                      var email = document.getElementById('login-form-email').value;
-                     var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                     var emailPattern = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
                          if (!emailPattern.test(email)) {
                               alert("Invalid email address");
                               return false;
@@ -301,5 +297,5 @@ function authenticateUser($email, $password) {
         <script src="js/jquery.sticky.js"></script>
         <script src="js/custom.js"></script>
 
-    </body>
+    </body>
 </html>
