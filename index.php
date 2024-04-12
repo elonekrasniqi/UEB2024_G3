@@ -177,8 +177,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </li>
     </ul>
 
-    <a href="login.html" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
-
+    <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
+    <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
 <script>
     
     var buyTicketBtn = document.getElementById("buyTicketBtn");
@@ -197,6 +197,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         this.style.color = ""; 
         this.style.transform = ""; 
     });
+
+    var LoginBtn = document.getElementById("LoginBtn");
+
+    
+    LoginBtn.addEventListener("mouseenter", function() {
+    this.style.backgroundColor = "#007bff"; 
+    this.style.color = "#fff"; 
+    this.style.transform = "scale(1.1)"; 
+    this.style.transition = "all 0.3s ease"; 
+});
+
+
+LoginBtn.addEventListener("mouseleave", function() {
+    this.style.backgroundColor = ""; 
+    this.style.color = ""; 
+    this.style.transform = ""; 
+});
 </script>
 
 </div>

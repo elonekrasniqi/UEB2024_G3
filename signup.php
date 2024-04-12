@@ -222,7 +222,7 @@ function checkUserCredentials($email, $password) {
                 
                                         <div class="row mt-3" style="color: white;">
                                             <div class="col-lg-12 text-center">
-                                                <span>Already have an account?</span> <a href="login.html">Login</a>
+                                                <span>Already have an account?</span> <a href="login.php">Login</a>
                                             </div>
                                         </div>
                                         

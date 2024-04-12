@@ -163,7 +163,7 @@ function authenticateUser($email, $password) {
             
                                     <div class="row mt-3" style="color: white;">
                                         <div class="col-lg-12 text-center">
-                                            <span>Don't have an account?</span> <a href="signup.html">Sign Up</a>
+                                            <span>Don't have an account?</span> <a href="signup.php">Sign Up</a>
                                         </div>
                                     </div>
                                 </div>
