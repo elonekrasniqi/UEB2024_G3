@@ -69,7 +69,7 @@ function validatePassword($password) {
 }
 
 function checkUserCredentials($email, $password) {
-    $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
 
     // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin dhe fjalëkalimin e dhënë
     if (file_exists($usersFile)) {
@@ -82,13 +82,14 @@ function checkUserCredentials($email, $password) {
             }
             // Kontrollo edhe për ekzistencën e emailit në skedar pa përmendur fjalëkalimin
             if (count($userData) >= 1 && $userData[0] === $email) {
-                return true; // Emaili ekziston në skedar
+                return true; // Emaili ekziston në skedar, nuk lejojë krijimin e llogarisë
             }
         }
     }
 
     return false; // Emaili dhe fjalëkalimi nuk përputhen në skedar ose skedari nuk ekziston
 }
+
 
 ?>
 
