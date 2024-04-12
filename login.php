@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+
+
+
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['login-form-email'];
@@ -20,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+
 // Funksioni për të verifikuar kredencialet e përdoruesit
 function authenticateUser($email, $password) {
     $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
@@ -38,6 +42,8 @@ function authenticateUser($email, $password) {
 
     return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
 }
+
+
 ?>
 
 

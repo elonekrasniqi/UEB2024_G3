@@ -4,6 +4,9 @@ session_start();
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['signup-form-email'];
+    $fullname = $_POST['signup-form-fullname'];
+    $password = $_POST['signup-form-password'];
+    $confirmPassword = $_POST['signup-form-confirm-password'];
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
 
     // Verifikimi i emailit
@@ -28,8 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                 // Perform further processing, e.g., save user data to a file
-                $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
-                $userData = "$email|$hashedPassword\n"; // Të dhënat e përdoruesit për të ruajtur
+                $usersFile = 'users.txt';   // Emri i skedarit ku ruhen emrat e përdoruesve
+                file_put_contents($usersFile, $userData, FILE_APPEND); 
+              
+
+                $userData = " $fullname| $email|$hashedPassword\n";
 
                 // Ruaj të dhënat e përdoruesit në skedar
                 file_put_contents($usersFile, $userData, FILE_APPEND);
@@ -197,6 +203,9 @@ function checkUserCredentials($email, $password) {
                 
                                     <div class="signup-form-body">
                                         <div class="row">
+                                        <div class="col-lg-12">
+                                        <input type="text" name="signup-form-fullname" id="signup-form-fullname" class="form-control" placeholder="Full Name" required>
+                                        </div>
                                             <div class="col-lg-12">
                                                 <input type="email" name="signup-form-email" id="signup-form-email" class="form-control" placeholder="Email address" required>
                                             </div>
