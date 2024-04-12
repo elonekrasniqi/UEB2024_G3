@@ -1,5 +1,7 @@
 <?php
-//validimi i emailit me RegEx nga ana e serverit
+session_start();
+
+// Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['login-form-email'];
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
@@ -7,27 +9,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!preg_match($emailPattern, $email)) {
         echo "Invalid email address";
     } else {
+        $password = $_POST['login-form-password'];
+
         // Perform further processing
-        echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
+        if (authenticateUser($email, $password)) {
+            echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
+        } else {
+            echo "Invalid credentials";
+        }
     }
 }
-?>
 
-<?php
-// Funksioni për të verifikuar fjalëkalimin kundër shprehjes regullore
-function validatePassword($password) {
-    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
-    return preg_match($pattern, $password);
+// Funksioni për të verifikuar kredencialet e përdoruesit
+function authenticateUser($email, $password) {
+    $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+
+    // Lexo përmbajtjen e skedarit dhe kërko për emailin dhe fjalëkalimin
+    if (file_exists($usersFile)) {
+        $fileContents = file_get_contents($usersFile);
+        $lines = explode("\n", $fileContents);
+        foreach ($lines as $line) {
+            $userData = explode("|", $line);
+            if (count($userData) === 2 && $userData[0] === $email && password_verify($password, $userData[1])) {
+                return true; // Kredencialet janë të sakta
+            }
+        }
+    }
+
+    return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
 }
 ?>
 
-<?php
-// Shprehja regullore për të validuar emrin
-function validateName($name) {
-    $pattern = '/^[a-zA-Z\s]+$/';
-    return preg_match($pattern, $name);
-}
-?>
 
 
 <!doctype html>
@@ -41,7 +53,7 @@ function validateName($name) {
 
         <title>Sunny Hill - Log in</title>
 
-        <!-- CSS FILES -->        
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

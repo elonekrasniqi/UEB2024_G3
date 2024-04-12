@@ -1,25 +1,98 @@
 <?php
-//validimi i emailit me RegEx nga ana e serverit
+session_start();
+
+// Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['login-form-email'];
+    $email = $_POST['signup-form-email'];
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
 
+    // Verifikimi i emailit
     if (!preg_match($emailPattern, $email)) {
         echo "Invalid email address";
     } else {
-        // Perform further processing
-        echo "Login successful";
+        $password = $_POST['signup-form-password'];
+        $confirmPassword = $_POST['signup-form-confirm-password'];
+
+        // Verifikimi i fjalëkalimit
+        if ($password !== $confirmPassword) {
+            echo "Passwords do not match";
+        } elseif (!validatePassword($password)) {
+            echo "Invalid password format";
+        } else {
+            // Kontrollo nëse emaili dhe fjalëkalimi përputhen në skedar
+            $userExists = checkUserCredentials($email, $password);
+            if ($userExists) {
+                echo "User with this email and password already exists, please login";
+            } else {
+                // Kodimi i fjalëkalimit me password_hash
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // Perform further processing, e.g., save user data to a file
+                $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+                $userData = "$email|$hashedPassword\n"; // Të dhënat e përdoruesit për të ruajtur
+
+                // Ruaj të dhënat e përdoruesit në skedar
+                file_put_contents($usersFile, $userData, FILE_APPEND);
+                echo "<script>alert('Signup successful');  window.location.href ='login.php' </script>";
+            }
+        }
     }
 }
+
+// Funksioni për të verifikuar fjalëkalimin sipas kritereve
+
+function validatePassword($password) {
+    // Kontrollo gjatësinë e fjalëkalimit
+    if (strlen($password) < 8) {
+        return false;
+    }
+
+    // Kontrollo përmbajtjen e karaktereve të fjalëkalimit
+    if (!preg_match('/[A-Z]/', $password)) {
+        return false; // Nuk ka asnjë shkronjë të madhe
+    }
+
+    if (!preg_match('/[a-z]/', $password)) {
+        return false; // Nuk ka asnjë shkronjë të vogël
+    }
+
+    if (!preg_match('/\d/', $password)) {
+        return false; // Nuk ka asnjë numër
+    }
+
+    if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/', $password)) {
+        return false; // Nuk ka asnjë simbol të veçantë
+    }
+
+    return true; // Fjalëkalimi është i vlefshëm
+}
+
+function checkUserCredentials($email, $password) {
+    $usersFile = 'users.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+
+    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin dhe fjalëkalimin e dhënë
+    if (file_exists($usersFile)) {
+        $fileContents = file_get_contents($usersFile);
+        $lines = explode("\n", $fileContents);
+        foreach ($lines as $line) {
+            $userData = explode("|", $line);
+            if (count($userData) === 2 && $userData[0] === $email && password_verify($password, $userData[1])) {
+                return true; // Emaili dhe fjalëkalimi përputhen në skedar
+            }
+            // Kontrollo edhe për ekzistencën e emailit në skedar pa përmendur fjalëkalimin
+            if (count($userData) >= 1 && $userData[0] === $email) {
+                return true; // Emaili ekziston në skedar
+            }
+        }
+    }
+
+    return false; // Emaili dhe fjalëkalimi nuk përputhen në skedar ose skedari nuk ekziston
+}
+
 ?>
 
-<?php
-// Funksioni për të verifikuar fjalëkalimin kundër shprehjes regullore
-function validatePassword($password) {
-    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
-    return preg_match($pattern, $password);
-}
-?>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -277,7 +350,7 @@ function validatePassword($password) {
 
       
 
-        <!-- JAVASCRIPT FILES -->
+      
         <script src="js/sign-up.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
