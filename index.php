@@ -28,19 +28,7 @@ if (isset($_POST['submitform'])) {
 }
 }
 
-// Validating date for July 2024 with Regex
-function validateDate($date) {
-    $pattern = '/^2024-07-(25|26|27|28)$/';
-    return preg_match($pattern, $date);
-}
 
-$date = '2024-07-25';
-if (validateDate($date)) {
-    echo 'The date is valid for July 2024!';
-} else {
-    echo 'The date is not valid for July 2024!';
-
-}
 
 //perdorimi i sessions per ruajtjen e te dhenave nga format e kontaktit dhe vullnetareve
 session_start();
@@ -731,7 +719,7 @@ $html = ' <section class="artists-section section-padding" id="section_3">
                                     <li class="pricing-list-item">standard content</li>
                                 </ul>
 
-                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.html">
+                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
                                     <span>Buy Ticket</span>
                                     <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"></circle><line x1="10" y1="18" x2="16" y2="12"></line><line x1="16" y1="12" x2="22" y2="18"></line></g></svg>
                                 </a>
@@ -760,7 +748,7 @@ $html = ' <section class="artists-section section-padding" id="section_3">
                                     <li class="pricing-list-item">live chat support</li>
                                 </ul>
 
-                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.html">
+                                <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
                                     <span>Buy Ticket</span>
                                     <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"></circle><line x1="10" y1="18" x2="16" y2="12"></line><line x1="16" y1="12" x2="22" y2="18"></line></g></svg>
                                 </a>
