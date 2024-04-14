@@ -29,32 +29,6 @@ if (isset($_POST['submitform'])) {
 }
 
 
-
-//perdorimi i sessions per ruajtjen e te dhenave nga format e kontaktit dhe vullnetareve
-session_start();
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check which form was submitted
-    if (isset($_POST['submit'])) {
-        // Contact Form submitted
-        $_SESSION['contact-name'] = $_POST['contact-name'];
-        $_SESSION['contact-email'] = $_POST['contact-email'];
-        $_SESSION['contact-company'] = $_POST['contact-company'];
-        $_SESSION['contact-message'] = $_POST['contact-message'];
-
-       
-    } elseif (isset($_POST['submitform'])) {
-        // Volunteer Form submitted
-        $_SESSION['volunteer-name'] = $_POST['volunteer-name'];
-        $_SESSION['volunteer-email'] = $_POST['volunteer-email'];
-        $_SESSION['volunteer-phone'] = $_POST['volunteer-phone'];
-        $_SESSION['volunteer-company'] = $_POST['volunteer-company'];
-        $_SESSION['volunteer-message'] = $_POST['volunteer-message'];
-
-       
-    }
-}
 ?>
 
 <!doctype html>
@@ -109,20 +83,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <main>
 
-            <header class="site-header">
-                <div class="container">
-                    <div class="row">
-                        
-                        <div class="col-lg-12 col-12 d-flex flex-wrap">
-                            <p class="d-flex me-4 mb-0">
-                                <i class="bi-person custom-icon me-2"></i>
-                                <strong class="text-dark">Welcome to Sunny Hill Festival 2024</strong>
-                            </p>
-                        </div>
+        <header class="site-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 d-flex flex-wrap">
+                <strong class="text-dark">
+                    <?php
+                    session_start();
 
-                    </div>
-                </div>
-            </header>
+                    // Kontrollo nëse përdoruesi është i kyçur
+                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+                    }
+                    ?>
+                </strong>
+            </div>
+            <div class="col-lg-6 col-12 d-flex flex-wrap justify-content-end">
+                <?php
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                    echo '<strong class="text-dark me-3"><a href="logout.php" style="color: black;">Log Out</a></strong>'; // Shfaq linkun e logout-it vetëm kur është kyçur përdoruesi
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
 
 
             <nav class="navbar navbar-expand-lg">
@@ -143,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         
                     </script>
                     
-<a href="login.html" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
+<a href="index.php" class="btn custom-btn d-lg-none ms-auto me-4">Buy Ticket</a>
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -177,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
 
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
-    <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
+    <a href="index.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
 <script>
     
     var buyTicketBtn = document.getElementById("buyTicketBtn");
