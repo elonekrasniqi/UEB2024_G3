@@ -312,8 +312,9 @@ LoginBtn.addEventListener("mouseleave", function() {
 
             <?php
 
-// Cookie to store the user's favorite artist selection, allowing the website to customize content based on user preferences.
-//gets the favorite artist based on the last YouTube channel clicked by the user
+//Cookie 3 për të ruajtur zgjedhjen e artistit të preferuar të përdoruesit, duke lejuar faqen të ndërtojë përmbajtjen bazuar në preferencat e përdoruesit.
+// Merr artistin e preferuar bazuar në kanalet e fundit të klikuara të YouTube nga përdoruesi
+
 
 $html = ' <section class="artists-section section-padding" id="section_3">
     <div class="container">
@@ -326,16 +327,16 @@ $html = ' <section class="artists-section section-padding" id="section_3">
                 'Dua Lipa', 'Mc Kresha & Lyrical Son', 'Rihanna', 'Maluma', 'Martin Garrix', 'Maneskin'
             ];
 
-// Check if the favorite artist cookie is set
+// Kontrollojme nëse cookie është vendosur
 if (isset($_COOKIE['favoriteArtist']) && in_array($_COOKIE['favoriteArtist'], $artists)) {
     $favoriteArtist = $_COOKIE['favoriteArtist'];
-    // Move the favorite artist to the first position
+    // Lëvizja artistit te klikuar në pozicionin e parë
     $key = array_search($favoriteArtist, $artists);
     unset($artists[$key]);
     array_unshift($artists, $favoriteArtist);
 }
 
-// Create a new array to store artist information
+// Vargu i ri për të ruajtur informacionin e artistit
 $artistsInfo = [
     'Dua Lipa' => [
         'image' => 'images/artists/wallpapersden.com_dua-lipa-photoshoot-2020_1920x2026.jpg',
