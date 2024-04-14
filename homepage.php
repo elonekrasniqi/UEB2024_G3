@@ -1,4 +1,18 @@
 <?php
+session_start();
+// session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
+if (isset($_GET['gjuha'])) {
+    $gjuha_zgjedhur = $_GET['gjuha'];
+    $_SESSION['gjuha'] = $gjuha_zgjedhur;
+
+    if ($gjuha_zgjedhur == 'albanian') {
+        header("Location: homepage-sh.php");
+    } else {
+        header("Location: homepage.php");
+    }
+    exit();
+}
+
 //cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,10 +41,6 @@ if (isset($_POST['submitform'])) {
     echo "<script>alert('Thank you for applying, $fullNameVol! We will contact you soon!');</script>";
 }
 }
-
-
-
-
 ?>
 
 <!doctype html>
@@ -81,16 +91,6 @@ document.addEventListener("DOMContentLoaded", function() {
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
-
-        .btn-primary {
-        background-color: #20479b;
-        border-color: #20479b;
-    }
-
-    .btn-primary:hover {
-        background-color: #56a2df;
-        border-color: #56a2df;
-    }
         </style>
 
         <main>
@@ -100,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="col-lg-6 col-12 d-flex flex-wrap">
                 <strong class="text-dark">
                     <?php
-                    session_start();
 
                     // Kontrollo nëse përdoruesi është i kyçur
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
@@ -175,12 +174,12 @@ document.addEventListener("DOMContentLoaded", function() {
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
     <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
     <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 15px;">
+    <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
         Language
         </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-               <li><a class="dropdown-item" href="#">Albanien</a></li>
-               <li><a class="dropdown-item" href="#">English</a></li>
+            <li><a class="dropdown-item" href="homepage.php?gjuha=albanian">Albanian</a></li>
+            <li><a class="dropdown-item" href="homepage.php?gjuha=english">English</a></li>
             </ul>
     </div>
 <script>
@@ -412,7 +411,7 @@ foreach ($artists as $artist) {
                         <hr>
                         <p class="mb-0">
                             <strong>Youtube Channel:</strong>
-                            <a href="' . $artistInfo['youtube'] . '" data-artist="' . $artist . '">' . $artist . ' Official</a>
+                            <a href="' . $artistInfo['youtube'] . '" data-artist="' . $artist . '">' . $artist . ' </a>
                         </p>
                     </div>
                 </div>
