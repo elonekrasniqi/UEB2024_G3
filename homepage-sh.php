@@ -294,7 +294,7 @@ LoginBtn.addEventListener("mouseleave", function() {
                         </div>
                         <div class="ms-4">
                             <h3>moment i lumtur</h3>
-                            <p class="mb-0">përvoja juaj e mrekullueshme në festival me ne</p>
+                            <p class="mb-0">Kaloni ditë të mrekullueshme me ne</p>
                         </div>
                     </div>
                 </div>
