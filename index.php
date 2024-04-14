@@ -1,28 +1,35 @@
 <?php
 session_start();
 
-// Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['login-form-email'];
-    
-    $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
+    $password = $_POST['login-form-password'];
 
+<<<<<<< Updated upstream
  
 
     if (!preg_match($emailPattern, $email)) {
+=======
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+>>>>>>> Stashed changes
         echo "Invalid email address";
     } else {
-        $password = $_POST['login-form-password'];
-
-        // Perform further processing
         if (authenticateUser($email, $password)) {
+<<<<<<< Updated upstream
             echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
+=======
+            $_SESSION['loggedin'] = true;
+            $_SESSION['email'] = $email; // Ruaj emrin e përdoruesit në sesion
+            echo "<script>alert('Login successful!'); window.location.href = 'homepage.php';</script>";
+            exit();
+>>>>>>> Stashed changes
         } else {
             echo "Invalid credentials";
         }
     }
 }
 
+<<<<<<< Updated upstream
 
 
 // Funksioni për të verifikuar kredencialet e përdoruesit
@@ -30,24 +37,32 @@ function authenticateUser($email, $password) {
     $_SESSION['loggedin'] = true; // Store logged-in status in session
             $_SESSION['email'] = $email; // Store email in session
     $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+=======
+function authenticateUser($email, $password) {
+    $usersFile = 'user.txt';
+>>>>>>> Stashed changes
 
-    // Lexo përmbajtjen e skedarit dhe kërko për emailin dhe fjalëkalimin
     if (file_exists($usersFile)) {
         $fileContents = file_get_contents($usersFile);
         $lines = explode("\n", $fileContents);
         foreach ($lines as $line) {
             $userData = explode("|", $line);
             if (count($userData) === 2 && $userData[0] === $email && password_verify($password, $userData[1])) {
-                return true; // Kredencialet janë të sakta
+                return true;
             }
         }
     }
 
+<<<<<<< Updated upstream
     return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
 
 
+=======
+    return false;
+>>>>>>> Stashed changes
 }
 ?>
+
 
 
 
