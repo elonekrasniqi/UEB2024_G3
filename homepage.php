@@ -105,24 +105,32 @@ document.addEventListener("DOMContentLoaded", function() {
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
+
+        .btn-primary {
+        background-color: #20479b;
+        border-color: #20479b;
+    }
+
+    .btn-primary:hover {
+        background-color: #56a2df;
+        border-color: #56a2df;
+    }
         </style>
 
         <main>
 
-            <header class="site-header">
-                <div class="container">
-                    <div class="row">
-                        
-                        <div class="col-lg-12 col-12 d-flex flex-wrap">
-                            <p class="d-flex me-4 mb-0">
-                                <i class="bi-person custom-icon me-2"></i>
-                                <strong class="text-dark">Welcome to Sunny Hill Festival 2024</strong>
-                            </p>
-                        </div>
-
-                    </div>
+        <header class="site-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12 d-flex flex-wrap">
+                    <p class="d-flex me-4 mb-0">
+                        <i class="bi-person custom-icon me-2"></i>
+                        <strong class="text-dark">Welcome to Sunny Hill Festival 2024</strong>
+                    </p>
                 </div>
-            </header>
+            </div>
+        </div>
+    </header>
 
 
             <nav class="navbar navbar-expand-lg">
@@ -178,6 +186,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
     <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 15px;">
+        Language
+        </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               <li><a class="dropdown-item" href="#">Albanien</a></li>
+               <li><a class="dropdown-item" href="#">English</a></li>
+            </ul>
+    </div>
 <script>
     
     var buyTicketBtn = document.getElementById("buyTicketBtn");
@@ -878,6 +895,9 @@ echo '</div>
         <script src="js/jquery.sticky.js"></script>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
 
     </body>
 </html>
