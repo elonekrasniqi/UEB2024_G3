@@ -24,7 +24,7 @@ class Bileta {
 
     public function ruajNeSkedar($user) {
         $data = $user->getEmri() . ',' . $this->emri . ',' . $this->cmimi . ',' . $this->dataBlerjes . "\n";
-        file_put_contents('user.txt', $data, FILE_APPEND);
+        file_put_contents('tickets.txt', $data, FILE_APPEND);
     }
 
     public function validoDate($data) {
@@ -88,10 +88,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validimi i datës së blerjes së biletes
     if ($bileta->validoDate($dataBlerjes)) {
         // Ruaj bileten ne skedar
-        $bileta->ruajNeSkedar($user);
-        
+      // Ruaj bileten ne skedar
+$bileta->ruajNeSkedar($user);
+
+// Display success message using JavaScript
+echo '<script>alert("Blerja u krye me sukses!"); window.location.href = "ticket.php";</script>';
+
+exit();
     } else {
-        echo "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
+        $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
     }
 }
 ?>
@@ -112,9 +117,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/festival.css" rel="stylesheet">
+
+
+
+    
 </head>
     
 <body>
+
     <main>
         <header class="site-header">
             <div class="container">
@@ -162,6 +172,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
 
+
+
         <section class="ticket-section section-padding">
             <div class="section-overlay"></div>
             <div class="container">
@@ -183,13 +195,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-check form-control">
-                                            <input class="form-check-input" type="radio" name="TicketForm" id="flexRadioDefault1" value="earlybird">
-                                            <label class="form-check-label" for="flexRadioDefault1">Early bird $120</label>
+                                        <input class="form-check-input" type="radio" name="TicketForm" id="flexRadioDefault1" value="earlybird" data-price="120">
+<label class="form-check-label" for="flexRadioDefault1">Early bird $120</label>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-check form-check-radio form-control">
-                                            <input class="form-check-input" type="radio" name="TicketForm" id="flexRadioDefault2" value="standard">
+                                            <input class="form-check-input" type="radio" name="TicketForm" id="flexRadioDefault2" value="standard" data-price="240">
                                             <label class="form-check-label" for="flexRadioDefault2">Standard $240</label>
                                         </div>
                                     </div>
@@ -207,7 +220,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </section>
     </main>
-
+  
+ 
     <footer class="site-footer">
         <!-- Footer content -->
     </footer>
@@ -217,5 +231,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.sticky.js"></script>
     <script src="js/custom.js"></script>
+
 </body>
 </html>
