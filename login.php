@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
 
+ 
 
     if (!preg_match($emailPattern, $email)) {
         echo "Invalid email address";
@@ -22,8 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+
+
 // Funksioni për të verifikuar kredencialet e përdoruesit
 function authenticateUser($email, $password) {
+    $_SESSION['loggedin'] = true; // Store logged-in status in session
+            $_SESSION['email'] = $email; // Store email in session
     $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
 
     // Lexo përmbajtjen e skedarit dhe kërko për emailin dhe fjalëkalimin
@@ -39,6 +44,8 @@ function authenticateUser($email, $password) {
     }
 
     return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
+
+
 }
 ?>
 
