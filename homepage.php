@@ -118,19 +118,31 @@ document.addEventListener("DOMContentLoaded", function() {
         </style>
 
         <main>
-
         <header class="site-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-12 d-flex flex-wrap">
-                    <p class="d-flex me-4 mb-0">
-                        <i class="bi-person custom-icon me-2"></i>
-                        <strong class="text-dark">Welcome to Sunny Hill Festival 2024</strong>
-                    </p>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 d-flex flex-wrap">
+                <strong class="text-dark">
+                    <?php
+                    session_start();
+
+                    // Kontrollo nëse përdoruesi është i kyçur
+                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+                    }
+                    ?>
+                </strong>
+            </div>
+            <div class="col-lg-6 col-12 d-flex flex-wrap justify-content-end">
+                <?php
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                    echo '<strong class="text-dark me-3"><a href="logout.php" style="color: black;">Log Out</a></strong>'; // Shfaq linkun e logout-it vetëm kur është kyçur përdoruesi
+                }
+                ?>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
 
             <nav class="navbar navbar-expand-lg">
