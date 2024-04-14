@@ -1,48 +1,69 @@
 <?php
 session_start();
 
+// Verifikimi i të dhënave të postimit kur forma dërgohet
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['login-form-email'];
     $password = $_POST['login-form-password'];
 
- 
-
-    if (!preg_match($emailPattern, $email)) {
-        echo "Invalid email address";
+    // Kontrolli i të dhënave të postimit
+    if (empty($email) || empty($password)) {
+        echo "Email and password are required";
     } else {
+        // Kontrollo nëse përdoruesi ekziston dhe fjalëkalimi është i saktë
         if (authenticateUser($email, $password)) {
-            echo "<script>alert('Login successful!'); window.location.href = 'index.php';</script>";
+            // Ruaj të dhënat e përdoruesit në sesion
+            $_SESSION['loggedin'] = true;
+            $_SESSION['email'] = $email;
+            $_SESSION['fullname'] = getUserFullname($email);
+
+            // Ridrejto përdoruesin pas hyrjes së suksesshme
+            header('Location: homepage.php');
+            exit;
         } else {
-            echo "Invalid credentials";
+            echo "Invalid email or password";
         }
     }
 }
 
-
-
-// Funksioni për të verifikuar kredencialet e përdoruesit
+// Funksioni për të verifikuar të dhënat e përdoruesit
 function authenticateUser($email, $password) {
-    $_SESSION['loggedin'] = true; // Store logged-in status in session
-            $_SESSION['email'] = $email; // Store email in session
-    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen të dhënat e përdoruesve
 
+    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin dhe fjalëkalimin e dhënë
     if (file_exists($usersFile)) {
         $fileContents = file_get_contents($usersFile);
         $lines = explode("\n", $fileContents);
         foreach ($lines as $line) {
             $userData = explode("|", $line);
-            if (count($userData) === 2 && $userData[0] === $email && password_verify($password, $userData[1])) {
-                return true;
+            if (count($userData) === 3 && $userData[1] === $email && password_verify($password, $userData[2])) {
+                return true; // Emaili dhe fjalëkalimi përputhen në skedar
             }
         }
     }
 
-    return false; // Kredencialet nuk janë gjetur ose skedari nuk ekziston
+    return false; // Emaili dhe fjalëkalimi nuk përputhen në skedar ose skedari nuk ekziston
+}
 
+// Funksioni për të marrë emrin e plotë të përdoruesit nga emaili
+function getUserFullname($email) {
+    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen të dhënat e përdoruesve
 
+    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin e dhënë
+    if (file_exists($usersFile)) {
+        $fileContents = file_get_contents($usersFile);
+        $lines = explode("\n", $fileContents);
+        foreach ($lines as $line) {
+            $userData = explode("|", $line);
+            if (count($userData) === 3 && $userData[1] === $email) {
+                return $userData[0]; // Kthe emrin e plotë të përdoruesit
+            }
+        }
+    }
+
+    return ''; // Nëse emaili nuk gjendet në skedar ose skedari nuk ekziston
 }
 ?>
-
 
 
 
