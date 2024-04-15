@@ -104,7 +104,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Kontrollo nëse përdoruesi është i kyçur
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+                        echo "<span>Mireseerdhe, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+                        echo "Kjo është hera " . $_SESSION['login_count'] . " që jeni kycur.";
                     }
                     ?>
                 </strong>
@@ -173,7 +174,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
 
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Blejë Tiketë</a>
-    <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Kycja</a>
     <div class="dropdown">
     <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
         Gjuha
