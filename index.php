@@ -17,6 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $email;
             $_SESSION['fullname'] = getUserFullname($email);
 
+            
+            if (!isset($_SESSION['login_count'])) {
+                $_SESSION['login_count'] = 1;
+            } else {
+                $_SESSION['login_count']++;
+            }
+
+
+
             // Ridrejto përdoruesin pas hyrjes së suksesshme
             header('Location: homepage.php');
             exit;
@@ -63,6 +72,9 @@ function getUserFullname($email) {
 
     return ''; // Nëse emaili nuk gjendet në skedar ose skedari nuk ekziston
 }
+
+
+
 ?>
 
 

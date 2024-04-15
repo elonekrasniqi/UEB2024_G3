@@ -1,5 +1,6 @@
 <?php
 session_start();
+//var_dump($_SESSION);
 // session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
     $gjuha_zgjedhur = $_GET['gjuha'];
@@ -42,7 +43,6 @@ if (isset($_POST['submitform'])) {
 }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -103,8 +103,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Kontrollo nëse përdoruesi është i kyçur
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Display the user's name in a separate span
+                        echo "You have logged in " . $_SESSION['login_count'] . " times.";
                     }
+                   
                     ?>
                 </strong>
             </div>
@@ -172,7 +174,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
 
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
-    <a href="login.php" class="btn custom-btn d-lg-block d-none" id="LoginBtn" style="margin-left: 15px;">Log in</a>
     <div class="dropdown">
     <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
         Language
@@ -883,7 +884,7 @@ echo '</div>
         <script src="js/click-scroll.js"></script>
         <script src="js/custom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
 
     </body>
