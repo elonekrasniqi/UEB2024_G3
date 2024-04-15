@@ -124,8 +124,7 @@ function checkUserCredentials($email, $password) {
     </head>
     
     <body>
-       
-       
+
         <main>
 
             <header class="site-header">
@@ -144,14 +143,14 @@ function checkUserCredentials($email, $password) {
             </header>
 
 
-            <section class="ticket-section section-padding">
+            <section class="ticket-section section-padding" style="height:677px">
                     <div class="section-overlay"></div>
                 
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6 col-10 mx-auto">
                             <form class="custom-form signup-form mb-5 mb-lg-0" action="#" method="post" role="form">
-    <h2 class="text-center mb-4">Sign Up</h2>
+    <h2 class="text-center mb-2">Sign Up</h2>
     <div class="signup-form-body">
         <div class="row">
             <div class="col-lg-12">
@@ -186,61 +185,13 @@ function checkUserCredentials($email, $password) {
     </div>
 </form>
 
-                            </div>
-                        </div>
-                    </div>
+</div>
+</div>
+</div>
                 
-            </section>
-            
-        </main>
+</section>
+</main>
 
-
-
-        <footer class="site-footer">
-            <div class="site-footer-top">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-12">
-                            <h2 class="text-white mb-lg-0">Sunny Hill Festival</h2>
-                        </div>
-
-                        <div class="col-lg-6 col-12 d-flex justify-content-lg-end align-items-center">
-                            <ul class="social-icon d-flex justify-content-lg-end">
-                               
-                                <li class="social-icon-item">
-                                    <a href="https://www.instagram.com/sunnyhillfestival/" class="social-icon-link">
-                                        <span class="bi-instagram"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="http://www.youtube.com/@SunnyHillFestival" class="social-icon-link">
-                                        <span class="bi-youtube"></span>
-                                    </a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="mailto:info@sunnyhillfestival.com" class="social-icon-link">
-                                        <span class="bi-google"></span>
-                                    </a>
-                                </li>
-                            
-                                <li class="social-icon-item">
-                                    <a href="https://www.facebook.com/sunnyhillfestival" class="social-icon-link">
-                                        <span class="bi-facebook"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-      
-
-      
         <script src="js/sign-up.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -248,5 +199,5 @@ function checkUserCredentials($email, $password) {
         <script src="js/custom.js"></script>
         
 
-    </body>
+</body>
 </html>
