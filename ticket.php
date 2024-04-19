@@ -149,7 +149,6 @@ exit();
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
-<<<<<<< Updated upstream
                             <a class="nav-link click-scroll" href="homepage.php#section_1">Home</a>
                         </li>
                         <li class="nav-item">
@@ -166,24 +165,6 @@ exit();
                         </li>
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="homepage.php#section_6">Contact</a>
-=======
-                            <a class="nav-link click-scroll" href="homepage.html#section_1">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="homepage.html#section_2">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="homepage.html#section_3">Artists</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="homepage.html#section_4">Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="homepage.html#section_5">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="homepage.html#section_6">Contact</a>
->>>>>>> Stashed changes
                         </li>
                     </ul>
                     <a href="login.php" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>

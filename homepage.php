@@ -688,7 +688,7 @@ echo '</div>
                     <div class="row">
 
                         <div class="col-lg-8 col-12 mx-auto">
-                            <h2 class="text-center mb-4">Interested? Let's talk</h2>
+                            <h2 class="text-center mb-4">Interested?</h2>
 
                             <nav class="d-flex justify-content-center">
                                 <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab" role="tablist">
@@ -773,37 +773,70 @@ echo '</div>
                                     
                                 </div>
                                 <div class="tab-pane fade" id="nav-History" role="tabpanel" aria-labelledby="nav-History-tab">
+
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-12 mx-auto">
                 <h3 class="text-center mb-4">Festival History</h3>
                 <ul>
-                    <li>
-                        <strong>2022:</strong> 12,000 attendees
-                        <br>
-                        <em>Highlights:</em> Introduction of a new main stage, performance by a renowned international artist, expanded food and beverage offerings.
-                    </li>
-                    <li>
-                        <strong>2021:</strong> 11,500 attendees
-                        <br>
-                        <em>Highlights:</em> First year of the festival after a one-year hiatus due to pandemic restrictions, introduction of virtual event components, increased focus on sustainability initiatives.
-                    </li>
-                    <li>
-                        <strong>2020:</strong> 10,000 attendees
-                        <br>
-                        <em>Highlights:</em> Launch of a dedicated family-friendly zone, collaboration with local artisans for unique merchandise, record-breaking ticket sales.
-                    </li>
-                    <li>
-                        <strong>2019:</strong> 8,500 attendees
-                        <br>
-                        <em>Highlights:</em> Headlining performances by popular artists, introduction of a wellness and mindfulness area, community outreach programs.
-                    </li>
-                    <li>
-                        <strong>2018:</strong> 7,200 attendees
-                        <br>
-                        <em>Highlights:</em> Expansion of festival grounds, inclusion of diverse cultural performances, partnership with local charities for fundraising efforts.
-                    </li>
+                <?php
+                    $history = [
+                        "2022" => "12000 attendees",
+                        "2021" => "11500 attendees",
+                        "2020" => "10000 attendees",
+                        "2019" => "8500 attendees",
+                        "2018" => "7200 attendees",
+                    ];
+
+                    // Function to generate sort links with query parameter
+                    function generateSortLink($text, $sortType)
+                    {
+                        $currentSort = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'yearAscending';
+                        $queryString = http_build_query(array_merge($_GET, ['sortBy' => $sortType]));
+                        $url = $_SERVER['PHP_SELF'] . '?' . $queryString;
+                        $activeClass = $currentSort === $sortType ? 'active' : '';
+                        return "<a href=\"$url\" class=\"$activeClass\">$text</a>";
+                    }
+
+                    // Check if sorting option is set and handle sorting
+                    if (isset($_GET['sortBy'])) {
+                        $sortBy = $_GET['sortBy'];
+                        switch ($sortBy) {
+                            case 'yearAscending':
+                                ksort($history);
+                                break;
+                            case 'yearDescending':
+                                krsort($history);
+                                break;
+                            case 'attendeesAscending':
+                                asort($history);
+                                break;
+                            case 'attendeesDescending':
+                                arsort($history);
+                                break;
+                            default:
+                                // Default sorting by year ascending
+                                ksort($history);
+                                break;
+                        }
+                    }
+
+                    // Display sorted festival history
+                    foreach ($history as $year => $attendance) {
+                        echo "<li><strong>$year:</strong> $attendance</li>";
+                    }
+                    ?>
                 </ul>
+
+                <!-- Sort links -->
+                <div class="sort-links">
+                    <?php
+                    echo generateSortLink('Sort by Lowest Year', 'yearAscending') . ' | ';
+                    echo generateSortLink('Sort by Highest Year', 'yearDescending') . ' | ';
+                    echo generateSortLink('Sort by Lowest Number of Attendees', 'attendeesAscending') . ' | ';
+                    echo generateSortLink('Sort by Highest Number of Attendees', 'attendeesDescending');
+                    ?>
+                </div>
             </div>
         </div>
     </div>
