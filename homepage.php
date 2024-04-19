@@ -703,6 +703,9 @@ echo '</div>
                                     <button class="nav-link" id="nav-Volenteer-tab" data-bs-toggle="tab" data-bs-target="#nav-Volenteer" type="button" role="tab" aria-controls="nav-Volenteer" aria-selected="false" style="margin-left: 10px;">
                                         <h5>Volunteer</h5>
                                     </button>
+                                    <button class="nav-link" id="nav-History-tab" data-bs-toggle="tab" data-bs-target="#nav-History" type="button" role="tab" aria-controls="nav-History" aria-selected="false" style="margin-left: 10px;">
+                                        <h5>History</h5>
+                                    </button>
                                 </div>
                             </nav>
 
@@ -769,6 +772,42 @@ echo '</div>
                                     
                                     
                                 </div>
+                                <div class="tab-pane fade" id="nav-History" role="tabpanel" aria-labelledby="nav-History-tab">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 mx-auto">
+                <h3 class="text-center mb-4">Festival History</h3>
+                <ul>
+                    <li>
+                        <strong>2022:</strong> 12,000 attendees
+                        <br>
+                        <em>Highlights:</em> Introduction of a new main stage, performance by a renowned international artist, expanded food and beverage offerings.
+                    </li>
+                    <li>
+                        <strong>2021:</strong> 11,500 attendees
+                        <br>
+                        <em>Highlights:</em> First year of the festival after a one-year hiatus due to pandemic restrictions, introduction of virtual event components, increased focus on sustainability initiatives.
+                    </li>
+                    <li>
+                        <strong>2020:</strong> 10,000 attendees
+                        <br>
+                        <em>Highlights:</em> Launch of a dedicated family-friendly zone, collaboration with local artisans for unique merchandise, record-breaking ticket sales.
+                    </li>
+                    <li>
+                        <strong>2019:</strong> 8,500 attendees
+                        <br>
+                        <em>Highlights:</em> Headlining performances by popular artists, introduction of a wellness and mindfulness area, community outreach programs.
+                    </li>
+                    <li>
+                        <strong>2018:</strong> 7,200 attendees
+                        <br>
+                        <em>Highlights:</em> Expansion of festival grounds, inclusion of diverse cultural performances, partnership with local charities for fundraising efforts.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
                             </div>
                         </div>
 
