@@ -823,25 +823,44 @@ echo '</div>
         return "<a href=\"{$_SERVER['PHP_SELF']}?sortBy=$sortType\">$text</a>";
     }
 
-    // Check if sorting option is set and handle sorting
     if (isset($_GET['sortBy'])) {
         $sortBy = $_GET['sortBy'];
         switch ($sortBy) {
             case 'yearAscending':
-                ksort($history);
+                ksort($history); // Sort by year in ascending order
                 break;
             case 'yearDescending':
-                krsort($history);
+                krsort($history); // Sort by year in descending order
                 break;
             case 'attendeesAscending':
-                uasort($history, function ($a, $b) {
-                    return $a['attendees'] - $b['attendees'];
-                });
+                // Temporary array to hold attendees data for sorting
+                $tempArray = [];
+                foreach ($history as $key => $value) {
+                    $tempArray[$key] = $value['attendees'];
+                }
+                // Sort the temporary array by attendees in ascending order
+                asort($tempArray);
+                // Rearrange the original $history array based on sorted attendees data
+                $sortedHistory = [];
+                foreach ($tempArray as $key => $attendees) {
+                    $sortedHistory[$key] = $history[$key];
+                }
+                $history = $sortedHistory; // Update the sorted array
                 break;
             case 'attendeesDescending':
-                uasort($history, function ($a, $b) {
-                    return $b['attendees'] - $a['attendees'];
-                });
+                // Temporary array to hold attendees data for sorting
+                $tempArray = [];
+                foreach ($history as $key => $value) {
+                    $tempArray[$key] = $value['attendees'];
+                }
+                // Sort the temporary array by attendees in descending order
+                arsort($tempArray);
+                // Rearrange the original $history array based on sorted attendees data
+                $sortedHistory = [];
+                foreach ($tempArray as $key => $attendees) {
+                    $sortedHistory[$key] = $history[$key];
+                }
+                $history = $sortedHistory; // Update the sorted array
                 break;
             default:
                 // Default sorting by year ascending
@@ -849,7 +868,6 @@ echo '</div>
                 break;
         }
     }
-
     // Display sorted festival history
     foreach ($history as $item) {
         $year = $item['year'];

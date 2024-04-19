@@ -792,28 +792,47 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
         $sortBy = $_GET['sortBy'];
         switch ($sortBy) {
             case 'yearAscending':
-                ksort($history);
+                ksort($history); // Sort by year in ascending order
                 break;
             case 'yearDescending':
-                krsort($history);
+                krsort($history); // Sort by year in descending order
                 break;
             case 'attendeesAscending':
-                uasort($history, function ($a, $b) {
-                    return $a['attendees'] - $b['attendees'];
-                });
+                // Temporary array to hold attendees data for sorting
+                $tempArray = [];
+                foreach ($history as $key => $value) {
+                    $tempArray[$key] = $value['attendees'];
+                }
+                // Sort the temporary array by attendees in ascending order
+                asort($tempArray);
+                // Rearrange the original $history array based on sorted attendees data
+                $sortedHistory = [];
+                foreach ($tempArray as $key => $attendees) {
+                    $sortedHistory[$key] = $history[$key];
+                }
+                $history = $sortedHistory; // Update the sorted array
                 break;
             case 'attendeesDescending':
-                uasort($history, function ($a, $b) {
-                    return $b['attendees'] - $a['attendees'];
-                });
+                // Temporary array to hold attendees data for sorting
+                $tempArray = [];
+                foreach ($history as $key => $value) {
+                    $tempArray[$key] = $value['attendees'];
+                }
+                // Sort the temporary array by attendees in descending order
+                arsort($tempArray);
+                // Rearrange the original $history array based on sorted attendees data
+                $sortedHistory = [];
+                foreach ($tempArray as $key => $attendees) {
+                    $sortedHistory[$key] = $history[$key];
+                }
+                $history = $sortedHistory; // Update the sorted array
                 break;
             default:
-                // Renditja parazgjedhëse sipas viti në rritje
+                // Default sorting by year ascending
                 ksort($history);
                 break;
         }
     }
-
     // Shfaq historinë e renditur të festivalit
     foreach ($history as $item) {
         $year = $item['year'];
