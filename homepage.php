@@ -777,65 +777,106 @@ echo '</div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-12 mx-auto">
-                <h3 class="text-center mb-4">Festival History</h3>
-                <ul>
-                <?php
-                    $history = [
-                        "2022" => "12000 attendees",
-                        "2021" => "11500 attendees",
-                        "2020" => "10000 attendees",
-                        "2019" => "8500 attendees",
-                        "2018" => "7200 attendees",
-                    ];
+                <h3 class="text-center mb-4">Sunny Hill History</h3>
+<div class="sort-links">
+    <?php
+    echo generateSortLink('Lowest Year', 'yearAscending') . ' | ';
+    echo generateSortLink('Highest Year', 'yearDescending') . ' | ';
+    echo generateSortLink('Lowest Number', 'attendeesAscending') . ' | ';
+    echo generateSortLink('Highest Number', 'attendeesDescending');
+    ?>
+</div><br>
+<ul id="festivalList">
+    <?php
+  $history = [
+    "2022" => [
+        "year" => "2022",
+        "attendees" => 12000,
+        "description" => "The 2022 Sunny Hill festival showcased a diverse range of performances and activities, attracting a large audience from around the world.",
+    ],
+    "2021" => [
+        "year" => "2021",
+        "attendees" => 11500,
+        "description" => "In 2021, the Sunny Hill festival celebrated its 4th anniversary with special events and performances, drawing a record-breaking number of attendees.",
+    ],
+    "2020" => [
+        "year" => "2020",
+        "attendees" => 10000,
+        "description" => "Despite challenges posed by the pandemic, the 2020 festival successfully transitioned to virtual platforms, engaging audiences globally.",
+    ],
+    "2019" => [
+        "year" => "2019",
+        "attendees" => 8500,
+        "description" => "The 2019 festival featured a theme of cultural diversity, with performances and exhibitions highlighting traditions from various regions.",
+    ],
+    "2018" => [
+        "year" => "2018",
+        "attendees" => 7200,
+        "description" => "In 2018, the Sunny Hill festival expanded its program to include workshops and interactive experiences, attracting both local and international participants.",
+    ],
+];
 
-                    // Function to generate sort links with query parameter
-                    function generateSortLink($text, $sortType)
-                    {
-                        $currentSort = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'yearAscending';
-                        $queryString = http_build_query(array_merge($_GET, ['sortBy' => $sortType]));
-                        $url = $_SERVER['PHP_SELF'] . '?' . $queryString;
-                        $activeClass = $currentSort === $sortType ? 'active' : '';
-                        return "<a href=\"$url\" class=\"$activeClass\">$text</a>";
-                    }
 
-                    // Check if sorting option is set and handle sorting
-                    if (isset($_GET['sortBy'])) {
-                        $sortBy = $_GET['sortBy'];
-                        switch ($sortBy) {
-                            case 'yearAscending':
-                                ksort($history);
-                                break;
-                            case 'yearDescending':
-                                krsort($history);
-                                break;
-                            case 'attendeesAscending':
-                                asort($history);
-                                break;
-                            case 'attendeesDescending':
-                                arsort($history);
-                                break;
-                            default:
-                                // Default sorting by year ascending
-                                ksort($history);
-                                break;
-                        }
-                    }
+    // Function to generate sort links with JavaScript sorting
+    function generateSortLink($text, $sortType)
+    {
+        return "<a href=\"{$_SERVER['PHP_SELF']}?sortBy=$sortType\">$text</a>";
+    }
 
-                    // Display sorted festival history
-                    foreach ($history as $year => $attendance) {
-                        echo "<li><strong>$year:</strong> $attendance</li>";
-                    }
-                    ?>
-                </ul>
+    // Check if sorting option is set and handle sorting
+    if (isset($_GET['sortBy'])) {
+        $sortBy = $_GET['sortBy'];
+        switch ($sortBy) {
+            case 'yearAscending':
+                ksort($history);
+                break;
+            case 'yearDescending':
+                krsort($history);
+                break;
+            case 'attendeesAscending':
+                uasort($history, function ($a, $b) {
+                    return $a['attendees'] - $b['attendees'];
+                });
+                break;
+            case 'attendeesDescending':
+                uasort($history, function ($a, $b) {
+                    return $b['attendees'] - $a['attendees'];
+                });
+                break;
+            default:
+                // Default sorting by year ascending
+                ksort($history);
+                break;
+        }
+    }
 
-                <!-- Sort links -->
-                <div class="sort-links">
-                    <?php
-                    echo generateSortLink('Sort by Lowest Year', 'yearAscending') . ' | ';
-                    echo generateSortLink('Sort by Highest Year', 'yearDescending') . ' | ';
-                    echo generateSortLink('Sort by Lowest Number of Attendees', 'attendeesAscending') . ' | ';
-                    echo generateSortLink('Sort by Highest Number of Attendees', 'attendeesDescending');
-                    ?>
+    // Display sorted festival history
+    foreach ($history as $item) {
+        $year = $item['year'];
+        $attendees = $item['attendees'];
+        $description = $item['description'];
+
+    echo "<li><strong>$year:</strong> $attendees attendees</li>";
+    echo "<p><em>$description</em></p>";
+    }
+    ?>
+</ul>
+
+
+
+<script>
+    document.querySelectorAll('.sort-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const sortBy = this.getAttribute('href').split('=')[1];
+        const currentURL = new URL(window.location.href);
+        currentURL.searchParams.set('sortBy', sortBy);
+        window.history.replaceState({}, '', currentURL);
+        window.location.reload();
+    });
+});
+</script>
+</div>
                 </div>
             </div>
         </div>

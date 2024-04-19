@@ -681,6 +681,9 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
                         <button class="nav-link" id="nav-Volenteer-tab" data-bs-toggle="tab" data-bs-target="#nav-Volenteer" type="button" role="tab" aria-controls="nav-Volenteer" aria-selected="false" style="margin-left: 10px;">
                             <h5>Vullnetare</h5>
                         </button>
+                        <button class="nav-link" id="nav-History-tab" data-bs-toggle="tab" data-bs-target="#nav-History" type="button" role="tab" aria-controls="nav-History" aria-selected="false" style="margin-left: 10px;">
+                                        <h5>Historia</h5>
+                                    </button>
                     </div>
                 </nav>
                 <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
@@ -732,12 +735,123 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
                             </div>
                         </form>
                     </div>
+
+                    <div class="tab-pane fade" id="nav-History" role="tabpanel" aria-labelledby="nav-History-tab">
+
+                    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 mx-auto">
+                <h3 class="text-center mb-4"> Historia e Festivalit Sunny Hill</h3>
+
+                    <div class="sort-links">
+    <?php
+    echo generateSortLink('Viti më i Ulet', 'yearAscending') . ' | ';
+    echo generateSortLink('Viti më i Lartë', 'yearDescending') . ' | ';
+    echo generateSortLink('Numri më i Ulet', 'attendeesAscending') . ' | ';
+    echo generateSortLink('Numri më i Lartë', 'attendeesDescending');
+    ?>
+</div><br>
+<ul id="festivalList">
+    <?php
+    $history = [
+        "2022" => [
+            "year" => "2022",
+            "attendees" => 12000,
+            "description" => "Festivali Sunny Hill 2022 prezantoi një gamë të gjerë performancash dhe aktivitetesh, duke tërhequr një audiencë të madhe nga e gjithë bota.",
+        ],
+        "2021" => [
+            "year" => "2021",
+            "attendees" => 11500,
+            "description" => "Në 2021, festivali Sunny Hill festoi 4-vjetorin me evente speciale dhe performanca, duke tërhequr një numër rekord të pjesëmarrësve.",
+        ],
+        "2020" => [
+            "year" => "2020",
+            "attendees" => 10000,
+            "description" => "Edhe pse u përball me sfida të shumta nga pandemia, festivali i vitit 2020 u përshtat me sukses në platforma virtuale, duke angazhuar audienca nga e gjithë bota.",
+        ],
+        "2019" => [
+            "year" => "2019",
+            "attendees" => 8500,
+            "description" => "Festivali i vitit 2019 pati një temë të diversitetit kulturor, me performanca dhe ekspozita që nënvizuan traditat nga rajone të ndryshme.",
+        ],
+        "2018" => [
+            "year" => "2018",
+            "attendees" => 7200,
+            "description" => "Në vitin 2018, festivali Sunny Hill zgjeroi programin për të përfshirë punëtoret dhe përvojat interactive, duke tërhequr pjesëmarrës të lokalëve dhe ndërkombëtarëve.",
+        ],
+    ];
+
+    // Funksioni për të krijuar lidhjet e renditjes me radhët Javascript
+    function generateSortLink($text, $sortType)
+    {
+        return "<a href=\"{$_SERVER['PHP_SELF']}?sortBy=$sortType\">$text</a>";
+    }
+
+    // Kontrollo nëse është vendosur opsioni i renditjes dhe trajto renditjen
+    if (isset($_GET['sortBy'])) {
+        $sortBy = $_GET['sortBy'];
+        switch ($sortBy) {
+            case 'yearAscending':
+                ksort($history);
+                break;
+            case 'yearDescending':
+                krsort($history);
+                break;
+            case 'attendeesAscending':
+                uasort($history, function ($a, $b) {
+                    return $a['attendees'] - $b['attendees'];
+                });
+                break;
+            case 'attendeesDescending':
+                uasort($history, function ($a, $b) {
+                    return $b['attendees'] - $a['attendees'];
+                });
+                break;
+            default:
+                // Renditja parazgjedhëse sipas viti në rritje
+                ksort($history);
+                break;
+        }
+    }
+
+    // Shfaq historinë e renditur të festivalit
+    foreach ($history as $item) {
+        $year = $item['year'];
+        $attendees = $item['attendees'];
+        $description = $item['description'];
+
+        echo "<li><strong>$year:</strong> $attendees pjesëmarrës</li>";
+        echo "<p><em>$description</em></p>";
+    }
+    ?>
+</ul>
+
+<script>
+    document.querySelectorAll('.sort-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sortBy = this.getAttribute('href').split('=')[1];
+            const currentURL = new URL(window.location.href);
+            currentURL.searchParams.set('sortBy', sortBy);
+            window.history.replaceState({}, '', currentURL);
+            window.location.reload();
+        });
+    });
+</script>
+</div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
         </main>
+
 
 
         <footer class="site-footer">
