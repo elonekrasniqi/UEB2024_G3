@@ -669,7 +669,7 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-12 mx-auto">
-                <h2 class="text-center mb-4">Të interesuar? Le të bisedojmë</h2>
+                <h2 class="text-center mb-4">Të interesuar?</h2>
                 <nav class="d-flex justify-content-center">
                     <div class="nav nav-tabs align-items-baseline justify-content-center" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="nav-ContactForm-tab" data-bs-toggle="tab" data-bs-target="#nav-ContactForm" type="button" role="tab" aria-controls="nav-ContactForm" aria-selected="false">
@@ -741,7 +741,7 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
                     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-12 mx-auto">
-                <h3 class="text-center mb-4"> Historia e Festivalit Sunny Hill</h3>
+                <h3 class="text-center mb-4"> Historia e Sunny Hill</h3>
 
                     <div class="sort-links">
     <?php
