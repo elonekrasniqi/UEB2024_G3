@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html" id="logo" style="transition: transform 0.3s ease; display: inline-block;">
+                    <a class="navbar-brand" href="homepage-sh.php" id="logo" style="transition: transform 0.3s ease; display: inline-block;">
                         Sunny Hill
                     </a>
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         
                     </script>
                     
-<a href="login.html" class="btn custom-btn d-lg-none ms-auto me-4">Blejë Tiketë</a>
+<a href="index.php" class="btn custom-btn d-lg-none ms-auto me-4">Blejë Tiketë</a>
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

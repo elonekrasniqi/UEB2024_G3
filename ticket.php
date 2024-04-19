@@ -149,22 +149,22 @@ exit();
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_1">Home</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_1">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_2">About</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_2">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_3">Artists</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_3">Artists</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_4">Schedule</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_4">Schedule</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_5">Pricing</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_5">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="index.html#section_6">Contact</a>
+                            <a class="nav-link click-scroll" href="homepage.php#section_6">Contact</a>
                         </li>
                     </ul>
                     <a href="login.php" class="btn custom-btn d-lg-block d-none">Buy Ticket</a>
