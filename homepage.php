@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 //var_dump($_SESSION);
 // session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
@@ -13,6 +14,8 @@ if (isset($_GET['gjuha'])) {
     }
     exit();
 }
+
+
 
 //cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
 // Check if the form is submitted
@@ -33,22 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
     }
     
-   
+  
 }
-  // Handle the volunteer form submission
-  elseif (isset($_POST['contact-name'])) {
-    $name = $_POST["contact-name"];
-    $hash = md5($name); // Generate a hash from the name
-    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
-    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
-    var_dump($color); // Add var_dump to display the color
-}    
-   
-
-
-
-
-
 
 //cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -57,6 +46,15 @@ if (isset($_POST['submitform'])) {
     setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
     echo "<script>alert('Thank you for applying, $fullNameVol! We will contact you soon!');</script>";
 }
+}
+
+//shiko a ka cookie ne fillim kur logohet personi 
+if (!isset($_COOKIE['first_login'])) {
+    // Shtoni cookie për herën e parë të logimit
+    setcookie('first_login', '1', time() + (86400 * 30), "/"); // Ruan për 30 ditë
+
+    // Shfaq mesazhin për gjendjen e cookies
+    echo "<script>alert('Cookies are enabled.');</script>";
 }
 ?>
 <!doctype html>
@@ -87,6 +85,7 @@ if (isset($_POST['submitform'])) {
     </head>
     
     <body>
+   
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const youtubeLinks = document.querySelectorAll('a[data-artist]');
@@ -117,9 +116,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 <strong class="text-dark">
                     <?php
 
-                    // Kontrollo nëse përdoruesi është i kyçur
+                    
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; // Display the user's name in a separate span
+                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; 
+                       
                         echo "You have logged in " . $_SESSION['login_count'] . " times.";
                     }
                    
@@ -200,6 +200,8 @@ document.addEventListener("DOMContentLoaded", function() {
             </ul>
     </div>
 <script>
+
+
     
     var buyTicketBtn = document.getElementById("buyTicketBtn");
 
@@ -250,7 +252,7 @@ LoginBtn.addEventListener("mouseleave", function() {
     }
 </script>
 
-            
+
 
             <section class="hero-section" id="section_1">
                 <div class="section-overlay"></div>
@@ -292,6 +294,8 @@ LoginBtn.addEventListener("mouseleave", function() {
                     </video>
                 </div>
             </section>
+
+     
 
 
             <section class="about-section section-padding" id="section_2">
