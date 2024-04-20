@@ -78,26 +78,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Krijimi i objektit User
     $user = new User($emri);
 
-    // Krijimi i objektit të biletes sipas tipit të zgjedhur
-    if ($tipiBiletës == "earlybird") {
-        $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
-    } elseif ($tipiBiletës == "standard") {
-        $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
-    }
+ // Krijimi i objektit të biletes sipas tipit të zgjedhur
+   if ($tipiBiletës == "earlybird") {
+    $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
+   } elseif ($tipiBiletës == "standard") {
+    $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
+   }
 
-    // Validimi i datës së blerjes së biletes
-    if ($bileta->validoDate($dataBlerjes)) {
-        // Ruaj bileten ne skedar
-      // Ruaj bileten ne skedar
-$bileta->ruajNeSkedar($user);
+  // Shto var_dump() për të shfaqur informacionin e detajuar të objektit të biletes
+    var_dump($bileta);
 
-// Display success message using JavaScript
-echo '<script>alert("Blerja u krye me sukses!"); window.location.href = "ticket.php";</script>';
+   // Validimi i datës së blerjes së biletes
+     if ($bileta->validoDate($dataBlerjes)) {
+    // Ruaj bileten ne skedar
+    $bileta->ruajNeSkedar($user);
 
-exit();
-    } else {
-        $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
-    }
+    // Display success message using JavaScript
+    echo '<script>alert("Blerja u krye me sukses!"); window.location.href = "ticket.php";</script>';
+
+    exit();
+     } else {
+    $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
+   }
+
 }
 ?>
 
