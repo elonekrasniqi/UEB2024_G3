@@ -11,3 +11,8 @@ Brikena Kastrati,Early Bird Ticket,120,2024-05-12
 elona,Early Bird Ticket,120,2024-04-20
 elona,Standard Ticket,240,2024-04-20
 elona,Early Bird Ticket,120,2024-04-20
+elona,Early Bird Ticket,120,2024-04-20
+elona,Standard Ticket,240,2024-04-20
+elona,Standard Ticket,720,2024-04-20
+elona,Standard Ticket,240,2024-04-20
+elona,Early Bird Ticket,120,2024-04-20
