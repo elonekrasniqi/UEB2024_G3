@@ -103,9 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Save the ticket data to a file
         file_put_contents('tickets.txt', $ticketDataString, FILE_APPEND);
 
-        // Display success message and ticket data using var_dump
+        // Display success message and redirect to ticket.php
         echo '<script>alert("Blerja u krye me sukses!");</script>';
-        var_dump($tickets[count($tickets) - 1]); // Shfaqja e të dhënave të biletes
         echo '<script>window.location.href = "ticket.php";</script>';
         exit();
     } else {
