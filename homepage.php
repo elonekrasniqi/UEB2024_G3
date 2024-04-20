@@ -466,7 +466,7 @@ echo '</div>
             </div>
         </div>
     </div>
-</section> <br>';
+</section>';
 ?>
 <?php
         // Funksioni per te shtuar presjet ne mes te numrave brenda ditelindjeve
@@ -814,7 +814,7 @@ echo '</div>
     echo generateSortLink('Lowest Number', 'attendeesAscending') . ' | ';
     echo generateSortLink('Highest Number', 'attendeesDescending');
     ?>
-</div><br>
+</div>
 <ul id="festivalList">
     <?php
   $history = [
