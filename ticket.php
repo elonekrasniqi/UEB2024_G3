@@ -102,11 +102,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Save the ticket data to a file
         file_put_contents('tickets.txt', $ticketDataString, FILE_APPEND);
-        echo '<script>alert("Blerja u krye me sukses!"); window.location.href = "ticket.php";</script>';
+
+        // Display success message and ticket data using var_dump
+        echo '<script>alert("Blerja u krye me sukses!");</script>';
+        var_dump($tickets[count($tickets) - 1]); // Shfaqja e të dhënave të biletes
+        echo '<script>window.location.href = "ticket.php";</script>';
         exit();
     } else {
         $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
     }
+
 }
 ?>
 
