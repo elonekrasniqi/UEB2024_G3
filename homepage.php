@@ -468,27 +468,6 @@ echo '</div>
     </div>
 </section>';
 ?>
-<?php
-        // Funksioni per te shtuar presjet ne mes te numrave brenda ditelindjeve
-        function Manipulimi_ditelindja($html) {
-            // Definojme me RegEx formatin e ditelindjes
-            $pattern = '/(<strong>Birthdate:<\/strong>\s*)([A-Za-z]+\s+\d{1,2})\s+(\d{4})/';
-
-            // Definojme zevendesimin e karakterit ne mes te ditelindjes
-            $replacement = '$1$2, $3';
-
-            // Shtojme presjen ne mes te ditelindjes me funksioni preg_replace
-            $html_me_presje = preg_replace($pattern, $replacement, $html);
-
-            return $html_me_presje;
-        }
-
-            // Shto presjen te datat e lindjes
-            $html_me_presje = Manipulimi_ditelindja($html);
-
-            // Outputi i HTML te modifikuar
-            echo $html_me_presje;
-            ?>
 
 
 
@@ -845,6 +824,12 @@ echo '</div>
     ],
 ];
 
+
+        // Kalo neper secilin vit te history array
+        foreach ($history as $year => $details) {
+            // Formato numrin e  attendees duke shtuar presje per te ndare mijerat e plota nga numrat e tjere (thousand separators) me RegEx
+            $history[$year]['attendees'] = preg_replace('/(?<=\d)(?=(\d{3})+$)/', ',', $details['attendees']);
+        }
 
     // Function to generate sort links with JavaScript sorting
     function generateSortLink($text, $sortType)
