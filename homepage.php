@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
         echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
     }
+
     //cookie i dyte, ndryshon ngjyren varesisht qfare vlere merr
     // Handle the volunteer form submission
     elseif (isset($_POST['volunteer-name'])) {
@@ -34,6 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }    
    
 }
+  // Handle the volunteer form submission
+  elseif (isset($_POST['contact-name'])) {
+    $name = $_POST["contact-name"];
+    $hash = md5($name); // Generate a hash from the name
+    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
+    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
+    var_dump($color); // Add var_dump to display the color
+}    
+   
+
+
+
+
+
+
 //cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submitform'])) {
