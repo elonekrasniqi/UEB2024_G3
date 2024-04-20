@@ -35,12 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
         setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
     }
-    
-  
-}
 
-//cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Handle the volunteer form submission
+  elseif (isset($_POST['contact-name'])) {
+    $name = $_POST["contact-name"];
+    $hash = md5($name); // Generate a hash from the name
+    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
+    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
+    // var_dump($color); // Add var_dump to display the color
+}    
 if (isset($_POST['submitform'])) {
     $fullNameVol = $_POST['volunteer-name'];
     setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
@@ -101,6 +104,12 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
         <style>
             #nav-Volenteer .custom-form {
+            background-color:<?php echo $color; ?>;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+        #nav-ContactForm .custom-form {
             background-color:<?php echo $color; ?>;
             padding: 20px;
             border-radius: 8px;
