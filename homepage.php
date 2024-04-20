@@ -801,7 +801,7 @@ echo '</div>
     ],
     "2020" => [
         "year" => "2020",
-        "attendees" => 10000,
+        "attendees" => 7000,
         "description" => "Despite challenges posed by the pandemic, the 2020 festival successfully transitioned to virtual platforms, engaging audiences globally.",
     ],
     "2019" => [

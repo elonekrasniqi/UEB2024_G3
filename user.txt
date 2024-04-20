@@ -1,0 +1,4 @@
+Elone|elona@gmail.com|$2y$10$aGEF5Ozrkzk9yelPy/xQ/e6CIMOZSAwRKepIBISdxvWGJkP9LqiYW
+Elone|elona1@gmail.com|$2y$10$9DGGvklXRrNf6iRXHJQvzeMzy/oLsXkwJhNSCk.OGmUvq74ZrXJQO
+Admin|Admin@gmail.com|$2y$10$1khYFiyJQAH2BA3ehoHtGe.pqy6X8cSMiFPgy.oASFJ42UNUxs2QG
+Elone|admin12@gmail.com|$2y$10$i1urG7/.RzXcSFJF3/meC.mZ828B0ZBhfsuuELtNI2Ai77.SQ2rt6
