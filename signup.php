@@ -9,21 +9,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verifikimi i emailit
     if (!preg_match($emailPattern, $email)) {
-        echo "Invalid email address";
+        echo '<script>alert("Invalid email address");</script>';
     } else {
         $password = $_POST['signup-form-password'];
         $confirmPassword = $_POST['signup-form-confirm-password'];
 
         // Verifikimi i fjalëkalimit
         if ($password !== $confirmPassword) {
-            echo "Passwords do not match";
+            echo '<script>alert("Passwords do not match");</script>';
         } elseif (!validatePassword($password)) {
-            echo "Invalid password format";
+            echo '<script>alert("Invalid password format");</script>';
         } else {
             // Kontrollo nëse emaili dhe fjalëkalimi përputhen në skedar
             $userExists = checkUserCredentials($email, $password);
             if ($userExists) {
-                echo "User with this email and password already exists, please login";
+                echo '<script>alert("User with this email and password already exists, please login");</script>';
             } else {
                 // Kodimi i fjalëkalimit me password_hash
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

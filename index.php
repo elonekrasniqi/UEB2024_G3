@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('Location: homepage.php');
             exit;
         } else {
-            echo "Invalid email or password";
+            echo '<script>alert("Invalid email or password");</script>';
         }
     }
 }
@@ -181,6 +181,20 @@ function getUserFullname($email) {
                          }
                          return true;
                    }
+                   function validateForm() {
+                                    var email = document.getElementById('login-form-email').value;
+                                    var password = document.getElementById('login-form-password').value;
+                                    var emailPattern = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+
+                                    if (!emailPattern.test(email)) {
+                                        alert("Invalid email address");
+                                        return false;
+                                    }
+
+                                    // Additional validation if needed (e.g., password length)
+
+                                    return true;
+                                }
                  </script>
             </section>
             
