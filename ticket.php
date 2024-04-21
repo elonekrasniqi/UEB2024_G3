@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<script>window.location.href = "ticket.php";</script>';
             exit();
         } else {
-            echo " <script>alert('Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).')</script>";
+            echo " <script>alert('Data e blerjes së biletes nuk është valide, është para ose pas datës së fundit të lejuar (24 Korrik).')</script>";
         }
     }
 }
