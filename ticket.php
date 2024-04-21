@@ -109,6 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
+        echo '<script>alert("' . $errorMessage . '");</script>';
     }
 
 }
