@@ -34,7 +34,8 @@ class Bileta {
             // Kontrollojmë nëse data është para datës së fundit të lejuar (24 Korrik)
             $dataKufi = strtotime('2024-07-24');
             $dataVerifikimi = strtotime($data);
-            if ($dataVerifikimi <= $dataKufi) {
+            $dataSot = strtotime(date("Y-m-d"));
+            if ($dataVerifikimi <= $dataKufi && $dataVerifikimi >= $dataSot) {
                 return true;
             }
         }
