@@ -56,6 +56,17 @@ if (!isset($_COOKIE['first_login'])) {
     // Shfaq mesazhin për gjendjen e cookies
     echo "<script>alert('Cookies are enabled.');</script>";
 }
+
+function playSpecificSound($soundFile) {
+    echo '<audio autoplay><source src="' . $soundFile . '" type="audio/wav"></audio>';
+    $_SESSION['lastPlayedSound'] = $soundFile;
+}
+
+// Kontrollo nëse është shtypur butoni për të luajtur tinguj
+if (isset($_POST['playSound'])) {
+    $soundFile = 'sounds/sound1.wav'; // Specifikoni fajllin e tingujve për të luajtur
+    playSpecificSound($soundFile);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -106,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
+        
         </style>
 
         <main>
@@ -307,7 +319,9 @@ LoginBtn.addEventListener("mouseleave", function() {
                                     <i class="custom-icon bi-geo-alt me-2" ></i>Sunny Hill Festival Park, Prishtina 10000, Kosova
                                 </h5>
                             </div>
-
+                            <form method="POST">
+            <button type="submit" name="playSound">Play Sound</button>
+        </form>
                            
                         </div>
                     </div>
