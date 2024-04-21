@@ -70,7 +70,7 @@ function getUserFullname($email) {
         }
     }
 
-    return ''; // Nëse emaili nuk gjendet në skedar ose skedari nuk ekziston
+    return 'false'; // Nëse emaili nuk gjendet në skedar ose skedari nuk ekziston
 }
 
 
