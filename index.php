@@ -3,8 +3,8 @@ session_start();
 
 // Verifikimi i të dhënave të postimit kur forma dërgohet
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['login-form-email'];
-    $password = $_POST['login-form-password'];
+    $email = trim($_POST['login-form-email']);
+    $password = trim($_POST['login-form-password']);
 
     // Kontrolli i të dhënave të postimit
     if (empty($email) || empty($password)) {

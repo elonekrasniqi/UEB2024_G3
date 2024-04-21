@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefoni = $_POST["ticket-form-phone"];
     $tipiBiletës = $_POST["TicketForm"];
     $numriBiletave = $_POST["ticket-form-number"];
-    $dataBlerjes = $_POST["dataBlerjes"];
+    $dataBlerjes = trim($_POST["dataBlerjes"]);
     
     // Validate number of tickets
     if ($numriBiletave < 1) {
@@ -106,11 +106,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Convert the numeric array to a string for file storage
             $ticketDataString = implode(',', $tickets[count($tickets) - 1]) . "\n";
 
+            // Kur bërët blerjen e biletes me sukses
+
+
             // Save the ticket data to a file
             file_put_contents('tickets.txt', $ticketDataString, FILE_APPEND);
 
             // Display success message and redirect to ticket.php
             echo '<script>alert("Blerja u krye me sukses!");</script>';
+           
             echo '<script>window.location.href = "ticket.php";</script>';
             exit();
         } else {
@@ -118,7 +122,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
 ?>
+
+
+
 
 
 <!DOCTYPE html>

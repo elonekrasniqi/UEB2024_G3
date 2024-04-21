@@ -2,16 +2,17 @@
 
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullname = $_POST['signup-form-fullname'];
-    $email = $_POST['signup-form-email'];
+    $fullname = trim($_POST['signup-form-fullname']);
+    $email = trim($_POST['signup-form-email']);
+    
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
 
     // Verifikimi i emailit
     if (!preg_match($emailPattern, $email)) {
         echo '<script>alert("Invalid email address");</script>';
     } else {
-        $password = $_POST['signup-form-password'];
-        $confirmPassword = $_POST['signup-form-confirm-password'];
+        $password = trim($_POST['signup-form-password']);
+        $confirmPassword = trim($_POST['signup-form-confirm-password']);
 
         // Verifikimi i fjalëkalimit
         if ($password !== $confirmPassword) {
