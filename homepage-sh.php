@@ -42,6 +42,17 @@ if (isset($_POST['submitform'])) {
     echo "<script>alert('Faleminderit per aplikimin, $fullNameVol! Ne do t'iu kontaktojme shume shpejt!');</script>";
 }
 }
+
+function playSpecificSound($soundFile) {
+    echo '<audio autoplay><source src="' . $soundFile . '" type="audio/wav"></audio>';
+    $_SESSION['lastPlayedSound'] = $soundFile;
+}
+
+// Kontrollo nëse është shtypur butoni për të luajtur tinguj
+if (isset($_POST['playSound'])) {
+    $soundFile = 'sounds/sound1.wav'; // Specifikoni fajllin e tingujve për të luajtur
+    playSpecificSound($soundFile);
+}
 ?>
 
 <!doctype html>
@@ -262,7 +273,9 @@ LoginBtn.addEventListener("mouseleave", function() {
                                     <i class="custom-icon bi-geo-alt me-2" ></i>Parku i Festivalit Sunny Hill, Prishtina 10000, Kosova
                                 </h5>
                             </div>
-
+                            <form method="POST">
+            <button type="submit" name="playSound">Luaj Muzikë</button>
+        </form>
                            
                         </div>
                     </div>
