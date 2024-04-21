@@ -77,43 +77,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipiBiletës = $_POST["TicketForm"];
     $numriBiletave = $_POST["ticket-form-number"];
     $dataBlerjes = $_POST["dataBlerjes"];
-
-    // Krijimi i objektit User
-    $user = new User($emri);
-
-    if ($tipiBiletës == "earlybird") {
-        $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
-    } elseif ($tipiBiletës == "standard") {
-        $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
-    }
-
-    // Validimi i datës së blerjes së biletes
-    if ($bileta->validoDate($dataBlerjes)) {
-        // Add ticket data to the tickets array
-        $tickets[] = [
-            $user->getEmri(),
-            $bileta->getEmri(),
-            $bileta->getCmimi(),
-            $bileta->getDataBlerjes()
-        ];
-
-        // Convert the numeric array to a string for file storage
-        $ticketDataString = implode(',', $tickets[count($tickets) - 1]) . "\n";
-
-        // Save the ticket data to a file
-        file_put_contents('tickets.txt', $ticketDataString, FILE_APPEND);
-
-        // Display success message and redirect to ticket.php
-        echo '<script>alert("Blerja u krye me sukses!");</script>';
-        echo '<script>window.location.href = "ticket.php";</script>';
-        exit();
+    
+    // Validate number of tickets
+    if ($numriBiletave < 1) {
+        echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
     } else {
-        $errorMessage = "Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).";
-        echo '<script>alert("' . $errorMessage . '");</script>';
-    }
+        // Continue with the ticket purchase process
+        // Krijimi i objektit User
+        $user = new User($emri);
 
+        if ($tipiBiletës == "earlybird") {
+            $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
+        } elseif ($tipiBiletës == "standard") {
+            $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
+        }
+
+        // Validimi i datës së blerjes së biletes
+        if ($bileta->validoDate($dataBlerjes)) {
+            // Add ticket data to the tickets array
+            $tickets[] = [
+                $user->getEmri(),
+                $bileta->getEmri(),
+                $bileta->getCmimi(),
+                $bileta->getDataBlerjes()
+            ];
+
+            // Convert the numeric array to a string for file storage
+            $ticketDataString = implode(',', $tickets[count($tickets) - 1]) . "\n";
+
+            // Save the ticket data to a file
+            file_put_contents('tickets.txt', $ticketDataString, FILE_APPEND);
+
+            // Display success message and redirect to ticket.php
+            echo '<script>alert("Blerja u krye me sukses!");</script>';
+            echo '<script>window.location.href = "ticket.php";</script>';
+            exit();
+        } else {
+            echo " <script>alert('Data e blerjes së biletes nuk është valide ose është pas datës së fundit të lejuar (24 Korrik).')</script>";
+        }
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

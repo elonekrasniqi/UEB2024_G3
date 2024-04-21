@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//var_dump($_SESSION);
+
 // session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
     $gjuha_zgjedhur = $_GET['gjuha'];
@@ -35,15 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
         setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
     }
+    
+  
+}
 
-  // Handle the volunteer form submission
-  elseif (isset($_POST['contact-name'])) {
-    $name = $_POST["contact-name"];
-    $hash = md5($name); // Generate a hash from the name
-    $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
-    setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
-    // var_dump($color); // Add var_dump to display the color
-}    
+//cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (isset($_POST['submitform'])) {
     $fullNameVol = $_POST['volunteer-name'];
     setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
@@ -109,12 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
-        #nav-ContactForm .custom-form {
-            background-color:<?php echo $color; ?>;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
-        }
         </style>
 
         <main>
@@ -145,6 +136,31 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
 </header>
+
+<style>
+
+
+@keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  #backToTopButton {
+position: fixed;
+bottom: 20px;
+right: 20px;
+user-select: none;
+cursor: grab;
+transition: all 0.3s;
+z-index: 4; 
+}
+
+#backToTopButton:hover span {
+animation: spin 1.5s linear infinite;
+transform-origin: center;
+display: inline-block;
+}
+</style>
 
 
             <nav class="navbar navbar-expand-lg">
@@ -199,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
 
     <a href="ticket.php" class="btn custom-btn d-lg-block d-none" id="buyTicketBtn">Buy Ticket</a>
+
+    
     <div class="dropdown">
     <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
         Language
@@ -305,7 +323,9 @@ LoginBtn.addEventListener("mouseleave", function() {
             </section>
 
      
-
+            <button id="backToTopButton" class="btn rounded-circle d-none" draggable="true" style="background-color:white; color: black; border: 1px solid black;">
+    <span>&#9733; </span> 
+</button>
 
             <section class="about-section section-padding" id="section_2">
                 <div class="container">
@@ -466,8 +486,29 @@ echo '</div>
             </div>
         </div>
     </div>
-</section>';
+</section> <br>';
 ?>
+<?php
+        // Funksioni per te shtuar presjet ne mes te numrave brenda ditelindjeve
+        function Manipulimi_ditelindja($html) {
+            // Definojme me RegEx formatin e ditelindjes
+            $pattern = '/(<strong>Birthdate:<\/strong>\s*)([A-Za-z]+\s+\d{1,2})\s+(\d{4})/';
+
+            // Definojme zevendesimin e karakterit ne mes te ditelindjes
+            $replacement = '$1$2, $3';
+
+            // Shtojme presjen ne mes te ditelindjes me funksioni preg_replace
+            $html_me_presje = preg_replace($pattern, $replacement, $html);
+
+            return $html_me_presje;
+        }
+
+            // Shto presjen te datat e lindjes
+            $html_me_presje = Manipulimi_ditelindja($html);
+
+            // Outputi i HTML te modifikuar
+            echo $html_me_presje;
+            ?>
 
 
 
@@ -793,7 +834,7 @@ echo '</div>
     echo generateSortLink('Lowest Number', 'attendeesAscending') . ' | ';
     echo generateSortLink('Highest Number', 'attendeesDescending');
     ?>
-</div>
+</div><br>
 <ul id="festivalList">
     <?php
   $history = [
@@ -824,12 +865,6 @@ echo '</div>
     ],
 ];
 
-
-        // Kalo neper secilin vit te history array
-        foreach ($history as $year => $details) {
-            // Formato numrin e  attendees duke shtuar presje per te ndare mijerat e plota nga numrat e tjere (thousand separators) me RegEx
-            $history[$year]['attendees'] = preg_replace('/(?<=\d)(?=(\d{3})+$)/', ',', $details['attendees']);
-        }
 
     // Function to generate sort links with JavaScript sorting
     function generateSortLink($text, $sortType)
@@ -1021,6 +1056,98 @@ echo '</div>
                 </div>
             </div>
         </footer>
+
+
+        <script>
+    //funksioni per animacion te backtotop buttonit
+document.addEventListener("DOMContentLoaded", function () {
+var backToTopButton = document.getElementById('backToTopButton');
+
+function toggleBackToTopButton() {
+backToTopButton.classList.toggle('d-none', window.scrollY <= 300);
+}
+
+function scrollToTop() {
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function animateBackToTopButton() {
+$('#backToTopButton').stop(true, true).fadeTo(200, 0.5).fadeTo(200, 1).addClass('animated bounce'); 
+}
+
+window.addEventListener('scroll', function () {
+toggleBackToTopButton();
+
+if (window.scrollY > 300) {
+    animateBackToTopButton();
+}
+});
+
+backToTopButton.addEventListener('click', scrollToTop);
+});
+
+
+
+
+
+// funksioni per drag n drop 
+var button = document.getElementById('backToTopButton');
+var offsetX, offsetY;
+
+button.addEventListener("dragstart", function (event) {
+event.dataTransfer.setData("text/plain", null);
+offsetX = event.clientX - button.getBoundingClientRect().left;
+offsetY = event.clientY - button.getBoundingClientRect().top;
+});
+
+document.addEventListener("dragover", function (event) {
+event.preventDefault();
+
+if (offsetX && offsetY) {
+    var x = event.clientX - offsetX;
+    var y = event.clientY - offsetY;
+
+    button.style.transform = "translate(" + x + "px, " + y + "px)";
+}
+});
+
+document.addEventListener("drop", function (event) {
+event.preventDefault();
+
+if (offsetX && offsetY) {
+    button.style.transform = "translate(0px, 0px)";
+    offsetX = offsetY = null;
+}
+});
+
+//callback function
+
+try {
+document.addEventListener("DOMContentLoaded", function () {
+// ... Kodi ekzistues ...
+
+// Shto funksionin e ri për të trajtuar klikimin e butonit "backToTopButton"
+function handleBackToTopButtonClick() {
+alert("Ky buton ju dërgon lart në faqen e sipërme.");
+// Mund të shtosh logjikën tuaj për të kthyer lart faqen këtu
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Gjej elementin e butonit
+var backToTopButton = document.getElementById('backToTopButton');
+
+// Regjistro ngjarjen e klikimit dhe lidh funksionin e krijuar më parë
+backToTopButton.addEventListener('click', handleBackToTopButtonClick);
+
+
+});
+}
+catch (error) {
+    console.error("Ka ndodhur një error ne funksionimin e kodit tuaj!", error.message);
+    throw error;
+}
+
+</script>
 
 
         <script src="js/jquery.min.js"></script>
