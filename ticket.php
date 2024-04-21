@@ -78,7 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipiBiletës = $_POST["TicketForm"];
     $numriBiletave = $_POST["ticket-form-number"];
     $dataBlerjes = trim($_POST["dataBlerjes"]);
-    
+    $xhirollogaria = $_POST["bank-account-number"]; // Mbledhni numrin e xhirollogarisë bankare
+
     // Validate number of tickets
     if ($numriBiletave < 1) {
         echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
@@ -98,6 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Add ticket data to the tickets array
             $tickets[] = [
                 $user->getEmri(),
+                $email, // Shtoni emailin në array të biletave
+                $telefoni, // Shtoni numrin e telefonit në array të biletave
+                $xhirollogaria, // Shtoni numrin e xhirollogarisë bankare në array të biletave
                 $bileta->getEmri(),
                 $bileta->getCmimi(),
                 $bileta->getDataBlerjes()
@@ -121,6 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo " <script>alert('Data e blerjes së biletes nuk është valide, është para datës aktuale ose pas datës së fundit të lejuar (24 Korrik).')</script>";
         }
     }
+
 }
 
 ?>
@@ -224,7 +229,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-check form-control">
                                         <input class="form-check-input" type="radio" name="TicketForm" id="flexRadioDefault1" value="earlybird" data-price="120">
-<label class="form-check-label" for="flexRadioDefault1">Early bird $120</label>
+                                        <label class="form-check-label" for="flexRadioDefault1">Early bird $120</label>
 
                                         </div>
                                     </div>
@@ -237,6 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <input type="number" name="ticket-form-number" id="ticket-form-number" class="form-control" placeholder="Number of Tickets" required>
                                 <textarea name="ticket-form-message" rows="3" class="form-control" id="ticket-form-message" placeholder="Additional Request"></textarea>
+                                <input type="text" name="bank-account-number" id="bank-account-number" class="form-control" placeholder="Bank Account Number" required>
                                 <input type="text" name="dataBlerjes" id="dataBlerjes" class="form-control" placeholder="Date of Purchase (yyyy-mm-dd)" required>
                                 <div class="col-lg-4 col-md-10 col-8 mx-auto">
                                     <button type="submit" class="form-control">Buy Ticket</button>
