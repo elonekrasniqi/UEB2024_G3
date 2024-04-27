@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
