@@ -17,14 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $email;
             $_SESSION['fullname'] = getUserFullname($email);
 
-            
+            // Përdorimi i sesionit për numërimin e hyrjeve
             if (!isset($_SESSION['login_count'])) {
                 $_SESSION['login_count'] = 1;
             } else {
                 $_SESSION['login_count']++;
             }
-
-
 
             // Ridrejto përdoruesin pas hyrjes së suksesshme
             header('Location: homepage.php');
@@ -35,46 +33,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Funksioni për të verifikuar të dhënat e përdoruesit
+// Funksioni për të verifikuar të dhënat e përdoruesit nga tabela e përdoruesve në bazën e të dhënave
 function authenticateUser($email, $password) {
-    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen të dhënat e përdoruesve
+    $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
+    $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
+    $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
+    $dbName = 'projektiueb'; // Emri i bazës së të dhënave
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin dhe fjalëkalimin e dhënë
-    if (file_exists($usersFile)) {
-        $fileContents = file_get_contents($usersFile);
-        $lines = explode("\n", $fileContents);
-        foreach ($lines as $line) {
-            $userData = explode("|", $line);
-            if (count($userData) === 3 && $userData[1] === $email && password_verify($password, $userData[2])) {
-                return true; // Emaili dhe fjalëkalimi përputhen në skedar
-            }
+    // Kontrollo lidhjen
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Kontrollo në bazën e të dhënave për përdoruesin me emailin dhe fjalëkalimin e dhënë
+    $stmt = $conn->prepare("SELECT * FROM tblusers WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['password'])) {
+            return true; // Autentikimi i suksesshëm
         }
     }
 
-    return false; // Emaili dhe fjalëkalimi nuk përputhen në skedar ose skedari nuk ekziston
+    $stmt->close();
+    $conn->close();
+
+    return false; // Autentikimi i dështuar
 }
 
 // Funksioni për të marrë emrin e plotë të përdoruesit nga emaili
 function getUserFullname($email) {
-    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen të dhënat e përdoruesve
+    $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
+    $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
+    $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
+    $dbName = 'projektiueb'; // Emri i bazës së të dhënave
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin e dhënë
-    if (file_exists($usersFile)) {
-        $fileContents = file_get_contents($usersFile);
-        $lines = explode("\n", $fileContents);
-        foreach ($lines as $line) {
-            $userData = explode("|", $line);
-            if (count($userData) === 3 && $userData[1] === $email) {
-                return $userData[0]; // Kthe emrin e plotë të përdoruesit
-            }
-        }
+    // Kontrollo lidhjen
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    return 'false'; // Nëse emaili nuk gjendet në skedar ose skedari nuk ekziston
+    // Merr emrin e plotë të përdoruesit nga tabela e përdoruesve
+    $stmt = $conn->prepare("SELECT name FROM tblusers WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['name']; // Kthe emrin e plotë të përdoruesit
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return 'false'; // Nëse emaili nuk gjendet në bazë ose skedari nuk ekziston
 }
-
-
-
 ?>
 
 

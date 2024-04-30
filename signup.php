@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Lidhja me bazën e të dhënave
                 $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
                 $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
-                $dbPass = ''; // Fjalëkalimi i bazës së të dhënave
+                $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
                 $dbName = 'projektiueb'; // Emri i bazës së të dhënave
                 $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
@@ -82,7 +82,7 @@ function validatePassword($password) {
 function checkEmailExists($email) {
     $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
     $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
-    $dbPass = ''; // Fjalëkalimi i bazës së të dhënave
+    $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
     $dbName = 'projektiueb'; // Emri i bazës së të dhënave
     $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
