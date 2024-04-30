@@ -1,5 +1,4 @@
- <?php
-
+<?php
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = trim($_POST['signup-form-fullname']);
@@ -20,20 +19,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif (!validatePassword($password)) {
             echo '<script>alert("Invalid password format");</script>';
         } else {
-            // Kontrollo nëse emaili dhe fjalëkalimi përputhen në skedar
-            $userExists = checkUserCredentials($email, $password);
-            if ($userExists) {
-                echo '<script>alert("User with this email and password already exists, please login");</script>';
+            // Kontrollo nëse emaili ekziston në bazën e të dhënave
+            if (checkEmailExists($email)) {
+                echo '<script>alert("User with this email already exists, please login");</script>';
             } else {
                 // Kodimi i fjalëkalimit me password_hash
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                // Perform further processing, e.g., save user data to a file
-                $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
-                $userData = "$fullname|$email|$hashedPassword\n"; // Të dhënat e përdoruesit për të ruajtur
+                // Lidhja me bazën e të dhënave
+                $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
+                $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
+                $dbPass = ''; // Fjalëkalimi i bazës së të dhënave
+                $dbName = 'projektiueb'; // Emri i bazës së të dhënave
+                $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-                // Ruaj të dhënat e përdoruesit në skedar
-                file_put_contents($usersFile, $userData, FILE_APPEND);
+                // Kontrollo lidhjen
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Shtimi i përdoruesit në bazën e të dhënave
+                $stmt = $conn->prepare("INSERT INTO tblusers (name, email, password) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $fullname, $email, $hashedPassword);
+                $stmt->execute();
+                $stmt->close();
+                $conn->close();
+
                 echo "<script>alert('Signup successful'); window.location.href ='index.php' </script>";
             }
         }
@@ -67,29 +78,31 @@ function validatePassword($password) {
     return true; // Fjalëkalimi është i vlefshëm
 }
 
-function checkUserCredentials($email, $password) {
-    $usersFile = 'user.txt'; // Emri i skedarit ku ruhen emrat e përdoruesve
+// Funksioni për të kontrolluar nëse emaili ekziston në bazën e të dhënave
+function checkEmailExists($email) {
+    $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
+    $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
+    $dbPass = ''; // Fjalëkalimi i bazës së të dhënave
+    $dbName = 'projektiueb'; // Emri i bazës së të dhënave
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-    // Kontrollo nëse skedari ekziston dhe përmban të dhëna për emailin dhe fjalëkalimin e dhënë
-    if (file_exists($usersFile)) {
-        $fileContents = file_get_contents($usersFile);
-        $lines = explode("\n", $fileContents);
-        foreach ($lines as $line) {
-            $userData = explode("|", $line);
-            if (count($userData) === 3 && $userData[1] === $email && password_verify($password, $userData[2])) {
-                return true; // Emaili dhe fjalëkalimi përputhen në skedar
-            }
-            // Kontrollo edhe për ekzistencën e emailit në skedar pa përmendur fjalëkalimin
-            if (count($userData) >= 2 && $userData[1] === $email) {
-                return true; // Emaili ekziston në skedar, nuk lejojë krijimin e llogarisë
-            }
-        }
+    // Kontrollo lidhjen
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    return false; // Emaili dhe fjalëkalimi nuk përputhen në skedar ose skedari nuk ekziston
+    // Kontrollo nëse emaili ekziston në tabelën e përdoruesve
+    $stmt = $conn->prepare("SELECT email FROM tblusers WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $count = $stmt->num_rows;
+    $stmt->close();
+    $conn->close();
+
+    return $count > 0; // Kthe true nëse emaili ekziston, false nëse nuk ekziston
 }
 ?>
-
 
 
 
