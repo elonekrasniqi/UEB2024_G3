@@ -273,10 +273,28 @@ LoginBtn.addEventListener("mouseleave", function() {
                                     <i class="custom-icon bi-geo-alt me-2" ></i>Parku i Festivalit Sunny Hill, Prishtina 10000, Kosova
                                 </h5>
                             </div>
-                            <form method="POST">
-            <button type="submit" name="playSound">Luaj Muzikë</button>
-        </form>
-                           
+        <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
+        Luaj Muzikë
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="soundDropdownButton">
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound1.wav')">Kenga 1</a></li>
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound2.mp3')">Kenga 2</a></li>
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound3.mp3')">Kenga 3</a></li>
+        </ul>
+    </div>
+
+    <audio id="soundPlayer">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+    function playSound(soundFile) {
+        var soundPlayer = document.getElementById('soundPlayer');
+        soundPlayer.innerHTML = '<source src="' + soundFile + '" type="audio/mpeg"><source src="' + soundFile + '" type="audio/wav">';
+        soundPlayer.load();
+        soundPlayer.play();
+    }
+</script>       
                         </div>
                     </div>
                 </div>

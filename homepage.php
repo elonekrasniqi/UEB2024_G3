@@ -87,7 +87,9 @@ if (!isset($_COOKIE['first_login'])) {
     echo "<script>alert('Cookies are enabled.');</script>";
 }
 
-function playSpecificSound($soundFile) {
+
+//function from the faza1
+/*function playSpecificSound($soundFile) {
     echo '<audio autoplay><source src="' . $soundFile . '" type="audio/wav"></audio>';
     $_SESSION['lastPlayedSound'] = $soundFile;
 }
@@ -97,7 +99,9 @@ if (isset($_POST['playSound'])) {
     $soundFile = 'sounds/sound1.wav'; // Specifikoni fajllin e tingujve për të luajtur
     playSpecificSound($soundFile);
 }
+*/
 ?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -122,6 +126,7 @@ if (isset($_POST['playSound'])) {
         <link href="css/bootstrap-icons.css" rel="stylesheet">
 
         <link href="css/festival.css" rel="stylesheet">
+        
 
     </head>
     
@@ -349,10 +354,29 @@ LoginBtn.addEventListener("mouseleave", function() {
                                     <i class="custom-icon bi-geo-alt me-2" ></i>Sunny Hill Festival Park, Prishtina 10000, Kosova
                                 </h5>
                             </div>
-                            <form method="POST">
-            <button type="submit" name="playSound">Play Sound</button>
-        </form>
-                           
+                            <div class="dropdown">
+    <button class="btn custom-btn d-lg-block d-none dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 45px;">
+        Select Sound
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="soundDropdownButton">
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound1.wav')">Sound 1</a></li>
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound2.mp3')">Sound 2</a></li>
+            <li><a class="dropdown-item" href="#" onclick="playSound('sounds/sound3.mp3')">Sound 3</a></li>
+        </ul>
+    </div>
+
+    <audio id="soundPlayer">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+    function playSound(soundFile) {
+        var soundPlayer = document.getElementById('soundPlayer');
+        soundPlayer.innerHTML = '<source src="' + soundFile + '" type="audio/mpeg"><source src="' + soundFile + '" type="audio/wav">';
+        soundPlayer.load();
+        soundPlayer.play();
+    }
+</script>
                         </div>
                     </div>
                 </div>
