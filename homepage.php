@@ -12,7 +12,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 else{
-    echo "success";
+    echo "<script>
+    setTimeout(function(){
+        document.getElementById('successAlert').style.display = 'none';
+    }, 1000); // 4000 milliseconds = 4 seconds
+    </script>";
+
+    echo "<div id='successAlert' style='background-color: #d4edda; border-color: #c3e6cb; color: #155724; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;'>
+    Success!
+    </div>";
 }
 
 ?>
@@ -149,14 +157,14 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="col-lg-6 col-12 d-flex flex-wrap">
                 <strong class="text-dark">
                     <?php
-
-                    
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span>Welcome, " . $_SESSION['fullname'] . "! </span>"; 
-                       
-                        echo "You have logged in " . $_SESSION['login_count'] . " times.";
+                        echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['fullname'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
+                        echo "<script>
+                            setTimeout(function() {
+                                document.getElementById('welcomeMsg').style.display = 'inline';
+                            }, 1000);
+                        </script>";
                     }
-                   
                     ?>
                 </strong>
             </div>
