@@ -129,7 +129,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
+<?php
+// Database connection parameters
+$servername = "localhost";
+$username = "root";
+$password = "2302";
+$dbname = "projektiueb";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Procesi i blerjes së biletes
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   // Retrieve form data
+   $emri = $_POST["ticket-form-name"];
+   $email = $_POST["ticket-form-email"];
+   $telefoni = $_POST["ticket-form-phone"];
+   $tipiBiletës = $_POST["TicketForm"];
+   $numriBiletave = $_POST["ticket-form-number"];
+   $dataBlerjes = trim($_POST["dataBlerjes"]);
+   $message = $_POST["ticket-form-message"]; 
+   $xhirollogaria = $_POST["bank-account-number"]; 
+
+   // Validate number of tickets
+   if ($numriBiletave < 1) {
+       echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
+   } else {
+       // Continue with the ticket purchase process
+       // Krijimi i objektit User
+       $user = new User($emri);
+
+       if ($tipiBiletës == "earlybird") {
+           $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
+       } elseif ($tipiBiletës == "standard") {
+           $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
+       }
+    }
+    $sql = "INSERT INTO tickets (emri, email, telefoni, xhirollogaria, bileta_emri, cmimi, data_blerjes, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssss", $emri, $email, $telefoni, $xhirollogaria, $bileta_emri, $cmimi, $data_blerjes, $message);
+    
+    $emri = $user->getEmri();
+    $email = $email;
+    $telefoni = $telefoni;
+    $xhirollogaria = $xhirollogaria;
+    $bileta_emri = $bileta->getEmri();
+    $cmimi = $bileta->getCmimi();
+    $data_blerjes = $bileta->getDataBlerjes();
+    $message = $message;
+
+    if ($stmt->execute()) {
+       
+        echo '<script>alert("Blerja u krye me sukses!");</script>';
+        echo '<script>window.location.href = "ticket.php";</script>';
+        exit();
+    } else {
+       
+        echo " <script>alert('Error: " . $conn->error . "');</script>";
+    }
+    $stmt->close();
+}
+
+$conn->close();
+?>
 
 
 
