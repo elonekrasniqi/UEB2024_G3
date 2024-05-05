@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         }
         </style>
+        
 
         <main>
         <header class="site-header">
@@ -131,6 +132,31 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
 </header>
+
+<style>
+
+
+@keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  #backToTopButton {
+position: fixed;
+bottom: 20px;
+right: 20px;
+user-select: none;
+cursor: grab;
+transition: all 0.3s;
+z-index: 4; 
+}
+
+#backToTopButton:hover span {
+animation: spin 1.5s linear infinite;
+transform-origin: center;
+display: inline-block;
+}
+</style>
 
 
             <nav class="navbar navbar-expand-lg">
@@ -306,6 +332,9 @@ LoginBtn.addEventListener("mouseleave", function() {
     </video>
 </div>
 </section>
+<button id="backToTopButton" class="btn rounded-circle d-none" draggable="true" style="background-color:white; color: black; border: 1px solid black;">
+    <span>&#9733; </span> 
+</button>
 
 <section class="about-section section-padding" id="section_2">
     <div class="container">
@@ -990,6 +1019,96 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
 </div>
 </div>
 </footer>
+<script>
+    //funksioni per animacion te backtotop buttonit
+document.addEventListener("DOMContentLoaded", function () {
+var backToTopButton = document.getElementById('backToTopButton');
+
+function toggleBackToTopButton() {
+backToTopButton.classList.toggle('d-none', window.scrollY <= 300);
+}
+
+function scrollToTop() {
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function animateBackToTopButton() {
+$('#backToTopButton').stop(true, true).fadeTo(200, 0.5).fadeTo(200, 1).addClass('animated bounce'); 
+}
+
+window.addEventListener('scroll', function () {
+toggleBackToTopButton();
+
+if (window.scrollY > 300) {
+    animateBackToTopButton();
+}
+});
+
+backToTopButton.addEventListener('click', scrollToTop);
+});
+
+
+
+
+
+// funksioni per drag n drop 
+var button = document.getElementById('backToTopButton');
+var offsetX, offsetY;
+
+button.addEventListener("dragstart", function (event) {
+event.dataTransfer.setData("text/plain", null);
+offsetX = event.clientX - button.getBoundingClientRect().left;
+offsetY = event.clientY - button.getBoundingClientRect().top;
+});
+
+document.addEventListener("dragover", function (event) {
+event.preventDefault();
+
+if (offsetX && offsetY) {
+    var x = event.clientX - offsetX;
+    var y = event.clientY - offsetY;
+
+    button.style.transform = "translate(" + x + "px, " + y + "px)";
+}
+});
+
+document.addEventListener("drop", function (event) {
+event.preventDefault();
+
+if (offsetX && offsetY) {
+    button.style.transform = "translate(0px, 0px)";
+    offsetX = offsetY = null;
+}
+});
+
+//callback function
+
+try {
+document.addEventListener("DOMContentLoaded", function () {
+// ... Kodi ekzistues ...
+
+// Shto funksionin e ri për të trajtuar klikimin e butonit "backToTopButton"
+function handleBackToTopButtonClick() {
+alert("Ky buton ju dërgon lart në faqen e sipërme.");
+// Mund të shtosh logjikën tuaj për të kthyer lart faqen këtu
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Gjej elementin e butonit
+var backToTopButton = document.getElementById('backToTopButton');
+
+// Regjistro ngjarjen e klikimit dhe lidh funksionin e krijuar më parë
+backToTopButton.addEventListener('click', handleBackToTopButtonClick);
+
+
+});
+}
+catch (error) {
+    console.error("Ka ndodhur një error ne funksionimin e kodit tuaj!", error.message);
+    throw error;
+}
+
+</script>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

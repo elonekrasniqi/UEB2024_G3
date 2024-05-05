@@ -1196,7 +1196,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Shto funksionin e ri për të trajtuar klikimin e butonit "backToTopButton"
 function handleBackToTopButtonClick() {
-alert("Ky buton ju dërgon lart në faqen e sipërme.");
+alert("This button takes you up to the top page.");
 // Mund të shtosh logjikën tuaj për të kthyer lart faqen këtu
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
