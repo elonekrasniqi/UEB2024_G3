@@ -1,3 +1,5 @@
+<?php require_once("forms.php"); ?>
+<?php require_once("contact.php"); ?>
 <?php
 $servername = "localhost";
 $username = "root";
@@ -828,7 +830,7 @@ echo '</div>
 
                             <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel" aria-labelledby="nav-ContactForm-tab">
-                                    <form class="custom-form contact-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                                    <form class="custom-form contact-form mb-5 mb-lg-0" action="contact.php" method="post" role="form">
                                         <div class="contact-form-body">
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 col-12">
@@ -857,7 +859,7 @@ echo '</div>
                                 </div>
 
                                 <div class="tab-pane fade" id="nav-Volenteer" role="tabpanel" aria-labelledby="nav-Volenteer-tab">
-                                    <form class="custom-form contact-form mb-5 mb-lg-0" action="#" method="post" role="form">
+                                    <form class="custom-form contact-form mb-5 mb-lg-0" action="forms.php" method="post" role="form">
                                         <div class="contact-form-body">
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 col-12">
@@ -1214,6 +1216,36 @@ catch (error) {
     console.error("Ka ndodhur një error ne funksionimin e kodit tuaj!", error.message);
     throw error;
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+            
+            // Serialize form data
+            var formData = $(this).serialize();
+            
+            // Send AJAX request
+            $.ajax({
+                type: 'POST',
+                url: 'forms.php',
+                data: formData,
+                success: function(response) {
+                    // Optional: display a success message or perform any other actions
+                    console.log(response);
+                    // Reload the page to reflect the changes
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    // Log any errors
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    </script>
 
 </script>
 
