@@ -10,7 +10,7 @@ $dbName = 'projektiueb';
 // Funksioni për lidhjen me bazën e të dhënave
 function connectToDatabase() {
     global $dbHost, $dbUser, $dbPass, $dbName;
-
+// try and catch kerkesa
     try {
         $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
         if ($conn->connect_error) {

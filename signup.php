@@ -1,4 +1,18 @@
 <?php
+ini_set('display_errors', 1);
+// Enable error reporting
+error_reporting(E_ALL);
+
+// Function to handle errors(Kallzon qffare errori osht, n'cilin rresht osht edhe n'cilen file)
+function handleError($errno, $errstr, $errfile, $errline) {
+    $errorMessage = "Error on line $errline in $errfile: $errstr";
+    error_log($errorMessage);
+    echo "Error occurred: $errorMessage";
+}
+
+// Set custom error handler to handle E_USER_ERROR
+set_error_handler("handleError", E_USER_ERROR);
+
 // Verifikimi i emailit përmes RegEx nga ana e serverit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = trim($_POST['signup-form-fullname']);
@@ -6,48 +20,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $emailPattern = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
 
-    // Verifikimi i emailit
-    if (!preg_match($emailPattern, $email)) {
-        echo '<script>alert("Invalid email address");</script>';
-    } else {
-        $password = trim($_POST['signup-form-password']);
-        $confirmPassword = trim($_POST['signup-form-confirm-password']);
-
-        // Verifikimi i fjalëkalimit
-        if ($password !== $confirmPassword) {
-            echo '<script>alert("Passwords do not match");</script>';
-        } elseif (!validatePassword($password)) {
-            echo '<script>alert("Invalid password format");</script>';
+    try {
+        // Verifikimi i emailit
+        if (!preg_match($emailPattern, $email)) {
+            throw new Exception("Invalid email address");
         } else {
-            // Kontrollo nëse emaili ekziston në bazën e të dhënave
-            if (checkEmailExists($email)) {
-                echo '<script>alert("User with this email already exists, please login");</script>';
+            $password = trim($_POST['signup-form-password']);
+            $confirmPassword = trim($_POST['signup-form-confirm-password']);
+
+            // Verifikimi i fjalëkalimit
+            if ($password !== $confirmPassword) {
+                throw new Exception("Passwords do not match");
+            } elseif (!validatePassword($password)) {
+                throw new Exception("Invalid password format");
             } else {
-                // Kodimi i fjalëkalimit me password_hash
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                // Kontrollo nëse emaili ekziston në bazën e të dhënave
+                if (checkEmailExists($email)) {
+                    throw new Exception("User with this email already exists, please login");
+                } else {
+                    // Kodimi i fjalëkalimit me password_hash
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                // Lidhja me bazën e të dhënave
-                $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
-                $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
-                $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
-                $dbName = 'projektiueb'; // Emri i bazës së të dhënave
-                $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+                    // Lidhja me bazën e të dhënave
+                    $dbHost = 'localhost'; // Emri i hostit të bazës së të dhënave
+                    $dbUser = 'root'; // Emri i përdoruesit të bazës së të dhënave
+                    $dbPass = '2302'; // Fjalëkalimi i bazës së të dhënave
+                    $dbName = 'projektiueb'; // Emri i bazës së të dhënave
+                    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-                // Kontrollo lidhjen
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
+                    // Kontrollo lidhjen
+                    if ($conn->connect_error) {
+                        throw new Exception("Connection failed: " . $conn->connect_error);
+                    }
+
+                    // Shtimi i përdoruesit në bazën e të dhënave
+                    $stmt = $conn->prepare("INSERT INTO tblusers (name, email, password) VALUES (?, ?, ?)");
+                    $stmt->bind_param("sss", $fullname, $email, $hashedPassword);
+                    $stmt->execute();
+                    $stmt->close();
+                    $conn->close();
+
+                    echo "<script>alert('Signup successful'); window.location.href ='index.php' </script>";
                 }
-
-                // Shtimi i përdoruesit në bazën e të dhënave
-                $stmt = $conn->prepare("INSERT INTO tblusers (name, email, password) VALUES (?, ?, ?)");
-                $stmt->bind_param("sss", $fullname, $email, $hashedPassword);
-                $stmt->execute();
-                $stmt->close();
-                $conn->close();
-
-                echo "<script>alert('Signup successful'); window.location.href ='index.php' </script>";
             }
         }
+    } catch (Exception $e) {
+        // Handle the exception - Perdorimi CATCH (kerkese)
+        handleError(E_USER_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }
 
@@ -75,7 +94,7 @@ function validatePassword($password) {
         return false; // Nuk ka asnjë simbol të veçantë
     }
 
-    return true; // Fjalëkalimi është i vlefshëm
+    return true;// Fjalëkalimi është i vlefshëm
 }
 
 // Funksioni për të kontrolluar nëse emaili ekziston në bazën e të dhënave
@@ -86,9 +105,9 @@ function checkEmailExists($email) {
     $dbName = 'projektiueb'; // Emri i bazës së të dhënave
     $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
-    // Kontrollo lidhjen
+    // Kontrollo lidhjen - perdorimi THROW (kerkese)
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
     // Kontrollo nëse emaili ekziston në tabelën e përdoruesve
@@ -103,7 +122,6 @@ function checkEmailExists($email) {
     return $count > 0; // Kthe true nëse emaili ekziston, false nëse nuk ekziston
 }
 ?>
-
 
 
 
