@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <strong class="text-dark">
                     <?php
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['fullname'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
+                        echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['name'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
                         echo "<script>
                             setTimeout(function() {
                                 document.getElementById('welcomeMsg').style.display = 'inline';

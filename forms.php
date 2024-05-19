@@ -12,12 +12,29 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Kerkesa: Përdorimi i funksioneve me referencë
-function modifyData(&$name, &$email, &$phone, &$company, &$message, &$messageLength) {
-    $name = strtoupper($name); // Convert name to uppercase
-    $company = strtoupper($company); // Convert company to uppercase
-    $message = wordwrap($message, 70); // Wrap message to 70 characters per line
-    
+// Function to modify and validate data using references
+function modifyAndValidateData(&$name, &$email, &$phone, &$company, &$message, &$errors) {
+    // Convert name and company to uppercase
+    $name = strtoupper($name);
+    $company = strtoupper($company);
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format.";
+    }
+
+    // Validate phone number (basic validation)
+    if (!preg_match("/^\+383[0-9]{8,13}$/", $phone)) {
+        $errors[] = "Invalid phone number. Must start with +383 and be between 8 and 13 digits.";
+    }
+
+    // Wrap message to 70 characters per line
+    $message = wordwrap($message, 70);
+
+    // Check message length
+    if (strlen($message) > 1000) {
+        $errors[] = "Message is too long. Maximum length is 1000 characters.";
+    }
 }
 
 // Process form submission
@@ -30,24 +47,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $company = mysqli_real_escape_string($conn, $_POST["volunteer-company"]);
         $message = mysqli_real_escape_string($conn, $_POST["volunteer-message"]);
 
-    
+        // Initialize errors array
+        $errors = [];
 
-        // Call the function to modify data
-        modifyData($name, $email, $phone, $company, $message);
+        // Call the function to modify and validate data
+        modifyAndValidateData($name, $email, $phone, $company, $message, $errors);
 
-        // Insert data into volunteers table
-        $sql = "INSERT INTO volunteers (name, email, phone, company, message) VALUES ('$name', '$email', '$phone', '$company', '$message')";
+        // Check if there are any errors
+        if (empty($errors)) {
+            // Insert data into volunteers table
+            $sql = "INSERT INTO volunteers (name, email, phone, company, message) VALUES ('$name', '$email', '$phone', '$company', '$message')";
 
-        if ($conn->query($sql) !== TRUE) {
-            // Log error
-            error_log("Error: " . $sql . "<br>" . $conn->error);
-        }
-            
+            if ($conn->query($sql) !== TRUE) {
+                // Log error
+                error_log("Error: " . $sql . "<br>" . $conn->error);
+            }
+
             header("Location: homepage.php");
-            exit(); 
+            exit();
+        } else {
+            // Handle errors (e.g., display to user as alerts)
+            echo "<script>";
+            foreach ($errors as $error) {
+                echo "alert('$error');";
+            }
+            echo "</script>";
         }
     }
-
+}
 
 // Close database connection
 $conn->close();
