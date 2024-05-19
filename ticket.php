@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 class Bileta {
     protected $emri;
     protected $cmimi;
@@ -136,15 +139,31 @@ $username = "root";
 $password = "2302";
 $dbname = "projektiueb";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Custom error handler function
+function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+    error_log("Error occurred: $errstr in $errfile on line $errline", 0);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Check if additional context is available
+    if ($errcontext) {
+        // Log additional context provided by $errcontext
+        $additional_context = print_r($errcontext, true);
+        error_log("Additional context: $additional_context", 0);
+    }
+
+    // Display a generic error message to the user
+    echo "<p>An error occurred. Please try again later.</p>";
+}
+// Set custom error handler
+set_error_handler("customErrorHandler");
+
+try {
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+} catch (Exception $e) {
+    // Handle connection error
+    die("Connection failed: " . $e->getMessage());
 }
 
-// Procesi i blerjes së biletes
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    // Retrieve form data
    $emri = $_POST["ticket-form-name"];
@@ -322,10 +341,7 @@ $conn->close();
         </section>
     </main>
   
- 
-    <footer class="site-footer">
-        <!-- Footer content -->
-    </footer>
+
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>

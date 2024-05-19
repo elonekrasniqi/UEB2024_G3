@@ -31,8 +31,9 @@ else{
 
 
 <?php
-session_start();
 
+// Start session
+session_start();
 
 // session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
@@ -46,8 +47,6 @@ if (isset($_GET['gjuha'])) {
     }
     exit();
 }
-
-
 
 //cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
 // Check if the form is submitted
@@ -66,18 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hash = md5($name); // Generate a hash from the name
         $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
         setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
-    }
-    
-  
+    }  
 }
 
 //cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-if (isset($_POST['submitform'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitform'])) {
     $fullNameVol = $_POST['volunteer-name'];
     setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
     echo "<script>alert('Thank you for applying, $fullNameVol! We will contact you soon!');</script>";
-}
 }
 
 //shiko a ka cookie ne fillim kur logohet personi 
@@ -88,21 +83,8 @@ if (!isset($_COOKIE['first_login'])) {
     // Shfaq mesazhin për gjendjen e cookies
     echo "<script>alert('Cookies are enabled.');</script>";
 }
-
-
-//function from the faza1
-/*function playSpecificSound($soundFile) {
-    echo '<audio autoplay><source src="' . $soundFile . '" type="audio/wav"></audio>';
-    $_SESSION['lastPlayedSound'] = $soundFile;
-}
-
-// Kontrollo nëse është shtypur butoni për të luajtur tinguj
-if (isset($_POST['playSound'])) {
-    $soundFile = 'sounds/sound1.wav'; // Specifikoni fajllin e tingujve për të luajtur
-    playSpecificSound($soundFile);
-}
-*/
 ?>
+
 
 <!doctype html>
 <html lang="en">
