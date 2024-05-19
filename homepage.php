@@ -873,7 +873,7 @@ echo '</div>
                                     
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 col-12">
-                                                    <input type="tel" name="volunteer-phone" id="volunteer-phone" class="form-control" placeholder="Your phone number" pattern="383-[0-9]{8}" required>
+                                                    <input type="tel" name="volunteer-phone" id="volunteer-phone" class="form-control" placeholder="Your phone number" pattern="+383[0-9]{8}" required>
                                                 </div>
                                     
                                                 <div class="col-lg-6 col-md-6 col-12">
