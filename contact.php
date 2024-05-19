@@ -19,6 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = mysqli_real_escape_string($conn, $_POST["contact-email"]);
         $company = mysqli_real_escape_string($conn, $_POST["contact-company"]);
         $message = mysqli_real_escape_string($conn, $_POST["contact-message"]);
+        $fullName = $_POST['contact-name'];
+        setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
+        echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
 
         // Insert data into contact table
         $sql = "INSERT INTO contact (name, email, company, message) VALUES ('$name', '$email', '$company', '$message')";
