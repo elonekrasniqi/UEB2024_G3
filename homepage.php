@@ -1,5 +1,5 @@
 <?php require_once("forms.php"); ?>
-<?php require_once("contact.php"); ?>
+<?php require_once("contact.php"); ?> <!-- require kerkese eshte -->
 <?php
 $servername = "localhost";
 $username = "root";
