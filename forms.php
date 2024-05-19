@@ -12,6 +12,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Kerkesa: Përdorimi i funksioneve me referencë
+function modifyData(&$name, &$email, &$phone, &$company, &$message, &$messageLength) {
+    $name = strtoupper($name); // Convert name to uppercase
+    $company = strtoupper($company); // Convert company to uppercase
+    $message = wordwrap($message, 70); // Wrap message to 70 characters per line
+    $messageLength = strlen($message); // Calculate the length of the modified message
+}
+
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["submitform"])) {
@@ -22,6 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $company = mysqli_real_escape_string($conn, $_POST["volunteer-company"]);
         $message = mysqli_real_escape_string($conn, $_POST["volunteer-message"]);
 
+        // Variable to hold the length of the modified message
+        $messageLength = 0;
+
+        // Call the function to modify data
+        modifyData($name, $email, $phone, $company, $message, $messageLength);
+
         // Insert data into volunteers table
         $sql = "INSERT INTO volunteers (name, email, phone, company, message) VALUES ('$name', '$email', '$phone', '$company', '$message')";
 
@@ -29,12 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Log error
             error_log("Error: " . $sql . "<br>" . $conn->error);
         } else {
+            // Log the length of the modified message
+            error_log("Message length: " . $messageLength);
+            
             // Redirect back to homepage
             header("Location: homepage.php");
             exit(); 
         }
     }
 }
+
 // Close database connection
 $conn->close();
 ?>

@@ -1,6 +1,5 @@
 <?php require_once("forms.php"); ?>
 <?php require_once("contact.php"); ?>
-
 <?php
 $servername = "localhost";
 $username = "root";
@@ -11,8 +10,21 @@ $dbname = "projektiueb";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if ($conn->connect_error) 
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+} 
+else{
+    echo "<script>
+    setTimeout(function(){
+        document.getElementById('successAlert').style.display = 'none';
+    }, 1000); // 4000 milliseconds = 4 seconds
+    </script>";
+
+    echo "<div id='successAlert' style='background-color: #d4edda; border-color: #c3e6cb; color: #155724; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;'>
+    Success!
+    </div>";
+}
+
 ?>
 
 
@@ -21,6 +33,8 @@ if ($conn->connect_error)
 <?php
 session_start();
 
+
+// session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
     $gjuha_zgjedhur = $_GET['gjuha'];
     $_SESSION['gjuha'] = $gjuha_zgjedhur;
@@ -34,6 +48,30 @@ if (isset($_GET['gjuha'])) {
 }
 
 
+
+//cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Handle the contact form submission
+    if (isset($_POST['submit'])) {
+        $fullName = $_POST['contact-name'];
+        setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
+        echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
+    }
+
+    //cookie i dyte, ndryshon ngjyren varesisht qfare vlere merr
+    // Handle the volunteer form submission
+    elseif (isset($_POST['volunteer-name'])) {
+        $name = $_POST["volunteer-name"];
+        $hash = md5($name); // Generate a hash from the name
+        $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
+        setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
+    }
+    
+  
+}
+
+//cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (isset($_POST['submitform'])) {
     $fullNameVol = $_POST['volunteer-name'];

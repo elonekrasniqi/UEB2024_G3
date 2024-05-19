@@ -23,6 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
         echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
 
+    
+        //Kerkesa: Përdorimi i funksioneve me referencë
+        function modifyData(&$name, &$email, &$company, &$message) {
+            $name = strtoupper($name); // Convert name to uppercase
+            $company = strtoupper($company); // Convert company to uppercase
+            $message = wordwrap($message, 70); // Wrap message to 70 characters per line
+        }
+
+        // Call the function to modify data
+        modifyData($name, $email, $company, $message);
+
         // Insert data into contact table
         $sql = "INSERT INTO contact (name, email, company, message) VALUES ('$name', '$email', '$company', '$message')";
 
