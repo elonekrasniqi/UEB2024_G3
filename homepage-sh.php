@@ -113,10 +113,8 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="col-lg-6 col-12 d-flex flex-wrap">
                 <strong class="text-dark">
                     <?php
-
-                    // Kontrollo nëse përdoruesi është i kyçur
-                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span>Mireseerdhe, " . $_SESSION['fullname'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['name'])) {
+    echo "<span>Mireseerdhe, " . $_SESSION['name'] . "! </span>"; // Shfaq emrin e përdoruesit në një span të veçantë
                         echo "Kjo është hera " . $_SESSION['login_count'] . " që jeni kycur.";
                     }
                     ?>

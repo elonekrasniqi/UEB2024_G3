@@ -146,15 +146,18 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="col-lg-6 col-12 d-flex flex-wrap">
                 <strong class="text-dark">
                     <?php
-                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                        echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['name'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
-                        echo "<script>
-                            setTimeout(function() {
-                                document.getElementById('welcomeMsg').style.display = 'inline';
-                            }, 1000);
-                        </script>";
-                    }
-                    ?>
+                  
+                   // Assuming $_SESSION['name'] is set after successful login
+                   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['name'])) {
+                       echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['name'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
+                       echo "<script>
+                           setTimeout(function() {
+                               document.getElementById('welcomeMsg').style.display = 'inline';
+                           }, 1000);
+                       </script>";
+                   }
+                   ?>
+                   
                 </strong>
             </div>
             <div class="col-lg-6 col-12 d-flex flex-wrap justify-content-end">
