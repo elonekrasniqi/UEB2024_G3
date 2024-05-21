@@ -10,7 +10,7 @@ Experience the vibrant energy of Kosovo's annual Sunny Hill Festival through our
 * [Brikena Katrati](https://github.com/brikenakastrati)
 * [Aulona Ramosaj](https://github.com/aulonaramosaj)
 * [Arlinda Beqiraj](https://github.com/arlindabeqiraj)
-* [Aurore Smirqaku](https://github.com/auroresmirqaku)
+* [Aurorë Smirqaku](https://github.com/auroresmirqaku)
 
 
 Take a look at out project in the link below:
