@@ -10,20 +10,9 @@ $dbname = "projektiueb";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if ($conn->connect_error) {
+if ($conn->connect_error) 
     die("Connection failed: " . $conn->connect_error);
-} 
-else{
-    echo "<script>
-    setTimeout(function(){
-        document.getElementById('successAlert').style.display = 'none';
-    }, 1000); // 4000 milliseconds = 4 seconds
-    </script>";
 
-    echo "<div id='successAlert' style='background-color: #d4edda; border-color: #c3e6cb; color: #155724; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;'>
-    Success!
-    </div>";
-}
 
 ?>
 

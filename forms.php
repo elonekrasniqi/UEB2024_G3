@@ -1,9 +1,6 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "2302";
-$dbname = "projektiueb";
+
+require_once 'db.php';
 
 // Function to modify and validate data using references
 function modifyAndValidateData(&$name, &$email, &$phone, &$company, &$message, &$errors) {
@@ -25,104 +22,100 @@ function modifyAndValidateData(&$name, &$email, &$phone, &$company, &$message, &
     $message = wordwrap($message, 70);
 
     // Check message length
-    if (strlen($message) > 1000) {
-        $errors[] = "Message is too long. Maximum length is 1000 characters.";
+    if (strlen($message) > 800) {
+        $errors[] = "Message is too long. Maximum length is 800 characters.";
     }
 }
 
 // Process form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["submitform"])) {
-        // Read the file containing logged-in user's emails
-        $file_path = 'users.txt';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitform"])) {
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-        // Open the file for reading
-        $handle = fopen($file_path, 'r');
+    // Read the file containing logged-in user's emails
+    $file_path = 'users.txt';
 
-        // Check if the file opened successfully
-        if ($handle) {
-            // Get the size of the file
-            $file_size = filesize($file_path);
+    // Open the file for reading
+    $handle = fopen($file_path, 'r');
 
-            // Check if file size retrieval was successful
-            if ($file_size === false) {
-                // Error accessing file size
-                $errors[] = "Error: Unable to get the size of the file.";
-            } else {
-                // Read the file contents into a string
-                $file_contents = fread($handle, $file_size);
+    // Check if the file opened successfully
+    if ($handle) {
+        // Get the size of the file
+        $file_size = filesize($file_path);
 
-                // Convert file contents to an array of emails
-                $logged_in_emails = explode("\n", $file_contents);
-
-                $entered_email = $_POST['volunteer-email'];
-
-                // Check if the entered email exists in the list of logged-in emails
-                if (!in_array($entered_email, $logged_in_emails)) {
-                    // If the entered email doesn't exist, add an error message
-                    $errors[] = "You are not authorized to use this email address.";
-
-                    // Redirect back to the referring page
-                    echo "<script>alert('You are not authorized to use this email address.'); window.history.back();</script>";
-                    exit();
-                }
-            }
-
-            // Close the file handle
-            fclose($handle);
+        // Check if file size retrieval was successful
+        if ($file_size === false) {
+            // Error accessing file size
+            $errors[] = "Error: Unable to get the size of the file.";
         } else {
-            // Error opening file
-            $errors[] = "Error: Unable to open file.";
+            // Read the file contents into a string
+            $file_contents = fread($handle, $file_size);
+
+            // Convert file contents to an array of emails
+            $logged_in_emails = explode("\n", $file_contents);
+
+            $entered_email = $_POST['volunteer-email'];
+
+            // Check if the entered email exists in the list of logged-in emails
+            if (!in_array($entered_email, $logged_in_emails)) {
+                // If the entered email doesn't exist, add an error message
+                $errors[] = "You are not authorized to use this email address.";
+            }
         }
 
-        // Continue processing only if there are no errors
+        // Close the file handle
+        fclose($handle);
+    } else {
+        // Error opening file
+        $errors[] = "Error: Unable to open file.";
+    }
+
+    // Continue processing only if there are no errors
+    if (empty($errors)) {
+        // Sanitize and validate volunteer form data
+        $stmt = $conn->prepare("INSERT INTO volunteers (name, email, phone, company, message) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $name, $email, $phone, $company, $message);
+
+        $name = strtoupper(mysqli_real_escape_string($conn, $_POST["volunteer-name"]));
+        $email = mysqli_real_escape_string($conn, $_POST["volunteer-email"]);
+        $phone = mysqli_real_escape_string($conn, $_POST["volunteer-phone"]);
+        $company = strtoupper(mysqli_real_escape_string($conn, $_POST["volunteer-company"]));
+        $message = mysqli_real_escape_string($conn, $_POST["volunteer-message"]);
+
+        // Initialize errors array
+        $errors = [];
+
+        // Call the function to modify and validate data (references are used)
+        modifyAndValidateData($name, $email, $phone, $company, $message, $errors);
+
+        // Check if there are any errors
         if (empty($errors)) {
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Sanitize and validate volunteer form data
-            $name = mysqli_real_escape_string($conn, $_POST["volunteer-name"]);
-            $email = mysqli_real_escape_string($conn, $_POST["volunteer-email"]);
-            $phone = mysqli_real_escape_string($conn, $_POST["volunteer-phone"]);
-            $company = mysqli_real_escape_string($conn, $_POST["volunteer-company"]);
-            $message = mysqli_real_escape_string($conn, $_POST["volunteer-message"]);
-
-            // Initialize errors array
-            $errors = [];
-
-            // Call the function to modify and validate data
-            modifyAndValidateData($name, $email, $phone, $company, $message, $errors);
-
-            // Check if there are any errors
-            if (empty($errors)) {
-                // Insert data into volunteers table
-                $sql = "INSERT INTO volunteers (name, email, phone, company, message) VALUES ('$name', '$email', '$phone', '$company', '$message')";
-
-                if ($conn->query($sql) !== TRUE) {
-                    // Log error
-                    error_log("Error: " . $sql . "<br>" . $conn->error);
-                }
-
+            // Execute the prepared statement to insert data into volunteers table
+            if ($stmt->execute()) {
+                // Redirect to homepage if insertion is successful
                 header("Location: homepage.php");
                 exit();
             } else {
-                // Handle errors (e.g., display to user as alerts)
-                echo "<script>";
-                foreach ($errors as $error) {
-                    echo "alert('$error');";
-                }
-                echo "</script>";
-
-                // Redirect back to the referring page
-                header("Location: " . $_SERVER['HTTP_REFERER']);
-                exit();
+                // Log error
+                error_log("Error: " . $stmt->error);
             }
-
-            // Close database connection
-            $conn->close();
         }
+    }
+
+    // Close database connection
+    $conn->close();
+
+    // Handle errors (e.g., display to user as alerts)
+    if (!empty($errors)) {
+        echo "<script>";
+        foreach ($errors as $error) {
+            echo "alert('$error');";
+        }
+        echo "window.history.back();"; // Redirect back to the referring page
+        echo "</script>";
+        exit(); // Stop further execution of PHP code
     }
 }
 ?>

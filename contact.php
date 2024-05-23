@@ -1,32 +1,22 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "2302";
-$dbname = "projektiueb";
+// Include database connection parameters from config.php
+require_once 'db.php';
 
 // Initialize errors array
 $errors = [];
 
-// Set the cookie first
+// Set the cookie first (if needed)
 $fullName = "";
+
+// Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     // Read the file containing logged-in user's emails
     $file_path = 'users.txt';
 
-    // Open the file for reading
-    $handle = fopen($file_path, 'r');
-
-    // Check if the file opened successfully
-    if ($handle) {
-        // Read the file contents into a string
-        $file_contents = fread($handle, filesize($file_path));
-
-        // Close the file handle
-        fclose($handle);
-
-        // Convert file contents to an array of emails
-        $logged_in_emails = explode("\n", $file_contents);
+    // Check if the file exists
+    if (file_exists($file_path)) {
+        // Read the file contents into an array
+        $logged_in_emails = file($file_path, FILE_IGNORE_NEW_LINES);
 
         // Get the entered email from the form
         $entered_email = $_POST['contact-email'];
@@ -43,80 +33,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     // Continue processing only if there are no errors
     if (empty($errors)) {
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Create database connection using information from config.php
+        $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+
+        // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
-            header("Location: homepage.php");
         }
 
-        $fullName = mysqli_real_escape_string($conn, $_POST["contact-name"]);
-        
         // Sanitize and validate contact form data
-        $name = mysqli_real_escape_string($conn, $_POST["contact-name"]);
+        $fullName = mysqli_real_escape_string($conn, $_POST["contact-name"]);
+        $name = strtoupper(mysqli_real_escape_string($conn, $_POST["contact-name"]));
         $email = mysqli_real_escape_string($conn, $_POST["contact-email"]);
-        $company = mysqli_real_escape_string($conn, $_POST["contact-company"]);
-        $message = mysqli_real_escape_string($conn, $_POST["contact-message"]);
+        $company = strtoupper(mysqli_real_escape_string($conn, $_POST["contact-company"]));
+        $message = wordwrap(mysqli_real_escape_string($conn, $_POST["contact-message"]), 70);
 
-        // Call the function to modify and validate data
-        if (!function_exists('modifyAndValidateData')) {
-            function modifyAndValidateData(&$name, &$email, &$company, &$message, &$errors) {
-                // Convert name and company to uppercase
-                $name = strtoupper($name);
-                $company = strtoupper($company);
-
-                // Validate email
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $errors[] = "Invalid email format.";
-                }
-
-                // Check if company is empty and set a default value
-                if (empty($company)) {
-                    $company = "NO COMPANY";
-                }
-
-                // Wrap message to 70 characters per line
-                $message = wordwrap($message, 70);
-
-                // Check message length
-                if (strlen($message) > 1000) {
-                    $errors[] = "Message is too long. Maximum length is 1000 characters.";
-                }
-                
-            }
+        // Validate email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format.";
         }
 
-        // Call the function to modify and validate data
-        modifyAndValidateData($name, $email, $company, $message, $errors);
-
-        // Call the function to log contact data
-        if (!function_exists('logContactData')) {
-            function logContactData(&$name, &$email, &$company, &$message) {
-                $logMessage = "Name: $name, Email: $email, Company: $company, Message: $message";
-                error_log($logMessage);
-            }
+        // Check if company is empty and set a default value
+        if (empty($company)) {
+            $company = "NO COMPANY";
         }
-        logContactData($name, $email, $company, $message);
 
-        // Check if there are any errors
+        // Check message length
+        if (strlen($message) > 1000) {
+            $errors[] = "Message is too long. Maximum length is 1000 characters.";
+        }
+
+        // If there are no errors, proceed with inserting data
         if (empty($errors)) {
-            // Insert data into contact table
-            $sql = "INSERT INTO contact (name, email, company, message) VALUES ('$name', '$email', '$company', '$message')";
+            // Prepare the SQL statement using a prepared statement
+            $stmt = $conn->prepare("INSERT INTO contact (name, email, company, message) VALUES (?, ?, ?, ?)");
 
-            if ($conn->query($sql) !== TRUE) {
+            // Bind parameters to the prepared statement
+            $stmt->bind_param("ssss", $name, $email, $company, $message);
+
+            // Execute the prepared statement
+            if ($stmt->execute()) {
+                // Redirect back to homepage if insert is successful
+                header("Location: homepage.php");
+                exit();
+            } else {
                 // Log error
-                error_log("Error: " . $sql . "<br>" . $conn->error);
+                error_log("Error: " . $stmt->error);
+                $errors[] = "Error inserting data. Please try again later.";
             }
-        }
 
-        // Redirect back to homepage
-        header("Location: homepage.php");
-        exit();
+            // Close the statement
+            $stmt->close();
+        }
 
         // Close database connection
         $conn->close();
     }
 }
 
+// Display errors as alerts
 if (!empty($errors)) {
     echo "<script>";
     foreach ($errors as $error) {
