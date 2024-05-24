@@ -33,48 +33,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitform"])) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    // Read the file containing logged-in user's emails
+    //KERKESE - work with files fsize , fopen, fclose
     $file_path = 'users.txt';
 
-    // Open the file for reading
     $handle = fopen($file_path, 'r');
-
-    // Check if the file opened successfully
     if ($handle) {
-        // Get the size of the file
         $file_size = filesize($file_path);
 
-        // Check if file size retrieval was successful
         if ($file_size === false) {
-            // Error accessing file size
             $errors[] = "Error: Unable to get the size of the file.";
         } else {
-            // Read the file contents into a string
             $file_contents = fread($handle, $file_size);
 
-            // Convert file contents to an array of emails
             $logged_in_emails = explode("\n", $file_contents);
 
             $entered_email = $_POST['volunteer-email'];
 
-            // Check if the entered email exists in the list of logged-in emails
             if (!in_array($entered_email, $logged_in_emails)) {
-                // If the entered email doesn't exist, add an error message
                 $errors[] = "You are not authorized to use this email address.";
             }
         }
 
-        // Close the file handle
         fclose($handle);
     } else {
-        // Error opening file
         $errors[] = "Error: Unable to open file.";
     }
 
-    // Continue processing only if there are no errors
+    
     if (empty($errors)) {
-        // Sanitize and validate volunteer form data
         $stmt = $conn->prepare("INSERT INTO volunteers (name, email, phone, company, message) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $name, $email, $phone, $company, $message);
 
@@ -84,13 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitform"])) {
         $company = strtoupper(mysqli_real_escape_string($conn, $_POST["volunteer-company"]));
         $message = mysqli_real_escape_string($conn, $_POST["volunteer-message"]);
 
-        // Initialize errors array
+        
         $errors = [];
 
-        // Call the function to modify and validate data (references are used)
         modifyAndValidateData($name, $email, $phone, $company, $message, $errors);
 
-        // Check if there are any errors
         if (empty($errors)) {
             // Execute the prepared statement to insert data into volunteers table
             if ($stmt->execute()) {
@@ -103,8 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitform"])) {
             }
         }
     }
-
-    // Close database connection
     $conn->close();
 
     // Handle errors (e.g., display to user as alerts)
