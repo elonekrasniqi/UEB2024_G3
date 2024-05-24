@@ -1,6 +1,6 @@
 <?php
 $dbHost = 'localhost'; 
 $dbUser = 'root';
-$dbPass = '2300'; 
+$dbPass = '2302'; 
 $dbName = 'projektiueb'; 
 ?>
