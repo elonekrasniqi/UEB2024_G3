@@ -133,7 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <?php
-// Database connection parameters
 $servername = "localhost";
 $username = "root";
 $password = "2302";
@@ -143,14 +142,13 @@ $dbname = "projektiueb";
 function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
     error_log("Error occurred: $errstr in $errfile on line $errline", 0);
 
-    // Check if additional context is available
+    // KERKESE
     if ($errcontext) {
         // Log additional context provided by $errcontext
         $additional_context = print_r($errcontext, true);
         error_log("Additional context: $additional_context", 0);
     }
 
-    // Display a generic error message to the user
     echo "<p>An error occurred. Please try again later.</p>";
 }
 // Set custom error handler
@@ -165,7 +163,6 @@ try {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   // Retrieve form data
    $emri = $_POST["ticket-form-name"];
    $email = $_POST["ticket-form-email"];
    $telefoni = $_POST["ticket-form-phone"];
