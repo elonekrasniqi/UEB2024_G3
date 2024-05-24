@@ -36,34 +36,6 @@ if (isset($_GET['gjuha'])) {
     }
     exit();
 }
-
-//cookie i pare, merr emrin nga forma per kontaktim dhe vendos alert
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle the contact form submission
-    if (isset($_POST['submit'])) {
-        $fullName = $_POST['contact-name'];
-        setcookie('contact-name', $fullName, time() + (86400 * 30), "/"); // Cookie expires in 30 days
-        echo "<script>alert('Thank you for contacting us, $fullName!');</script>";
-    }
-
-    //cookie i dyte, ndryshon ngjyren varesisht qfare vlere merr
-    // Handle the volunteer form submission
-    elseif (isset($_POST['volunteer-name'])) {
-        $name = $_POST["volunteer-name"];
-        $hash = md5($name); // Generate a hash from the name
-        $color = substr($hash, 0, 6); // Take the first 6 characters of the hash
-        setcookie("dynamicColor", $color, time() + (30 * 24 * 60 * 60), "/"); // Cookie valid for 30 days
-    }  
-}
-
-//cookie i trete qe e merr emrin nga forma per vullnetare dhe vendos alert after submit
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitform'])) {
-    $fullNameVol = $_POST['volunteer-name'];
-    setcookie('volunteer-name', $fullNameVol, time() + (86400 * 30), "/"); // Cookie expires in 30 days
-    echo "<script>alert('Thank you for applying, $fullNameVol! We will contact you soon!');</script>";
-}
-
 //shiko a ka cookie ne fillim kur logohet personi 
 if (!isset($_COOKIE['first_login'])) {
     // Shtoni cookie për herën e parë të logimit
@@ -908,6 +880,11 @@ echo '</div>
         "description" => "In 2018, the Sunny Hill festival expanded its program to include workshops and interactive experiences, attracting both local and international participants.",
     ],
 ];
+    //perdorimi i referencave ne vargje-------------->kerkese
+    //perdoren referencat per ndryshimin e te dhenave ne nje varg
+      $refHistory = &$history; 
+       $refHistory["2022"]["attendees"] = 16000; 
+
 
 
     // Function to generate sort links with JavaScript sorting
@@ -962,14 +939,15 @@ echo '</div>
         }
     }
     // Display sorted festival history
-    foreach ($history as $item) {
+    foreach ($refHistory as $item) {
         $year = $item['year'];
         $attendees = $item['attendees'];
         $description = $item['description'];
-
-    echo "<li><strong>$year:</strong> $attendees attendees</li>";
-    echo "<p><em>$description</em></p>";
+    
+        echo "<li><strong>$year:</strong> $attendees attendees</li>";
+        echo "<p><em>$description</em></p>";
     }
+    
     ?>
 </ul>
 

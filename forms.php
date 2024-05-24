@@ -2,7 +2,7 @@
 
 require_once 'db.php';
 
-// Function to modify and validate data using references
+//Perdorimi i funksioneve me referenca ------->kerkese
 function modifyAndValidateData(&$name, &$email, &$phone, &$company, &$message, &$errors) {
     // Convert name and company to uppercase
     $name = strtoupper($name);
@@ -73,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitform"])) {
         
         $errors = [];
 
+          //perdorimi i funksioneve me reference------>kerkese
         modifyAndValidateData($name, $email, $phone, $company, $message, $errors);
 
         if (empty($errors)) {

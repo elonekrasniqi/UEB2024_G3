@@ -1,22 +1,17 @@
 <?php
 session_start();
 
-//kerkesa per me iu cas variablave globale me referenca
+// casja ne variabla globale permes referencave ----->kerkese
 $sess = &$_SESSION;
 
 // Krijo një referencë për variablën 'loggedin' brenda sesionit
 $loggedin = &$sess['loggedin'];
 
-// Nëse 'loggedin' është e vendosur, pastroje atë
-//kerkesa per perdorimin e funksionit unset
+//perdorimi i funksionit unset------>kerkese
 if (isset($loggedin)) {
     unset($loggedin);
 }
 
-// Krijo një referencë për variablën globale $_POST
-$post = &$_POST;
-
-// Ridrejto përdoruesin në faqen kryesore
 header('Location: index.php'); 
 exit;
 ?>

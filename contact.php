@@ -36,23 +36,29 @@ if ($handle) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $fullName = mysqli_real_escape_string($conn, $_POST["contact-name"]);
-        $name = strtoupper(mysqli_real_escape_string($conn, $_POST["contact-name"]));
-        $email = mysqli_real_escape_string($conn, $_POST["contact-email"]);
-        $company = strtoupper(mysqli_real_escape_string($conn, $_POST["contact-company"]));
-        $message = wordwrap(mysqli_real_escape_string($conn, $_POST["contact-message"]), 70);
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Invalid email format.";
+        //-----------------------------------------------------------------------------------
+        //perdorimi i funksioneve me referenca----> kerkese
+        //percjellja e vlerave permes referencave -----> kerkese
+        function modifyAndValidateData(&$name, &$email, &$company, &$message, &$errors) {
+            // Convert name and company to uppercase
+            $name = strtoupper($name);
+            $company = strtoupper($company);
+        
+            // Validate email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Invalid email format.";
+            }
+        
+        
+            // Wrap message to 70 characters per line
+            $message = wordwrap($message, 70);
+        
+            // Check message length
+            if (strlen($message) > 800) {
+                $errors[] = "Message is too long. Maximum length is 800 characters.";
+            }
         }
-
-        if (empty($company)) {
-            $company = "NO COMPANY";
-        }
-
-        if (strlen($message) > 1000) {
-            $errors[] = "Message is too long. Maximum length is 1000 characters.";
-        }
+        
 
         if (empty($errors)) {
             $stmt = $conn->prepare("INSERT INTO contact (name, email, company, message) VALUES (?, ?, ?, ?)");
