@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Store user data in session using references
                     $_SESSION['loggedin'] = true;
                     $_SESSION['user'] = $row; // Storing a reference to the user row
-                    $_SESSION['fullname'] = $row['fullname']; 
+                    $_SESSION['name'] = $row['name']; 
 
                     // Use session for login count
                     if (!isset($_SESSION['login_count'])) {

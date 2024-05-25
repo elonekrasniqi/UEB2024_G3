@@ -109,8 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     <?php
                   
                    // Assuming $_SESSION['name'] is set after successful login
-                   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['fullname'])) {
-                       echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['fullname'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
+                   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['name'])) {
+                       echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['name'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
                        echo "<script>
                            setTimeout(function() {
                                document.getElementById('welcomeMsg').style.display = 'inline';
