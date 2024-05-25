@@ -202,7 +202,7 @@ display: inline-block;
         </li>
 
         <li class="nav-item">
-            <a class="nav-link click-scroll" href="#section_5" onclick="addEffect(this)">Caktimi</a>
+            <a class="nav-link click-scroll" href="#section_5" onclick="addEffect(this)">Cmimet</a>
         </li>
 
         <li class="nav-item">
@@ -676,11 +676,13 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
             <p class="pricing-tag ms-auto">Ruaj deri në <span>50%</span></p>
         </div>
         <ul class="pricing-list mt-3">
-            <li class="pricing-list-item">platformë për klientë të mundshëm</li>
-            <li class="pricing-list-item">përvojë dixhitale</li>
-            <li class="pricing-list-item">zë cilësor</li>
-            <li class="pricing-list-item">përmbajtje standard</li>
-        </ul>
+                    <li class="pricing-list-item">çmim i zbritur i biletës</li>
+                    <li class="pricing-list-item">akses i hershëm në njoftimet e lineup-it</li>
+                    <li class="pricing-list-item">akses në të gjitha zonat e përgjithshme</li>
+                    <li class="pricing-list-item">përvojë digjitale</li>
+                    <li class="pricing-list-item">zë me cilësi të lartë</li>
+                    <li class="pricing-list-item">përmbajtje standarde</li>
+                </ul>
         <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
             <span>Bleni Biletën</span>
             <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
@@ -703,12 +705,13 @@ $orari_html = '<section class="schedule-section section-padding" id="section_4">
             </div>
         </div>
         <ul class="pricing-list mt-3">
-            <li class="pricing-list-item">platformë për klientë të mundshëm</li>
-            <li class="pricing-list-item">përvojë dixhitale</li>
-            <li class="pricing-list-item">zë cilësor</li>
-            <li class="pricing-list-item">përmbajtje premium</li>
-            <li class="pricing-list-item">mbështetje live chat</li>
-        </ul>
+                    <li class="pricing-list-item">akses në të gjitha zonat e përgjithshme</li>
+                    <li class="pricing-list-item">vauçerë të zbritura për ushqim dhe pije</li>
+                    <li class="pricing-list-item">parkim falas</li>
+                    <li class="pricing-list-item">hartë dhe udhëzues falas të festivalit</li>
+                    <li class="pricing-list-item">rreshta të përparësisë në hyrje</li>
+                    <li class="pricing-list-item">zbritje për biletat e ardhshme të festivalit</li>
+                </ul>
         <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
             <span>Bleni Biletën</span>
             <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
