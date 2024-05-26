@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Database insertion example
             $servername = "localhost";
             $username = "root";
-            $password = "2302";
+            $password = "123";
             $dbname = "projektiueb";
 
             // Create connection

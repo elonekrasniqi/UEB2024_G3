@@ -2,6 +2,7 @@
 
 require_once 'db.php';
 
+
 //Perdorimi i funksioneve me referenca ------->kerkese
 function modifyAndValidateData(&$name, &$email, &$phone, &$company, &$message, &$errors) {
     // Convert name and company to uppercase

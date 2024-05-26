@@ -1165,8 +1165,9 @@ catch (error) {
     throw error;
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+
+ src="https://code.jquery.com/jquery-3.6.0.min.js" </script>
+
     $(document).ready(function() {
         $('form').submit(function(event) {
             // Prevent default form submission
@@ -1193,9 +1194,7 @@ catch (error) {
             });
         });
     });
-    </script>
 
-</script>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
