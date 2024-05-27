@@ -216,6 +216,34 @@ function checkEmailExists($email) {
                 
 </section>
 </main>
+        <script>
+            //Përdorimi i AJAX-it për lexim dhe update-im nga një DB
+          document.getElementById('signupButton').addEventListener('click', function(event) {
+          event.preventDefault();
+
+            var fullname = document.getElementById('signup-form-fullname').value;
+            var email = document.getElementById('signup-form-email').value;
+            var password = document.getElementById('signup-form-password').value;
+            var confirmPassword = document.getElementById('signup-form-confirm-password').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'signup_ajax.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+            var response = xhr.responseText;
+            alert(response);
+            }
+           };
+
+            xhr.send('signup-form-fullname=' + encodeURIComponent(fullname) +
+             '&signup-form-email=' + encodeURIComponent(email) +
+             '&signup-form-password=' + encodeURIComponent(password) +
+             '&signup-form-confirm-password=' + encodeURIComponent(confirmPassword));
+           });
+        </script>
+
 
         <script src="js/sign-up.js"></script>
         <script src="js/jquery.min.js"></script>
