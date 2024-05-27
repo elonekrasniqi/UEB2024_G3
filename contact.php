@@ -1,14 +1,16 @@
 <?php
 
+ob_start(); // Start output buffering
+
 require_once 'db.php';
+require 'C:\xampp\htdocs\UEB2024_G3\phpmailer\vendor\autoload.php'; // Include Composer's autoloader
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $errors = [];
 
-$fullName = "";
-
-// KERKESE - work with files fsize , fopen, fclose
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-
     $file_path = 'users.txt';
     $handle = fopen($file_path, 'r');
 
@@ -16,14 +18,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $file_contents = fread($handle, filesize($file_path));
         fclose($handle);
 
-        $logged_in_emails = explode("\n", $file_contents);
-        $entered_email = $_POST['contact-email'];
+        $logged_in_emails = array_unique(array_map('trim', explode("\n", $file_contents)));
+
+        $entered_email = trim($_POST['contact-email']);
 
         if (!in_array($entered_email, $logged_in_emails)) {
-            $errors[] = "You are not authorized to use this email address.";
+            $errors[] = urlencode("You are not authorized to use this email address.");
         }
+
+        // Set the recipient to the entered email if authorized
+        $recipient = $entered_email;
+
+        // Check if recipient email is valid
+        if (empty($recipient) || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = urlencode("Recipient email is not valid.");
+        }
+
     } else {
-        $errors[] = "Error: Unable to open file.";
+        $errors[] = urlencode("Error: Unable to open file.");
     }
 
     if (empty($errors)) {
@@ -32,35 +44,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        //-----------------------------------------------------------------------------------
-        //perdorimi i funksioneve me referenca----> kerkese
-        //percjellja e vlerave permes referencave -----> kerkese
         function modifyAndValidateData(&$name, &$email, &$company, &$message, &$errors) {
-            // Convert name and company to uppercase
             $name = strtoupper($name);
             $company = strtoupper($company);
 
-            // Validate email
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors[] = "Invalid email format.";
+                $errors[] = urlencode("Invalid email format.");
             }
 
-            // Wrap message to 70 characters per line
             $message = wordwrap($message, 70);
 
-            // Check message length
             if (strlen($message) > 800) {
-                $errors[] = "Message is too long. Maximum length is 800 characters.";
+                $errors[] = urlencode("Message is too long. Maximum length is 800 characters.");
             }
         }
 
-        // Retrieve form data
-        $name = $_POST['name'];
+        $name = $_POST['contact-name'];
         $email = $_POST['contact-email'];
-        $company = $_POST['company'];
-        $message = $_POST['message'];
+        $company = $_POST['contact-company'];
+        $message = $_POST['contact-message'];
 
-        // Modify and validate data
         modifyAndValidateData($name, $email, $company, $message, $errors);
 
         if (empty($errors)) {
@@ -68,20 +71,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             $stmt->bind_param("ssss", $name, $email, $company, $message);
 
             if ($stmt->execute()) {
-                // Log email details 
-                $to = $email;
-                $subject = "Contact Form Submission";
-                $body = "Name: $name\nCompany: $company\nMessage: $message";
-                $headers = "From: webmaster@example.com";
+                $mail = new PHPMailer(true);
 
-                // Log email details
-                error_log("Email details:\nTo: $to\nSubject: $subject\nBody: $body\nHeaders: $headers");
+                try {
+                    $mail->SMTPDebug = 0;                      // Disable verbose debug output
+                    $mail->isSMTP();                           // Set mailer to use SMTP
+                    $mail->Host       = 'smtp.gmail.com';      // Specify main and backup SMTP servers
+                    $mail->SMTPAuth   = true;                  // Enable SMTP authentication
+                    $mail->Username   = 'projektiueb@gmail.com'; // SMTP username
+                    $mail->Password   = 'afjh jufl ixsk mxol'; // SMTP password
+                    $mail->SMTPSecure = 'tls';                 // Enable TLS encryption, `ssl` also accepted
+                    $mail->Port       = 587;                   // TCP port to connect to
 
-                header("Location: homepage.php");
-                exit();
+                    //Recipients
+                    $mail->setFrom('no-reply@gmail.com', 'Mailer');
+                    $mail->addAddress($recipient);             // Add a recipient
+
+                    // Content
+                    $mail->isHTML(true);                       // Set email format to HTML
+                    $mail->Subject = "Kontakti";
+                    $email_message = "\nFaleminderit qe kontaktuat. Do te ju kthejme pergjigje ne kohen sa me te shkurter.\n";
+                    $email_message .= "Here are the details:\nName: $name\n";
+                    $email_message .= "Email: $email\nCompany: $company\nMessage:\n$message\n";
+
+                    $mail->Body    = nl2br($email_message);    // Convert new lines to <br> tags
+                    $mail->AltBody = $email_message;           // Plain text version of the email
+
+                    $mail->send();
+                    header("Location: homepage.php?status=success");
+                    exit();
+                } catch (Exception $e) {
+                    $errors[] = urlencode("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+                }
             } else {
-                error_log("Error: " . $stmt->error);
-                $errors[] = "Error inserting data. Please try again later.";
+                $errors[] = urlencode("Error inserting data. Please try again later.");
             }
 
             $stmt->close();
@@ -91,14 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     }
 }
 
-// Display errors as alerts
 if (!empty($errors)) {
-    echo "<script>";
-    foreach ($errors as $error) {
-        echo "alert('$error');";
-    }
-    echo "window.location.href = 'homepage.php';"; 
-    echo "</script>";
+    $errorString = implode('&', $errors); // Concatenate all errors
+    header("Location: homepage.php?errors=$errorString"); 
     exit(); 
 }
+
+ob_end_flush(); // End output buffering and flush the output
 ?>
