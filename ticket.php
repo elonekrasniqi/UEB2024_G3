@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 class Bileta {
     protected $emri;
     protected $cmimi;
@@ -70,67 +71,10 @@ class User {
     }
 }
 
-$tickets = [];
-// ticket purchase form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $emri = $_POST["ticket-form-name"];
-    $email = $_POST["ticket-form-email"];
-    $telefoni = $_POST["ticket-form-phone"];
-    $tipiBiletës = $_POST["TicketForm"];
-    $numriBiletave = $_POST["ticket-form-number"];
-    $dataBlerjes = trim($_POST["dataBlerjes"]);
-    $xhirollogaria = $_POST["bank-account-number"]; // Mbledhni numrin e xhirollogarisë bankare
-
-    // Validate number of tickets
-    if ($numriBiletave < 1) {
-        echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
-    } else {
-        // Continue with the ticket purchase process
-        // Krijimi i objektit User
-        $user = new User($emri);
-
-        if ($tipiBiletës == "earlybird") {
-            $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
-        } elseif ($tipiBiletës == "standard") {
-            $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
-        }
-
-        // Validimi i datës së blerjes së biletes
-        if ($bileta->validoDate($dataBlerjes)) {
-            // Add ticket data to the tickets array
-            $tickets[] = [
-                $user->getEmri(),
-                $email, // Shtoni emailin në array të biletave
-                $telefoni, // Shtoni numrin e telefonit në array të biletave
-                $xhirollogaria, // Shtoni numrin e xhirollogarisë bankare në array të biletave
-                $bileta->getEmri(),
-                $bileta->getCmimi(),
-                $bileta->getDataBlerjes()
-            ];
-
-            // Convert the numeric array to a string for file storage
-            $ticketDataString = implode(',', $tickets[count($tickets) - 1]) . "\n";
-
-            // Kur bërët blerjen e biletes me sukses
-
-
-            // Save the ticket data to a file or insert into the database
-            // Code for file storage or database insertion goes here
-
-            // Database insertion example
-            $servername = "localhost";
-            $username = "root";
-            $password = "2302";
-            $dbname = "projektiueb";
-        }
-    }
-}
-// Custom error handler function
+// Set custom error handler function
 function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
     error_log("Error occurred: $errstr in $errfile on line $errline", 0);
 
-    // KERKESE
     if ($errcontext) {
         // Log additional context provided by $errcontext
         $additional_context = print_r($errcontext, true);
@@ -139,68 +83,82 @@ function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
 
     echo "<p>An error occurred. Please try again later.</p>";
 }
+
 // Set custom error handler
 set_error_handler("customErrorHandler");
+
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "2302";
+$dbname = "projektiueb";
 
 try {
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
 } catch (Exception $e) {
     // Handle connection error
-    die("Connection failed: " . $e->getMessage());
+    customErrorHandler(E_USER_ERROR, "Connection failed: " . $e->getMessage(), __FILE__, __LINE__, null);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   $emri = $_POST["ticket-form-name"];
-   $email = $_POST["ticket-form-email"];
-   $telefoni = $_POST["ticket-form-phone"];
-   $tipiBiletës = $_POST["TicketForm"];
-   $numriBiletave = $_POST["ticket-form-number"];
-   $dataBlerjes = trim($_POST["dataBlerjes"]);
-   $message = $_POST["ticket-form-message"]; 
-   $xhirollogaria = $_POST["bank-account-number"]; 
+    $emri = $_POST["ticket-form-name"];
+    $email = $_POST["ticket-form-email"];
+    $telefoni = $_POST["ticket-form-phone"];
+    $tipiBiletës = $_POST["TicketForm"];
+    $numriBiletave = $_POST["ticket-form-number"];
+    $dataBlerjes = trim($_POST["dataBlerjes"]);
+    $message = $_POST["ticket-form-message"]; 
+    $xhirollogaria = $_POST["bank-account-number"]; 
 
-   // Validate number of tickets
-   if ($numriBiletave < 1) {
-       echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
-   } else {
-       // Continue with the ticket purchase process
-       // Krijimi i objektit User
-       $user = new User($emri);
-
-       if ($tipiBiletës == "earlybird") {
-           $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
-       } elseif ($tipiBiletës == "standard") {
-           $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
-       }
-    }
-    $sql = "INSERT INTO tickets (emri, email, telefoni, xhirollogaria, bileta_emri, cmimi, data_blerjes, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $emri, $email, $telefoni, $xhirollogaria, $bileta_emri, $cmimi, $data_blerjes, $message);
-
-    $emri = $user->getEmri();
-    $email = $email;
-    $telefoni = $telefoni;
-    $xhirollogaria = $xhirollogaria;
-    $bileta_emri = $bileta->getEmri();
-    $cmimi = $bileta->getCmimi();
-    $data_blerjes = $bileta->getDataBlerjes();
-    $message = $message;
-
-    if ($stmt->execute()) {
-       
-        echo '<script>alert("Blerja u krye me sukses!");</script>';
-        echo '<script>window.location.href = "ticket.php";</script>';
-        exit();
+    // Validate number of tickets
+    if ($numriBiletave < 1) {
+        echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
     } else {
-       
-        echo " <script>alert('Error: " . $conn->error . "');</script>";
-    }
-    $stmt->close();
-}
+        // Continue with the ticket purchase process
+        $user = new User($emri);
 
-$conn->close();
-?>
+        if ($tipiBiletës == "earlybird") {
+            $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
+        } elseif ($tipiBiletës == "standard") {
+            $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
+        }
+
+        // Validate purchase date
+        if ($bileta->validoDate($dataBlerjes)) {
+            $sql = "INSERT INTO tickets (emri, email, telefoni, xhirollogaria, bileta_emri, cmimi, data_blerjes, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                customErrorHandler(E_USER_ERROR, "Database prepare error: " . $conn->error, __FILE__, __LINE__, null);
+            }
+
+            $stmt->bind_param("ssssssss", $emri, $email, $telefoni, $xhirollogaria, $bileta_emri, $cmimi, $data_blerjes, $message);
+
+            $emri = $user->getEmri();
+            $email = $email;
+            $telefoni = $telefoni;
+            $xhirollogaria = $xhirollogaria;
+            $bileta_emri = $bileta->getEmri();
+            $
+            $cmimi = $bileta->getCmimi();
+            $data_blerjes = $bileta->getDataBlerjes();
+            $message = $message;
+    
+            if ($stmt->execute()) {
+                echo '<script>alert("Blerja u krye me sukses!");</script>';
+                echo '<script>window.location.href = "ticket.php";</script>';
+                exit();
+            } else {
+                customErrorHandler(E_USER_ERROR, "Database execute error: " . $stmt->error, __FILE__, __LINE__, null);
+            }
+    
+            $stmt->close();
+        }
+    }
+}
+    $conn->close();
+    ?>
+
 
 
 
