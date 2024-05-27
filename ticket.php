@@ -8,6 +8,34 @@ error_reporting(E_ALL);
 
 $tickets = [];
 
+function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+    error_log("Error occurred: $errstr in $errfile on line $errline", 0);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    // Check if additional context is available
+    if ($errcontext) {
+        // Log additional context provided by $errcontext
+        $additional_context = print_r($errcontext, true);
+        error_log("Additional context: $additional_context", 0);
+    }
+
+    // Display a generic error message to the user
+    echo "<p>An error occurred. Please try again later.</p>";
+}
+// Set custom error handler
+set_error_handler("customErrorHandler");
+
+try {
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+} catch (Exception $e) {
+    // Handle connection error
+    die("Connection failed: " . $e->getMessage());
+}
+
+}
 // Process ticket purchase form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data

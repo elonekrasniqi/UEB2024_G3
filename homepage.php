@@ -1,6 +1,9 @@
 <?php require_once("forms.php"); ?>
 <?php require_once("contact.php"); ?> <!-- require kerkese eshte -->
 <?php
+
+error_reporting(E_ALL);
+
 $servername = "localhost";
 $username = "root";
 $password = "2302";
@@ -15,12 +18,7 @@ if ($conn->connect_error)
 
 
 ?>
-
-
-
-
 <?php
-
 // Start session
 session_start();
 
@@ -45,7 +43,6 @@ if (!isset($_COOKIE['first_login'])) {
     echo "<script>alert('Cookies are enabled.');</script>";
 }
 ?>
-
 
 <!doctype html>
 <html lang="en">
