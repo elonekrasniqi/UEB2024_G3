@@ -3,7 +3,6 @@ ini_set('display_errors', 1);
 // Enable error reporting
 error_reporting(E_ALL);
 
-// Include config file
 require_once 'db.php';
 
 // Function to handle errors
@@ -70,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Function to validate password format
-function validatePassword($password) {
+function validatePassword(&$password) {
     // Check password length
     if (strlen($password) < 8) {
         return false;
