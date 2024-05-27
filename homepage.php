@@ -16,7 +16,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) 
     die("Connection failed: " . $conn->connect_error);
 
-
 ?>
 <?php
 // Start session
@@ -106,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     <?php
                   
                    // Assuming $_SESSION['name'] is set after successful login
-                   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['name'])) {
-                       echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['name'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
+                   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['fullname'])) {
+                       echo "<span id='welcomeMsg' style='display:none;'>Welcome, " . $_SESSION['fullname'] . "! You have logged in " . $_SESSION['login_count'] . " times.</span>";
                        echo "<script>
                            setTimeout(function() {
                                document.getElementById('welcomeMsg').style.display = 'inline';
@@ -695,12 +694,13 @@ echo '</div>
                                 </div>
 
                                 <ul class="pricing-list mt-3">
-                                <li class="pricing-list-item">discounted ticket price</li>
-                                <li class="pricing-list-item">early access to lineup announcements</li>
-                                <li class="pricing-list-item">access to all general areas</li>
-                                <li class="pricing-list-item">digital experience</li>
-                                <li class="pricing-list-item">high-quality sound</li>
-                                <li class="pricing-list-item">standard content</li>
+                                    <li class="pricing-list-item">platform for potential customers</li>
+
+                                    <li class="pricing-list-item">digital experience</li>
+
+                                    <li class="pricing-list-item">high-quality sound</li>
+
+                                    <li class="pricing-list-item">standard content</li>
                                 </ul>
 
                                 <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
@@ -721,13 +721,16 @@ echo '</div>
                                 </div>
 
                                 <ul class="pricing-list mt-3">
-                                 <li class="pricing-list-item">access to all general areas</li>
-                                 <li class="pricing-list-item">discounted food and beverage vouchers</li>
-                                 <li class="pricing-list-item">free parking pass</li>
-                                 <li class="pricing-list-item">complimentary festival map and guide</li>
-                                 <li class="pricing-list-item">priority entrance lines</li>
-                                 <li class="pricing-list-item">discount on future festival tickets</li>
-                                 </ul>
+                                    <li class="pricing-list-item">platform for potential customers</li>
+
+                                    <li class="pricing-list-item">digital experience</li>
+
+                                    <li class="pricing-list-item">high-quality sound</li>
+
+                                    <li class="pricing-list-item">premium content</li>
+                                    
+                                    <li class="pricing-list-item">live chat support</li>
+                                </ul>
 
                                 <a class="link-fx-1 color-contrast-higher mt-4" href="ticket.php">
                                     <span>Buy Ticket</span>
@@ -1162,8 +1165,9 @@ catch (error) {
     throw error;
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+
+ src="https://code.jquery.com/jquery-3.6.0.min.js" </script>
+
     $(document).ready(function() {
         $('form').submit(function(event) {
             // Prevent default form submission
@@ -1190,9 +1194,7 @@ catch (error) {
             });
         });
     });
-    </script>
 
-</script>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
