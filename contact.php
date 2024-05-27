@@ -3,7 +3,7 @@
 ob_start(); // Start output buffering
 
 require_once 'db.php';
-require 'C:\xampp\htdocs\UEB2024_G3\phpmailer\vendor\autoload.php'; // Include Composer's autoloader
+require 'vendor/autoload.php'; // Include Composer's autoloader
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
