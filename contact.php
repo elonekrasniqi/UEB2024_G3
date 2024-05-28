@@ -1,9 +1,9 @@
 <?php
 
-ob_start(); // Start output buffering
+ob_start(); // Fillon buferimin e output-it
 
 require_once 'db.php';
-require 'C:\xampp\htdocs\UEB2024_G3\vendor\autoload.php'; // Include Composer's autoloader
+require 'C:\xampp\htdocs\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -26,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             $errors[] = urlencode("You are not authorized to use this email address.");
         }
 
-        // Set the recipient to the entered email if authorized
+        // Përcakton marrësin te email-i i futur nëse është i autorizuar
         $recipient = $entered_email;
 
-        // Check if recipient email is valid
+        // Kontrollon nëse email-i i marrësit është valid
         if (empty($recipient) || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
             $errors[] = urlencode("Recipient email is not valid.");
         }
@@ -59,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             }
         }
 
-        $name = $_POST['contact-name'];
-        $email = $_POST['contact-email'];
-        $company = $_POST['contact-company'];
-        $message = $_POST['contact-message'];
+        $name = filter_var($_POST['contact-name'], FILTER_SANITIZE_STRING);
+        $email = filter_var($_POST['contact-email'], FILTER_SANITIZE_EMAIL);
+        $company = filter_var($_POST['contact-company'], FILTER_SANITIZE_STRING);
+        $message = filter_var($_POST['contact-message'], FILTER_SANITIZE_STRING);
 
         modifyAndValidateData($name, $email, $company, $message, $errors);
 
@@ -74,28 +74,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                 $mail = new PHPMailer(true);
 
                 try {
-                    $mail->SMTPDebug = 0;                      // Disable verbose debug output
-                    $mail->isSMTP();                           // Set mailer to use SMTP
-                    $mail->Host       = 'smtp.gmail.com';      // Specify main and backup SMTP servers
-                    $mail->SMTPAuth   = true;                  // Enable SMTP authentication
-                    $mail->Username   = 'projektiueb@gmail.com'; // SMTP username
-                    $mail->Password   = 'afjh jufl ixsk mxol'; // SMTP password
-                    $mail->SMTPSecure = 'tls';                 // Enable TLS encryption, `ssl` also accepted
-                    $mail->Port       = 587;                   // TCP port to connect to
+                    $mail->SMTPDebug = 0;                      // Çaktivizon output-in e debug-ut të detajuar
+                    $mail->isSMTP();                           // Përcakton mailer për të përdorur SMTP
+                    $mail->Host       = 'smtp.gmail.com';      // Specifikon serverët kryesorë dhe rezervë SMTP
+                    $mail->SMTPAuth   = true;                  // Aktivizon autentifikimin SMTP
+                    $mail->Username   = 'projektiueb@gmail.com'; // Emri i përdoruesit SMTP
+                    $mail->Password   = 'afjh jufl ixsk mxol'; // Fjalëkalimi SMTP
+                    $mail->SMTPSecure = 'tls';                 // Aktivizon enkriptimin TLS, `ssl` gjithashtu pranohet
+                    $mail->Port       = 587;                   // Porti TCP për të lidhur
 
-                    //Recipients
+                    // Marrësit
                     $mail->setFrom('no-reply@gmail.com', 'Mailer');
-                    $mail->addAddress($recipient);             // Add a recipient
+                    $mail->addAddress($recipient);             // Shton një marrës
+                    $mail->addReplyTo('info_sunnyhill@gmail.com', 'Information');
+                    $mail->addCC('cc@gmail.com');
+                    $mail->addBCC('bcc@gmail.com');
 
-                    // Content
-                    $mail->isHTML(true);                       // Set email format to HTML
+                    // Përmbajtja
+                    $mail->isHTML(true);                       // Përcakton formatin e email-it në HTML
                     $mail->Subject = "Kontakti";
                     $email_message = "\nFaleminderit qe kontaktuat. Do te ju kthejme pergjigje ne kohen sa me te shkurter.\n";
                     $email_message .= "Here are the details:\nName: $name\n";
                     $email_message .= "Email: $email\nCompany: $company\nMessage:\n$message\n";
 
-                    $mail->Body    = nl2br($email_message);    // Convert new lines to <br> tags
-                    $mail->AltBody = $email_message;           // Plain text version of the email
+                    $mail->Body    = nl2br($email_message);    // Konverton rreshtat e rinj në tag-et <br>
+                    $mail->AltBody = $email_message;           // Versioni me tekst të thjeshtë i email-it
 
                     $mail->send();
                     header("Location: homepage.php?status=success");
@@ -115,10 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 }
 
 if (!empty($errors)) {
-    $errorString = implode('&', $errors); // Concatenate all errors
+    $errorString = implode('&', $errors); // Konkatenon të gjitha gabimet
     header("Location: homepage.php?errors=$errorString"); 
     exit(); 
 }
 
-ob_end_flush(); // End output buffering and flush the output
+ob_end_flush(); // Përfundon buferimin e output-it dhe pastron output-in
+
 ?>

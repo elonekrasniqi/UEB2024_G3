@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 $servername = "localhost";
 $username = "root";
-$password = "Arlinda.Be2004";
+$password = "2302";
 $dbname = "projektiueb";
 
 // Create connection
