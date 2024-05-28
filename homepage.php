@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 $servername = "localhost";
 $username = "root";
-$password = "2302";
+$password = "Arlinda.Be2004";
 $dbname = "projektiueb";
 
 // Create connection
@@ -1167,6 +1167,7 @@ catch (error) {
 
 
  src="https://code.jquery.com/jquery-3.6.0.min.js" </script>
+ <script>
 
     $(document).ready(function() {
         $('form').submit(function(event) {
@@ -1194,6 +1195,7 @@ catch (error) {
             });
         });
     });
+    </script>
 
 
         <script src="js/jquery.min.js"></script>
