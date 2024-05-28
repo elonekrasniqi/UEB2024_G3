@@ -2,6 +2,31 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+//Përdorimi i AJAX-it për lexim dhe update-im nga një PHP skriptë 
+// Kontrolloni nëse kërkesa është bërë përmes AJAX
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ajax'])) {
+    // Trajtoni kërkesën AJAX këtu
+    $emri = $_POST['ticket-form-name'];
+    $email = $_POST['ticket-form-email'];
+    // Vazhdoni me të dhënat e tjera dhe logjikën e përpunimit
+
+    // Pas përpunimit, përgjigjuni me JSON ose thjesht një mesazh
+    if ($numriBiletave < 1) {
+        echo json_encode(['error' => 'Numri i biletave duhet të jetë më i madh se 1.']);
+    } else {
+        // Nëse kodi PHP ekzekutohet pa probleme
+        if ($bileta->validoDate($dataBlerjes)) {
+            if ($stmt->execute()) {
+                echo json_encode(['success' => 'Blerja u krye me sukses!']);
+            } else {
+                echo json_encode(['error' => 'Database execute error.']);
+            }
+        } else {
+            echo json_encode(['error' => 'Data e blerjes nuk është e vlefshme.']);
+        }
+    }
+    exit; // Mbyllni këtë skriptë pasi keni përgjigjur AJAX
+}
 
 class Bileta {
     protected $emri;
@@ -72,7 +97,7 @@ class User {
 }
 
 // Set custom error handler function
-function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext = null) {
     error_log("Error occurred: $errstr in $errfile on line $errline", 0);
 
     if ($errcontext) {
@@ -90,7 +115,7 @@ set_error_handler("customErrorHandler");
 // Database connection details
 $servername = "localhost";
 $username = "root";
-$password = "2302";
+$password = "Arlinda.Be2004";
 $dbname = "projektiueb";
 
 try {
@@ -139,7 +164,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $telefoni = $telefoni;
             $xhirollogaria = $xhirollogaria;
             $bileta_emri = $bileta->getEmri();
-            $
             $cmimi = $bileta->getCmimi();
             $data_blerjes = $bileta->getDataBlerjes();
             $message = $message;
@@ -242,6 +266,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row">
                     <div class="col-lg-6 col-10 mx-auto">
                         <form class="custom-form ticket-form mb-5 mb-lg-0" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" role="form">
+                        <input type="hidden" name="ajax" value="1">
                             <h2 class="text-center mb-4">Get started here</h2>
                             <div class="ticket-form-body">
                                 <div class="row">
@@ -291,6 +316,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.sticky.js"></script>
     <script src="js/custom.js"></script>
+    <script>
+    //Përdorimi i AJAX-it për lexim dhe update-im nga një PHP skriptë 
+    $(document).ready(function() {
+    $('.ticket-form').on('submit', function(e) {
+        e.preventDefault(); // Ndalo rifreskimin e faqes
+        var formData = $(this).serialize(); // Merr të dhënat nga forma në formatin e duhur për dërgim
+
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>',
+            data: formData,
+            success: function(response) {
+                alert('Blerja u krye me sukses!');
+                window.location.href = 'ticket.php'; // Ridrejto në faqe pas suksesit
+            },
+            error: function() {
+                alert('Ka një problem me dërgimin e të dhënave.');
+            }
+        });
+    });
+    });
+    </script>
+
 
 </body>
 </html>
