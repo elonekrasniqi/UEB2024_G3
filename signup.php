@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt->close();
                     $conn->close();
 
+                    
                     echo "<script>alert('Signup successful'); window.location.href ='index.php' </script>";
                 }
             }

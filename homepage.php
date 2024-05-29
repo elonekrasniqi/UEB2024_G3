@@ -1,3 +1,5 @@
+
+<?php include("weather.php"); ?>
 <?php require_once("forms.php"); ?>
 <?php require_once("contact.php"); ?> <!-- require kerkese eshte -->
 <?php
@@ -282,7 +284,9 @@ LoginBtn.addEventListener("mouseleave", function() {
 
                             <h1 class="text-white mb-5">Sunny Hill Festival 2024</h1>
 
-                            <a class="btn custom-btn smoothscroll" href="#section_2">Let's begin</a>
+                            <h5>Moti në Prishtinë</h5>
+                            <p>Përshkrimi i motit: <?php echo $weatherDescription; ?></p>
+                            <p>Temperatura: <?php echo $temperature; ?>°C</p>
                         </div>
 
                         <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">

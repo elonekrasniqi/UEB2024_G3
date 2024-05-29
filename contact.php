@@ -3,7 +3,7 @@
 ob_start(); // Fillon buferimin e output-it
 
 require_once 'db.php';
-require 'C:\xampp\htdocs\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
+require 'C:\xampp\htdocs\GitHub\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
