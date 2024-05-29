@@ -157,7 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     return false;
                 }
 
-                // Additional validation if needed (e.g., password length)
                 return true;
             }
         </script>
