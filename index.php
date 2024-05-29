@@ -17,10 +17,11 @@ function connectToDatabase() {
 }
 
 function handleDatabaseError($errno, $errstr) {
-    $error_message = "Database Connection Error [$errno]: $errstr";
+    $error_message = "Gabim në Lidhjen me Bazën e të Dhënave [$errno]: $errstr";
     error_log($error_message . PHP_EOL, 3, 'database_errors.log');
-    echo "<script>alert('A database error occurred. Please try again later.');</script>";
+    echo "<script>alert('Ndodhi një gabim me bazën e të dhënave. Ju lutemi provoni përsëri më vonë.');</script>";
 }
+
 
 function verifyCredentials(&$email, &$password, &$conn) {
     // Për të siguruar që ndryshimet në $email reflektohen jashtë funksionit
