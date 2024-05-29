@@ -3,7 +3,7 @@
 ob_start(); // Fillon buferimin e output-it
 
 require_once 'db.php';
-require 'C:\xampp\htdocs\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
+require 'C:\xampp\htdocs\GitHub\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                     $mail->Port       = 587;                   // Porti TCP për të lidhur
 
                     // Marrësit
-                    $mail->setFrom('no-reply@gmail.com', 'Mailer');
+                    $mail->setFrom('no-reply@gmail.com', 'SunnyHill');
                     $mail->addAddress($recipient);             // Shton një marrës
                     $mail->addReplyTo('info_sunnyhill@gmail.com', 'Information');
                     $mail->addCC('cc@gmail.com');
