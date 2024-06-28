@@ -1,5 +1,6 @@
+<?php include("weather.php"); ?>
 <?php require_once("forms.php"); ?>
-<?php require_once("contact.php"); ?> 
+<?php require_once("contact.php"); ?>
 <?php // homepage ne gjuhen shqipe
 session_start();
 
@@ -283,7 +284,9 @@ LoginBtn.addEventListener("mouseleave", function() {
 
                             <h1 class="text-white mb-5">Festivali Sunny Hill 2024</h1>
 
-                            <a class="btn custom-btn smoothscroll" href="#section_2">Le të fillojmë</a>
+                            <h5>Moti në Prishtinë</h5>
+                            <p style="color:white">Përshkrimi i motit: <?php echo $weatherDescription; ?></p>
+                            <p style="color:white">Temperatura: <?php echo $temperature; ?>°C</p>
                         </div>
 
                         <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">

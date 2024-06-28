@@ -22,13 +22,12 @@ function handleDatabaseError($errno, $errstr) {
     echo "<script>alert('Ndodhi një gabim me bazën e të dhënave. Ju lutemi provoni përsëri më vonë.');</script>";
 }
 
-
 function verifyCredentials(&$email, &$password, &$conn) {
     // Për të siguruar që ndryshimet në $email reflektohen jashtë funksionit
     $email = trim($email);
     $password = trim($password);
 
-    $stmt = $conn->prepare("SELECT * FROM tblusers WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, name, password FROM tblusers WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -55,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($user) {
                 $_SESSION['loggedin'] = true;
+                $_SESSION['user_id'] = $user['id']; // Ruaj ID-në e përdoruesit në sesion
                 $_SESSION['user'] = $user; 
                 $_SESSION['name'] = $user['name']; 
 
@@ -78,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">

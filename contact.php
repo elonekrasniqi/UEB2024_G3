@@ -1,6 +1,7 @@
 <?php
-
 ob_start(); // Fillon buferimin e output-it
+
+session_start(); // Fillon ose rikthen sesionin
 
 require_once 'db.php';
 require 'C:\xampp\htdocs\GitHub\UEB2024_G3\vendor\autoload.php'; // Përfshin autoload-in e Composer-it
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        function modifyAndValidateData(&$name, &$email, &$company, &$message, &$errors) {
+        function modifyAndValidateData(&$name, &$email, &$company, &$message, &$errors, &$user_id) {
             $name = strtoupper($name);
             $company = strtoupper($company);
 
@@ -64,13 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $email = $_POST['contact-email'];
         $company = $_POST['contact-company'];
         $message = $_POST['contact-message'];
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
         // Modify and validate data
-        modifyAndValidateData($name, $email, $company, $message, $errors);
+        modifyAndValidateData($name, $email, $company, $message, $errors, $user_id);
 
         if (empty($errors)) {
-            $stmt = $conn->prepare("INSERT INTO contact (name, email, company, message) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $name, $email, $company, $message);
+            $stmt = $conn->prepare("INSERT INTO contact (name, email, company, message, user_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssi", $name, $email, $company, $message, $user_id);
 
             if ($stmt->execute()) {
                 $mail = new PHPMailer(true);
@@ -135,3 +137,4 @@ if (!empty($errors)) {
 }
 
 ob_end_flush(); // Përfundon buferimin e output-it dhe pastron output-in
+?>

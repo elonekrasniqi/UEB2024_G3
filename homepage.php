@@ -20,8 +20,7 @@ if ($conn->connect_error)
 
 ?>
 <?php
-// Start session
-session_start();
+
 
 // session per te ndryshuar permbajtjen varesisht cilen gjuhe selekton useri
 if (isset($_GET['gjuha'])) {
@@ -285,8 +284,8 @@ LoginBtn.addEventListener("mouseleave", function() {
                             <h1 class="text-white mb-5">Sunny Hill Festival 2024</h1>
 
                             <h5>Moti në Prishtinë</h5>
-                            <p>Përshkrimi i motit: <?php echo $weatherDescription; ?></p>
-                            <p>Temperatura: <?php echo $temperature; ?>°C</p>
+                            <p style="color:white">Përshkrimi i motit: <?php echo $weatherDescription; ?></p>
+                            <p style="color:white">Temperatura: <?php echo $temperature; ?>°C</p>
                         </div>
 
                         <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">

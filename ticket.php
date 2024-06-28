@@ -1,73 +1,74 @@
-
 <?php
-// Database credentials
-$dbHost = 'localhost';
-$dbUser = 'root';
-$dbPass = '2302';
-$dbName = 'projektiueb';
+session_start(); // Fillon ose rihap sesionin në fillim të skedarit
 
-// Establish database connection
-$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+function merrDatenAktuale() {
+    return date("Y-m-d");
 }
 
-class Bileta {
-    protected $emri;
-    protected $cmimi;
-    protected $dataBlerjes;
+// Kontrolli i datës aktuale
+$dataAktuale = merrDatenAktuale();
 
-    public function __construct($emri, $cmimi, $dataBlerjes) {
-        $this->emri = $emri;
-        $this->cmimi = $cmimi;
-        $this->dataBlerjes = $dataBlerjes;
-    }
+// Kontrolli i kufirit të datës për blerjen e biletave
+$limitData = '2024-07-23';
+if ($dataAktuale > $limitData) {
+    echo json_encode(array("status" => "error", "message" => "Nuk mund të blini bileta pas datës 23 korrik 2024."));
+    exit();
+} else {
+    // Kontrolli i metodës së kërkesës (POST) për të kryer veprimet e blerjes së biletave
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Database credentials
+        $dbHost = 'localhost';
+        $dbUser = 'root';
+        $dbPass = '2302';
+        $dbName = 'projektiueb';
 
-    public function getEmri() {
-        return $this->emri;
-    }
-
-    public function getCmimi() {
-        return $this->cmimi;
-    }
-
-    public function getDataBlerjes() {
-        return $this->dataBlerjes;
-    }
-
-    public function ruajNeSkedar($user) {
-        $data = $user->getEmri() . ',' . $this->emri . ',' . $this->cmimi . ',' . $this->dataBlerjes . "\n";
-        file_put_contents('tickets.txt', $data, FILE_APPEND);
-    }
-
-    public function validoDate($data) {
-        // Format valid: yyyy-mm-dd
-        $pattern = "/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/";
-        if (preg_match($pattern, $data)) {
-            // Check if the date is before the allowed end date (July 24)
-            $dataKufi = strtotime('2024-07-24');
-            $dataVerifikimi = strtotime($data);
-            $dataSot = strtotime(date("Y-m-d"));
-            if ($dataVerifikimi <= $dataKufi && $dataVerifikimi >= $dataSot) {
-                return true;
-            }
+        // Establish database connection
+        $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+        if ($conn->connect_error) {
+            echo json_encode(array("status" => "error", "message" => "Connection failed: " . $conn->connect_error));
+            exit();
         }
-        return false;
+
+        // Pjesa e kodit për përpunimin e formës dhe blerjen e biletave
+        $emri = $_POST["ticket-form-name"];
+        $email = $_POST["ticket-form-email"];
+        $telefoni = $_POST["ticket-form-phone"];
+        $tipiBiletës = $_POST["TicketForm"];
+        $numriBiletave = $_POST["ticket-form-number"];
+        $message = $_POST["ticket-form-message"];
+        $xhirollogaria = $_POST["bank-account-number"];
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+        // Validimi i numrit të biletave
+        if ($numriBiletave < 1) {
+            echo json_encode(array("status" => "error", "message" => "Numri i biletave duhet të jetë më i madh se 1."));
+            exit();
+        } else {
+            // Krijimi i objektit User
+            $user = new User($emri);
+
+            if ($tipiBiletës == "earlybird") {
+                $bileta = new EarlyBirdBileta("Early Bird Ticket", 120);
+            } elseif ($tipiBiletës == "standard") {
+                $bileta = new StandardBileta("Standard Ticket", 240);
+            }
+
+            $sql = "INSERT INTO tickets (emri, email, telefoni, xhirollogaria, bileta_emri, cmimi, message, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param("sssssssi", $emri, $email, $telefoni, $xhirollogaria, $bileta_emri, $cmimi, $message, $user_id);
+            $emri = $user->getEmri();
+            $bileta_emri = $bileta->getEmri();
+            $cmimi = $bileta->getCmimi();
+
+    
+        }
+
+        $conn->close();
     }
 }
 
-class EarlyBirdBileta extends Bileta {
-    public function __construct($emri, $cmimi, $dataBlerjes) {
-        parent::__construct($emri, $cmimi, $dataBlerjes);
-    }
-}
-
-class StandardBileta extends Bileta {
-    public function __construct($emri, $cmimi, $dataBlerjes) {
-        parent::__construct($emri, $cmimi, $dataBlerjes);
-    }
-}
-
+// Klasa User
 class User {
     private $emri;
 
@@ -80,54 +81,38 @@ class User {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $emri = $_POST["ticket-form-name"];
-    $email = $_POST["ticket-form-email"];
-    $telefoni = $_POST["ticket-form-phone"];
-    $tipiBiletës = $_POST["TicketForm"];
-    $numriBiletave = $_POST["ticket-form-number"];
-    $dataBlerjes = trim($_POST["dataBlerjes"]);
-    $message = $_POST["ticket-form-message"];
-    $xhirollogaria = $_POST["bank-account-number"];
+// Klasa Bileta
+class Bileta {
+    protected $emri;
+    protected $cmimi;
 
-    // Validate number of tickets
-    if ($numriBiletave < 1) {
-        echo "<script>alert('Numri i biletave duhet të jetë më i madh se 1.')</script>";
-    } else {
-        // Create user object
-        $user = new User($emri);
+    public function __construct($emri, $cmimi) {
+        $this->emri = $emri;
+        $this->cmimi = $cmimi;
+    }
 
-        // Create ticket object based on ticket type
-        if ($tipiBiletës == "earlybird") {
-            $bileta = new EarlyBirdBileta("Early Bird Ticket", 120, $dataBlerjes);
-        } elseif ($tipiBiletës == "standard") {
-            $bileta = new StandardBileta("Standard Ticket", 240, $dataBlerjes);
-        }
+    public function getEmri() {
+        return $this->emri;
+    }
 
-        // Prepare and bind SQL statement
-        $sql = "INSERT INTO tickets (emri, email, telefoni, xhirollogaria, bileta_emri, cmimi, data_blerjes, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $emri, $email, $telefoni, $xhirollogaria, $bileta_emri, $cmimi, $dataBlerjes, $message);
-
-        // Set values for SQL statement
-        $emri = $user->getEmri();
-        $bileta_emri = $bileta->getEmri();
-        $cmimi = $bileta->getCmimi();
-
-        // Execute SQL statement
-        if ($stmt->execute()) {
-            echo '<script>alert("Blerja u krye me sukses!");</script>';
-            echo '<script>window.location.href = "ticket.php";</script>';
-            exit();
-        } else {
-            echo "<script>alert('Error: " . $conn->error . "');</script>";
-        }
-
-        $stmt->close();
+    public function getCmimi() {
+        return $this->cmimi;
     }
 }
 
-$conn->close();
+// Klasa EarlyBirdBileta
+class EarlyBirdBileta extends Bileta {
+    public function __construct($emri, $cmimi) {
+        parent::__construct($emri, $cmimi);
+    }
+}
+
+// Klasa StandardBileta
+class StandardBileta extends Bileta {
+    public function __construct($emri, $cmimi) {
+        parent::__construct($emri, $cmimi);
+    }
+}
 ?>
 
 
@@ -141,7 +126,7 @@ $conn->close();
     <meta name="author" content="">
     <link rel="icon" href="images/sunny-hill-festival-logo.png" type="image/x-icon">
     <title>Sunny Hill - Ticket HTML Form</title>
-    <!-- CSS FILES -->        
+        
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap" rel="stylesheet">
@@ -210,7 +195,7 @@ $conn->close();
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-10 mx-auto">
-                        <form class="custom-form ticket-form mb-5 mb-lg-0" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" role="form">
+                        <form class="custom-form ticket-form mb-5 mb-lg-0" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  method="post" role="form">
                             <h2 class="text-center mb-4">Get started here</h2>
                             <div class="ticket-form-body">
                                 <div class="row">
@@ -238,10 +223,9 @@ $conn->close();
                                         </div>
                                     </div>
                                 </div>
-                                <input type="number" name="ticket-form-number" id="ticket-form-number" class="form-control" placeholder="Number of Tickets" required>
+                                <input type="number" name="ticket-form-number" id="ticket-form-number" min="1" class="form-control" placeholder="Number of Tickets" required>
                                 <textarea name="ticket-form-message" rows="3" class="form-control" id="ticket-form-message" placeholder="Additional Request"></textarea>
                                 <input type="text" name="bank-account-number" id="bank-account-number" class="form-control" placeholder="Bank Account Number" required>
-                                <input type="text" name="dataBlerjes" id="dataBlerjes" class="form-control" placeholder="Date of Purchase (yyyy-mm-dd)" required>
                                 <div class="col-lg-4 col-md-10 col-8 mx-auto">
                                     <button type="submit" class="form-control">Buy Ticket</button>
                                 </div>
