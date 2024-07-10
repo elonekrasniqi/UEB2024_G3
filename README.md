@@ -7,6 +7,6 @@ Experience the vibrant energy of Kosovo's annual Sunny Hill Festival through our
 
 ## Authors:
 * [Elonë Krasniqi](https://github.com/elonekrasniqi)
-* [Brikena Katrati](https://github.com/brikenakastrati)
+* [Brikena Kastrati](https://github.com/brikenakastrati)
 * [Aulona Ramosaj](https://github.com/aulonaramosaj)
 * [Arlinda Beqiraj](https://github.com/arlindabeqiraj)
